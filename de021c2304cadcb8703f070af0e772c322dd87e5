@@ -1,0 +1,4 @@
+main.py
+  49d28382-96cb-438e-971b-9a8b3b38dc2a:2026-05-02T14:28:04.145Z 41,176
+---
+{"schema_version": "authorship/3.0.0", "base_commit_sha": "HEAD~1", "prompts": {"49d28382-96cb-438e-971b-9a8b3b38dc2a:2026-05-02T14:28:04.145Z": {"agent_id": {"tool": "claude_code", "model": ""}, "human_author": "dushyant.panda@razorpay.com", "accepted_lines": 2, "overriden_lines": 0}}}
