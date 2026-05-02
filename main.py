@@ -1,15 +1,22 @@
 """
 GoingGlobal — India's export regulation intelligence hub.
-FastAPI backend with Voyage AI embeddings, Qdrant retrieval, and MCP support.
+FastAPI + MCP backend backed by Voyage AI embeddings and Qdrant.
 
 Endpoints:
-  GET  /          — metadata
+  GET  /          — corpus metadata
   GET  /health    — liveness check
-  POST /search    — semantic search over ingested export regulation docs
+  POST /search    — semantic search, returns cited source chunks
+  POST /ingest    — (protected) embed all chunks in data/ into Qdrant
   /mcp            — MCP server (auto-mounted by fastapi-mcp)
 """
+import asyncio
+import glob
+import json
+import logging
 import os
+import uuid
 from contextlib import asynccontextmanager
+from pathlib import Path
 from typing import Optional
 
 import truststore
@@ -17,17 +24,21 @@ truststore.inject_into_ssl()
 
 import voyageai
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Header
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi_mcp import FastApiMCP
 from pydantic import BaseModel, Field
 from qdrant_client import QdrantClient
-from qdrant_client.models import Filter, FieldCondition, MatchValue, QueryRequest
+from qdrant_client.models import Distance, Filter, FieldCondition, MatchValue, PointStruct, VectorParams
 
 load_dotenv()
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger("goingglobal")
 
 COLLECTION = "goingglobal"
 MODEL = "voyage-3-lite"
+VECTOR_SIZE = 512
+INGEST_BATCH = 32
 
 _voyage: voyageai.Client | None = None
 _qdrant: QdrantClient | None = None
@@ -42,8 +53,15 @@ async def lifespan(app: FastAPI):
     _voyage = voyageai.Client(api_key=api_key)
     _qdrant = QdrantClient(
         url=os.getenv("QDRANT_URL", "http://localhost:6333"),
-        api_key=os.getenv("QDRANT_API_KEY"),
+        api_key=os.getenv("QDRANT_API_KEY") or None,
     )
+    log.info("Connected to Qdrant at %s", os.getenv("QDRANT_URL", "http://localhost:6333"))
+
+    # Auto-ingest if collection empty and chunk files exist
+    if os.getenv("AUTO_INGEST", "false").lower() == "true":
+        log.info("AUTO_INGEST=true — starting background ingestion...")
+        asyncio.create_task(_run_ingest())
+
     yield
 
 
@@ -62,7 +80,7 @@ app.add_middleware(
 )
 
 
-# ── Models ────────────────────────────────────────────────────────────────────
+# ── Models ─────────────────────────────────────────────────────────────────────
 
 class SearchRequest(BaseModel):
     query: str = Field(..., min_length=2, max_length=500)
@@ -82,7 +100,86 @@ class SearchResult(BaseModel):
     score: float
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+class IngestResult(BaseModel):
+    status: str
+    chunks_ingested: int
+    by_type: dict
+
+
+# ── Ingestion ──────────────────────────────────────────────────────────────────
+
+async def _run_ingest() -> IngestResult:
+    """Embed all *_chunks.json files in data/ and upsert into Qdrant."""
+    chunk_files = sorted(glob.glob("data/*_chunks.json"))
+    if not chunk_files:
+        raise RuntimeError("No chunk files found in data/")
+
+    all_chunks: list[dict] = []
+    for f in chunk_files:
+        with open(f) as fh:
+            all_chunks.extend(json.load(fh))
+    log.info("Ingesting %d chunks from %d files", len(all_chunks), len(chunk_files))
+
+    # Ensure collection exists
+    existing = [c.name for c in _qdrant.get_collections().collections]
+    if COLLECTION not in existing:
+        _qdrant.create_collection(
+            collection_name=COLLECTION,
+            vectors_config=VectorParams(size=VECTOR_SIZE, distance=Distance.COSINE),
+        )
+        log.info("Created collection '%s'", COLLECTION)
+
+    upserted = 0
+    by_type: dict[str, int] = {}
+
+    for i in range(0, len(all_chunks), INGEST_BATCH):
+        batch = all_chunks[i: i + INGEST_BATCH]
+        texts = [c["text"] for c in batch]
+
+        for attempt in range(5):
+            try:
+                result = await asyncio.get_event_loop().run_in_executor(
+                    None,
+                    lambda t=texts: _voyage.embed(t, model=MODEL, input_type="document"),
+                )
+                break
+            except Exception as e:
+                wait = 20 * (attempt + 1)
+                log.warning("Voyage retry %d in %ds: %s", attempt + 1, wait, e)
+                await asyncio.sleep(wait)
+        else:
+            log.error("Batch %d failed after 5 attempts, skipping", i // INGEST_BATCH)
+            continue
+
+        points = []
+        for chunk, vector in zip(batch, result.embeddings):
+            points.append(PointStruct(
+                id=str(uuid.uuid4()),
+                vector=vector,
+                payload={
+                    "text": chunk["text"],
+                    "doc_type": chunk.get("doc_type", "Other"),
+                    "title": chunk.get("title", ""),
+                    "source_url": chunk.get("source_url", ""),
+                    "page": chunk.get("page", 0),
+                    "source": chunk.get("source", ""),
+                },
+            ))
+            dt = chunk.get("doc_type", "Other")
+            by_type[dt] = by_type.get(dt, 0) + 1
+
+        _qdrant.upsert(collection_name=COLLECTION, points=points)
+        upserted += len(points)
+        log.info("Ingested %d/%d chunks", upserted, len(all_chunks))
+
+        if i + INGEST_BATCH < len(all_chunks):
+            await asyncio.sleep(2)  # polite pacing (no rate limit on Railway)
+
+    log.info("Ingestion complete — %d vectors in '%s'", upserted, COLLECTION)
+    return IngestResult(status="ok", chunks_ingested=upserted, by_type=by_type)
+
+
+# ── Helpers ────────────────────────────────────────────────────────────────────
 
 def _corpus_stats() -> dict:
     try:
@@ -103,7 +200,7 @@ def _corpus_stats() -> dict:
         return {"total_documents": 0, "by_type": {}}
 
 
-# ── Routes ────────────────────────────────────────────────────────────────────
+# ── Routes ─────────────────────────────────────────────────────────────────────
 
 @app.get("/")
 async def root():
@@ -112,11 +209,7 @@ async def root():
         "name": "goingglobal",
         "version": "1.0.0",
         "tagline": "India's export regulation intelligence. Citation-first, retrieval-only.",
-        "endpoints": {
-            "mcp": "/mcp",
-            "health": "/health",
-            "search": "/search",
-        },
+        "endpoints": {"mcp": "/mcp", "health": "/health", "search": "/search", "ingest": "/ingest"},
         "corpus": corpus,
         "disclaimer": (
             "Unofficial resource. Not affiliated with RBI, DGFT, or any government body. "
@@ -131,6 +224,25 @@ async def health():
     return {"status": "ok"}
 
 
+@app.post("/ingest", response_model=IngestResult)
+async def ingest(x_ingest_key: Optional[str] = Header(None)):
+    """
+    Embed all chunk files in data/ and upsert into Qdrant.
+    Protected by INGEST_KEY env var (if set). Call once after deployment.
+    """
+    if _voyage is None or _qdrant is None:
+        raise HTTPException(503, "Service not initialised")
+
+    ingest_key = os.getenv("INGEST_KEY")
+    if ingest_key and x_ingest_key != ingest_key:
+        raise HTTPException(401, "Missing or invalid X-Ingest-Key header")
+
+    try:
+        return await _run_ingest()
+    except Exception as e:
+        raise HTTPException(500, str(e))
+
+
 @app.post("/search", response_model=list[SearchResult])
 async def search(req: SearchRequest):
     """
@@ -141,7 +253,10 @@ async def search(req: SearchRequest):
         raise HTTPException(503, "Service not initialised")
 
     try:
-        result = _voyage.embed([req.query], model=MODEL, input_type="query")
+        result = await asyncio.get_event_loop().run_in_executor(
+            None,
+            lambda: _voyage.embed([req.query], model=MODEL, input_type="query"),
+        )
         vector = result.embeddings[0]
     except Exception as e:
         raise HTTPException(502, f"Embedding failed: {e}")
@@ -177,7 +292,7 @@ async def search(req: SearchRequest):
     ]
 
 
-# ── MCP ───────────────────────────────────────────────────────────────────────
+# ── MCP ────────────────────────────────────────────────────────────────────────
 
 mcp = FastApiMCP(app)
 mcp.mount()

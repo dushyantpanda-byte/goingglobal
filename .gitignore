@@ -2,7 +2,8 @@
 __pycache__/
 *.pyc
 .env
-data/*.json
+data/*_extracted.json
 data/*.pdf
+# chunk files ARE committed so Railway can ingest them without re-downloading PDFs
 *.egg-info/
 .DS_Store
