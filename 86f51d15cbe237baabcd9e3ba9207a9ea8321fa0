@@ -1,0 +1,20 @@
+.gitignore
+  49d28382-96cb-438e-971b-9a8b3b38dc2a:2026-05-02T13:27:31.894Z 5,7
+data/dgft_ftp_2023_chunks.json
+  49d28382-96cb-438e-971b-9a8b3b38dc2a:2026-05-02T13:27:31.894Z 1-1114
+data/dgft_hop_2023_chunks.json
+  49d28382-96cb-438e-971b-9a8b3b38dc2a:2026-05-02T13:27:31.894Z 1-1714
+data/fema_notification_23_chunks.json
+  49d28382-96cb-438e-971b-9a8b3b38dc2a:2026-05-02T13:27:31.894Z 1-194
+data/gst_lut_master_circular_chunks.json
+  49d28382-96cb-438e-971b-9a8b3b38dc2a:2026-05-02T13:27:31.894Z 1-50
+data/gst_refund_zero_rating_chunks.json
+  49d28382-96cb-438e-971b-9a8b3b38dc2a:2026-05-02T13:27:31.894Z 1-410
+data/rbi_master_direction_chunks.json
+  49d28382-96cb-438e-971b-9a8b3b38dc2a:2026-05-02T13:27:31.894Z 1-450
+main.py
+  49d28382-96cb-438e-971b-9a8b3b38dc2a:2026-05-02T13:27:24.405Z 3,6,8-9,12-15,17,19,27,32,35-36,40-41,56,58,60-63,83,103-106,109,111-115,117-121,123-130,132-133,135-137,139-152,154-169,171-173,175-176,178-179,182,203,212,227-234,236-238,240-243,256-259,295
+requirements.txt
+  49d28382-96cb-438e-971b-9a8b3b38dc2a:2026-05-02T13:27:38.848Z 15
+---
+{"schema_version": "authorship/3.0.0", "base_commit_sha": "HEAD~1", "prompts": {"49d28382-96cb-438e-971b-9a8b3b38dc2a:2026-05-02T13:27:31.894Z": {"agent_id": {"tool": "claude_code", "model": ""}, "human_author": "dushyant.panda@razorpay.com", "accepted_lines": 2, "overriden_lines": 0}, "49d28382-96cb-438e-971b-9a8b3b38dc2a:2026-05-02T13:27:24.405Z": {"agent_id": {"tool": "claude_code", "model": ""}, "human_author": "dushyant.panda@razorpay.com", "accepted_lines": 111, "overriden_lines": 0}, "49d28382-96cb-438e-971b-9a8b3b38dc2a:2026-05-02T13:27:38.848Z": {"agent_id": {"tool": "claude_code", "model": ""}, "human_author": "dushyant.panda@razorpay.com", "accepted_lines": 1, "overriden_lines": 0}}}
