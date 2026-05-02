@@ -38,7 +38,7 @@ log = logging.getLogger("goingglobal")
 COLLECTION = "goingglobal"
 MODEL = "voyage-3-lite"
 VECTOR_SIZE = 512
-INGEST_BATCH = 32
+INGEST_BATCH = 8
 
 _voyage: voyageai.Client | None = None
 _qdrant: QdrantClient | None = None
@@ -173,7 +173,7 @@ async def _run_ingest() -> IngestResult:
         log.info("Ingested %d/%d chunks", upserted, len(all_chunks))
 
         if i + INGEST_BATCH < len(all_chunks):
-            await asyncio.sleep(2)  # polite pacing (no rate limit on Railway)
+            await asyncio.sleep(22)  # 3 RPM free-tier pacing
 
     log.info("Ingestion complete — %d vectors in '%s'", upserted, COLLECTION)
     return IngestResult(status="ok", chunks_ingested=upserted, by_type=by_type)
