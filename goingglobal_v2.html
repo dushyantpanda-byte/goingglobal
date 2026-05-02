@@ -1,1296 +1,1318 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GoingGlobal — India's Export Intelligence Hub</title>
-  <meta name="description" content="Every regulation, tip, scheme, and tool a first-time or active Indian SME exporter needs. AI-powered search backed by real government documents." />
-  <style>
-    /* ── Reset & Variables ──────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --blue:   #1a56db;
-      --blue-d: #1343b0;
-      --green:  #057a55;
-      --amber:  #b45309;
-      --red:    #c81e1e;
-      --purple: #6c2bd9;
-      --gray-1: #f9fafb;
-      --gray-2: #f3f4f6;
-      --gray-3: #e5e7eb;
-      --gray-5: #6b7280;
-      --gray-7: #374151;
-      --gray-9: #111827;
-      --radius: 10px;
-      --shadow: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.06);
-      --shadow-md: 0 4px 6px -1px rgba(0,0,0,.1);
-    }
-    body { font-family: system-ui, -apple-system, sans-serif; color: var(--gray-9); background: #fff; line-height: 1.6; }
-    a { color: var(--blue); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    img { display: block; max-width: 100%; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GoingGlobal — India's Export Intelligence Hub by Razorpay</title>
+<meta name="description" content="Every regulation, scheme, and tool an Indian SME exporter needs — plus Razorpay's cross-border payment stack. AI-powered search backed by real government documents." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+/* ── Design tokens (Razorpay Going Global palette) ─────────────────── */
+:root {
+  --ink:     #02042A;
+  --ink-2:   #0A0E3F;
+  --ink-3:   #161A4E;
+  --paper:   #F5F1EA;
+  --paper-2: #EDE6D9;
+  --line:    rgba(255,255,255,.10);
+  --line-d:  rgba(2,4,42,.10);
+  --blue:    #3395FF;
+  --blue-2:  #1E6FE6;
+  --cyan:    #7CD3FF;
+  --gold:    #F5C518;
+  --gold-2:  #FFD84D;
+  --coral:   #FF6A4D;
+  --grass:   #4ADE80;
+  --muted:   rgba(255,255,255,.62);
+  --muted-d: rgba(2,4,42,.6);
+  --r: 14px;
+}
+*,*::before,*::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: "DM Sans", system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection { background: var(--gold); color: var(--ink); }
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-    /* ── Layout ─────────────────────────────────────────────────────── */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-    section { padding: 60px 0; }
-    section:nth-child(even) { background: var(--gray-1); }
+/* ── Typography ─────────────────────────────────────────────────────── */
+.serif { font-family: "Instrument Serif", serif; font-weight: 400; font-style: italic; }
+.eyebrow {
+  font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+  font-weight: 600; color: var(--blue);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.eyebrow::before { content:""; width:24px; height:1px; background:currentColor; display:inline-block; }
+h1,h2,h3,h4 { margin: 0; letter-spacing: -.02em; font-weight: 600; }
+h1 { font-size: clamp(44px, 7vw, 96px); line-height: .96; letter-spacing: -.035em; }
+h2 { font-size: clamp(32px, 4vw, 64px); line-height: 1; letter-spacing: -.03em; }
+h3 { font-size: clamp(20px, 1.8vw, 28px); line-height: 1.2; }
+p { margin: 0; line-height: 1.6; }
 
-    /* ── Nav ─────────────────────────────────────────────────────────── */
-    nav { background: #fff; border-bottom: 1px solid var(--gray-3); position: sticky; top: 0; z-index: 100; }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; max-width: 1200px; margin: 0 auto; }
-    .nav-logo { font-weight: 700; font-size: 1.2rem; color: var(--blue); }
-    .nav-links { display: flex; gap: 24px; font-size: .9rem; }
-    .nav-links a { color: var(--gray-7); font-weight: 500; }
-    .nav-links a:hover { color: var(--blue); text-decoration: none; }
+/* ── Buttons ─────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 22px; border-radius: 999px;
+  font-size: 15px; font-weight: 600; letter-spacing: -.005em;
+  text-decoration: none; cursor: pointer; border: 0; font-family: inherit;
+  transition: transform .25s, box-shadow .25s, background .25s;
+}
+.btn-primary { background: var(--ink); color: #fff; box-shadow: 0 8px 24px -10px rgba(2,4,42,.55); }
+.btn-primary:hover { transform: translateY(-2px); background: var(--ink-2); text-decoration: none; }
+.btn-blue { background: var(--blue); color: #fff; box-shadow: 0 12px 28px -10px rgba(51,149,255,.6); }
+.btn-blue:hover { transform: translateY(-2px); background: var(--blue-2); text-decoration: none; }
+.btn-gold { background: var(--gold); color: var(--ink); box-shadow: 0 10px 24px -10px rgba(245,197,24,.5); }
+.btn-gold:hover { transform: translateY(-2px); background: var(--gold-2); text-decoration: none; }
+.btn-ghost { background: transparent; color: var(--ink); border: 1px solid rgba(2,4,42,.18); }
+.btn-ghost:hover { background: rgba(2,4,42,.04); text-decoration: none; }
+.btn-ghost-light { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.22); }
+.btn-ghost-light:hover { background: rgba(255,255,255,.06); text-decoration: none; }
+.btn .arrow { width: 14px; height: 14px; transition: transform .3s; }
+.btn:hover .arrow { transform: translate(3px,-3px); }
+.btn-sm { padding: 10px 18px; font-size: 14px; }
 
-    /* ── Hero ─────────────────────────────────────────────────────────── */
-    .hero { background: linear-gradient(135deg, #1a56db 0%, #1343b0 60%, #0f2d6b 100%); color: #fff; padding: 80px 0 60px; }
-    .hero h1 { font-size: 2.6rem; font-weight: 800; max-width: 700px; line-height: 1.2; margin-bottom: 16px; }
-    .hero p { font-size: 1.1rem; opacity: .85; max-width: 580px; margin-bottom: 40px; }
-    .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
-    .badge { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3); border-radius: 20px; padding: 4px 12px; font-size: .8rem; }
+/* ── Pill labels ─────────────────────────────────────────────────────── */
+.pill-dark {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 500;
+  background: rgba(255,255,255,.06); color: rgba(255,255,255,.85); border: 1px solid var(--line);
+}
+.pill-light {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 500;
+  background: rgba(2,4,42,.05); color: var(--muted-d); border: 1px solid var(--line-d);
+}
+.dot-green { width:8px; height:8px; border-radius:50%; background:var(--grass); box-shadow:0 0 0 4px rgba(74,222,128,.18); }
 
-    /* ── Search ──────────────────────────────────────────────────────── */
-    .search-wrap { position: relative; max-width: 640px; }
-    .search-input { width: 100%; padding: 14px 50px 14px 18px; font-size: 1rem; border-radius: var(--radius); border: none; outline: none; box-shadow: 0 4px 20px rgba(0,0,0,.25); }
-    .search-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: var(--blue); color: #fff; border: none; border-radius: 6px; padding: 8px 14px; cursor: pointer; font-size: .9rem; }
-    .search-btn:hover { background: var(--blue-d); }
-    .search-results { position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: #fff; border: 1px solid var(--gray-3); border-radius: var(--radius); box-shadow: var(--shadow-md); max-height: 480px; overflow-y: auto; z-index: 200; display: none; }
-    .search-results.open { display: block; }
-    .search-result-item { padding: 14px 16px; border-bottom: 1px solid var(--gray-2); cursor: pointer; }
-    .search-result-item:last-child { border-bottom: none; }
-    .search-result-item:hover { background: var(--gray-1); }
-    .sri-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-    .sri-tag { font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: .04em; }
-    .tag-rbi    { background: #dbeafe; color: #1e40af; }
-    .tag-fema   { background: #fce7f3; color: #9d174d; }
-    .tag-dgft   { background: #d1fae5; color: #065f46; }
-    .tag-gst    { background: #fef3c7; color: #92400e; }
-    .tag-exim   { background: #ede9fe; color: #4c1d95; }
-    .tag-ecgc   { background: #fee2e2; color: #991b1b; }
-    .tag-customs{ background: #e0f2fe; color: #0c4a6e; }
-    .tag-other  { background: var(--gray-2); color: var(--gray-7); }
-    .sri-title  { font-weight: 600; font-size: .9rem; color: var(--gray-9); }
-    .sri-text   { font-size: .85rem; color: var(--gray-5); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .sri-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
-    .sri-score  { font-size: .75rem; color: var(--gray-5); }
-    .sri-source { font-size: .75rem; color: var(--blue); }
-    .search-empty { padding: 24px 16px; text-align: center; color: var(--gray-5); font-size: .9rem; }
-    .search-loading { padding: 24px 16px; text-align: center; color: var(--gray-5); }
-    .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--gray-3); border-top-color: var(--blue); border-radius: 50%; animation: spin .7s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .search-filter { display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 16px; border-bottom: 1px solid var(--gray-2); }
-    .filter-chip { font-size: .75rem; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--gray-3); cursor: pointer; background: #fff; color: var(--gray-7); }
-    .filter-chip.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+/* ── Nav ─────────────────────────────────────────────────────────────── */
+.nav {
+  position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+  z-index: 100; width: min(1240px, calc(100vw - 32px));
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px 10px 22px;
+  background: rgba(2,4,42,.82); backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255,255,255,.08); border-radius: 999px; color: #fff;
+  transition: background .3s, border-color .3s;
+}
+.nav.is-light { background: rgba(245,241,234,.9); border-color: rgba(2,4,42,.08); color: var(--ink); }
+.nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; text-decoration: none; color: inherit; }
+.nav-mark {
+  width: 26px; height: 26px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  display: grid; place-items: center; color: #fff; font-size: 14px; font-weight: 800;
+}
+.nav-links { display: flex; gap: 4px; font-size: 14px; }
+.nav-links a { color: inherit; text-decoration: none; padding: 8px 14px; border-radius: 999px; opacity: .78; transition: opacity .2s, background .2s; }
+.nav-links a:hover { opacity: 1; background: rgba(255,255,255,.07); }
+.nav.is-light .nav-links a:hover { background: rgba(2,4,42,.05); }
+.nav-cta { display: flex; gap: 8px; align-items: center; }
+@media(max-width:900px) { .nav-links { display: none; } }
 
-    /* ── Section headings ────────────────────────────────────────────── */
-    .section-header { text-align: center; margin-bottom: 40px; }
-    .section-header h2 { font-size: 1.9rem; font-weight: 700; margin-bottom: 8px; }
-    .section-header p { color: var(--gray-5); font-size: 1rem; max-width: 540px; margin: 0 auto; }
+/* ── Container ───────────────────────────────────────────────────────── */
+.container { width: min(1240px, calc(100vw - 48px)); margin: 0 auto; }
+section { position: relative; }
+.sec { padding: 120px 0; }
+.sec-dark { background: var(--ink); color: #fff; }
+.sec-paper { background: var(--paper); }
+.sec-paper2 { background: var(--paper-2); }
 
-    /* ── Steps ──────────────────────────────────────────────────────── */
-    .steps { display: flex; flex-direction: column; gap: 12px; }
-    .step { border: 1px solid var(--gray-3); border-radius: var(--radius); overflow: hidden; }
-    .step-header { display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px; cursor: pointer; user-select: none; }
-    .step-header:hover { background: var(--gray-1); }
-    .step-num { background: var(--blue); color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .9rem; flex-shrink: 0; }
-    .step-title-wrap { flex: 1; }
-    .step-title { font-weight: 600; font-size: 1rem; }
-    .step-sub { font-size: .85rem; color: var(--gray-5); margin-top: 2px; }
-    .step-arrow { color: var(--gray-5); font-size: 1.1rem; margin-top: 4px; transition: transform .2s; }
-    .step.open .step-arrow { transform: rotate(90deg); }
-    .step-body { display: none; padding: 0 20px 20px 68px; font-size: .95rem; line-height: 1.7; }
-    .step.open .step-body { display: block; }
-    .step-body ul { margin: 8px 0 8px 20px; }
-    .step-body li { margin-bottom: 4px; }
-    .step-body .warn { background: #fef3c7; border-left: 3px solid #f59e0b; padding: 10px 14px; border-radius: 4px; margin-top: 10px; font-size: .88rem; }
-    .step-body .tip  { background: #d1fae5; border-left: 3px solid #10b981; padding: 10px 14px; border-radius: 4px; margin-top: 10px; font-size: .88rem; }
+.sec-head { display: flex; gap: 40px; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; }
+.sec-head .l { max-width: 680px; }
+.sec-head .l p { margin-top: 16px; color: var(--muted-d); font-size: 17px; max-width: 540px; }
+.sec-dark .sec-head .l p { color: rgba(255,255,255,.65); }
+@media(max-width:780px){ .sec-head { flex-direction:column; align-items:flex-start; gap:16px; } }
 
-    /* ── Cards grid ─────────────────────────────────────────────────── */
-    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-    .card { background: #fff; border: 1px solid var(--gray-3); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
-    .card-icon { font-size: 1.8rem; margin-bottom: 10px; }
-    .card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
-    .card p  { font-size: .875rem; color: var(--gray-5); line-height: 1.6; }
-    .card-tag { display: inline-block; font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; }
-    .card-link { display: inline-block; margin-top: 12px; font-size: .85rem; font-weight: 600; color: var(--blue); }
-    .card-savings { display: inline-block; margin-top: 8px; font-size: .8rem; background: #d1fae5; color: #065f46; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
-    .card-fta { font-size: .78rem; font-weight: 600; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-top: 8px; }
-    .fta-yes  { background: #d1fae5; color: #065f46; }
-    .fta-no   { background: #fee2e2; color: #991b1b; }
-    .fta-part { background: #fef3c7; color: #92400e; }
+/* ── Reveal animation ────────────────────────────────────────────────── */
+.reveal { opacity:0; transform:translateY(24px); transition:opacity .9s ease, transform .9s cubic-bezier(.2,.8,.2,1); }
+.reveal.in { opacity:1; transform:none; }
+.hero .reveal { opacity:1; transform:none; }
+.d1{transition-delay:.08s} .d2{transition-delay:.16s} .d3{transition-delay:.24s} .d4{transition-delay:.32s}
 
-    /* ── Market filter ──────────────────────────────────────────────── */
-    .market-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
-    .mf-btn { padding: 6px 16px; border-radius: 20px; border: 1px solid var(--gray-3); background: #fff; font-size: .85rem; cursor: pointer; color: var(--gray-7); }
-    .mf-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); }
-    .market-card { transition: opacity .2s; }
-    .market-card.hidden { display: none; }
+/* ── HERO ────────────────────────────────────────────────────────────── */
+.hero {
+  background: var(--ink); color: #fff;
+  padding: 140px 0 80px; position: relative; isolation: isolate; overflow: hidden;
+}
+.hero-gradient {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(900px 500px at 80% 5%, rgba(51,149,255,.28), transparent 60%),
+    radial-gradient(700px 500px at 5% 85%, rgba(245,197,24,.14), transparent 60%),
+    radial-gradient(1200px 700px at 50% 110%, rgba(124,211,255,.12), transparent 60%);
+}
+.hero-grain {
+  position: absolute; inset: -10%; opacity: .45; mix-blend-mode: overlay;
+  background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size: 3px 3px; pointer-events: none;
+}
+.hero-inner { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr .85fr; gap: 48px; align-items: center; }
+@media(max-width:980px){ .hero-inner { grid-template-columns: 1fr; } }
 
-    /* ── Schemes ─────────────────────────────────────────────────────── */
-    .scheme-card { background: #fff; border: 1px solid var(--gray-3); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
-    .scheme-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
-    .scheme-card .benefit { font-size: .8rem; background: #ede9fe; color: #4c1d95; padding: 2px 8px; border-radius: 4px; font-weight: 600; display: inline-block; margin-bottom: 10px; }
-    .scheme-card p { font-size: .875rem; color: var(--gray-5); margin-bottom: 12px; }
-    .scheme-card ol { font-size: .85rem; color: var(--gray-7); padding-left: 20px; }
-    .scheme-card li { margin-bottom: 4px; }
+.hero h1 { color: #fff; margin-top: 24px; }
+.hero h1 .gold-line {
+  background: linear-gradient(180deg,#fff 0%,#fff 55%,var(--gold) 55.1%,var(--gold) 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero h1 .underlined { position: relative; white-space: nowrap; }
+.hero h1 .underlined::after {
+  content:""; position:absolute; left:0; right:0; bottom:.05em; height:.16em;
+  background: var(--cyan); border-radius: 4px; z-index: -1;
+  transform-origin: left; animation: ulIn 1.2s .5s cubic-bezier(.2,.8,.2,1) backwards;
+}
+@keyframes ulIn { from{transform:scaleX(0)} to{transform:scaleX(1)} }
 
-    /* ── Case studies ────────────────────────────────────────────────── */
-    .case-card { background: #fff; border: 1px solid var(--gray-3); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
-    .case-card .merchant { font-weight: 700; color: var(--blue); margin-bottom: 4px; }
-    .case-card .category { font-size: .8rem; color: var(--gray-5); margin-bottom: 12px; }
-    .case-card .result { background: var(--gray-1); border-radius: 6px; padding: 10px 14px; font-size: .85rem; margin-top: 12px; }
-    .case-card .result strong { color: var(--green); }
+.hero-sub { margin-top: 20px; max-width: 500px; font-size: 18px; line-height: 1.55; color: rgba(255,255,255,.78); }
+.hero-cta { margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.hero-badges { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 8px; }
 
-    /* ── Razorpay products ───────────────────────────────────────────── */
-    .rzp-card { background: #fff; border: 1px solid var(--gray-3); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
-    .rzp-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-    .rzp-card p { font-size: .875rem; color: var(--gray-5); }
-    .rzp-card a { display: inline-block; margin-top: 12px; font-size: .85rem; background: #0e1c5c; color: #fff; padding: 7px 14px; border-radius: 6px; font-weight: 600; }
-    .rzp-card a:hover { background: #1a2d80; text-decoration: none; }
+/* ── Hero search ─────────────────────────────────────────────────────── */
+.search-wrap { position: relative; max-width: 580px; margin-top: 32px; }
+.search-box {
+  display: flex; align-items: center;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16);
+  border-radius: 999px; padding: 6px 6px 6px 22px;
+  backdrop-filter: blur(12px); transition: border-color .2s, background .2s;
+}
+.search-box:focus-within { background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.32); }
+.search-box input {
+  flex: 1; background: none; border: none; outline: none; font-size: 15px;
+  color: #fff; font-family: inherit; min-width: 0;
+}
+.search-box input::placeholder { color: rgba(255,255,255,.45); }
+.search-box button {
+  background: var(--blue); color: #fff; border: none; border-radius: 999px;
+  padding: 10px 20px; font-size: 14px; font-weight: 600; font-family: inherit;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  transition: background .2s, transform .2s;
+}
+.search-box button:hover { background: var(--blue-2); transform: scale(1.02); }
 
-    /* ── Resource library ────────────────────────────────────────────── */
-    .resource-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--gray-2); }
-    .resource-item:last-child { border-bottom: none; }
-    .resource-icon { font-size: 1.5rem; flex-shrink: 0; }
-    .resource-meta { flex: 1; }
-    .resource-meta h4 { font-size: .95rem; font-weight: 600; margin-bottom: 4px; }
-    .resource-meta p { font-size: .85rem; color: var(--gray-5); }
-    .resource-meta a { font-size: .82rem; font-weight: 600; color: var(--blue); }
+.search-results {
+  position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+  background: #fff; border: 1px solid rgba(2,4,42,.08); border-radius: 20px;
+  box-shadow: 0 40px 80px -20px rgba(2,4,42,.35);
+  max-height: 500px; overflow-y: auto; z-index: 200; display: none;
+}
+.search-results.open { display: block; }
+.search-filter-bar { display: flex; gap: 6px; flex-wrap: wrap; padding: 12px 16px 10px; border-bottom: 1px solid var(--paper-2); }
+.sf-chip {
+  font-size: 12px; padding: 4px 12px; border-radius: 999px;
+  border: 1px solid var(--line-d); cursor: pointer; background: #fff;
+  color: var(--ink); font-weight: 500; transition: all .15s;
+}
+.sf-chip.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.sri { padding: 14px 16px; border-bottom: 1px solid var(--paper); cursor: pointer; }
+.sri:last-child { border-bottom: none; }
+.sri:hover { background: var(--paper); }
+.sri-top { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.sri-tag {
+  font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.tag-rbi    { background: #dbeafe; color: #1e40af; }
+.tag-fema   { background: #fce7f3; color: #9d174d; }
+.tag-dgft   { background: #d1fae5; color: #065f46; }
+.tag-gst    { background: #fef3c7; color: #92400e; }
+.tag-exim   { background: #ede9fe; color: #4c1d95; }
+.tag-ecgc   { background: #fee2e2; color: #991b1b; }
+.tag-other  { background: var(--paper-2); color: var(--ink-2); }
+.sri-title { font-weight: 600; font-size: 13px; color: var(--ink); }
+.sri-text { font-size: 13px; color: var(--muted-d); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.sri-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
+.sri-score { font-size: 12px; color: rgba(2,4,42,.35); }
+.sri-src { font-size: 12px; color: var(--blue); font-weight: 500; }
+.search-empty, .search-loading { padding: 24px 16px; text-align: center; color: var(--muted-d); font-size: 14px; }
+.spinner { display:inline-block; width:20px; height:20px; border:2px solid rgba(2,4,42,.1); border-top-color:var(--blue); border-radius:50%; animation:spin .7s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
 
-    /* ── FAQ ──────────────────────────────────────────────────────────── */
-    .faq-item { border-bottom: 1px solid var(--gray-2); }
-    .faq-q { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; cursor: pointer; font-weight: 600; font-size: .95rem; gap: 12px; }
-    .faq-q:hover { color: var(--blue); }
-    .faq-icon { font-size: 1.1rem; color: var(--gray-5); flex-shrink: 0; transition: transform .2s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); }
-    .faq-a { display: none; padding: 0 0 16px; font-size: .9rem; color: var(--gray-7); line-height: 1.7; }
-    .faq-item.open .faq-a { display: block; }
+/* ── Hero globe visual ───────────────────────────────────────────────── */
+.hero-vis { position: relative; height: 500px; }
+.globe {
+  position: absolute; inset: 0; margin: auto; width: 400px; height: 400px; border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 30%, rgba(255,255,255,.18), transparent 55%),
+    radial-gradient(circle at 70% 75%, rgba(51,149,255,.55), transparent 55%),
+    conic-gradient(from 220deg at 50% 50%, #1E6FE6, #02042A, #3395FF, #02042A, #1E6FE6);
+  box-shadow: inset -40px -60px 120px rgba(0,0,0,.65), inset 30px 30px 80px rgba(124,211,255,.25), 0 30px 80px -20px rgba(51,149,255,.45);
+  animation: spin 60s linear infinite;
+}
+.globe::before {
+  content:""; position:absolute; inset:0; border-radius:50%;
+  background: repeating-linear-gradient(0deg,transparent 0 28px,rgba(124,211,255,.18) 28px 29px),
+              repeating-linear-gradient(90deg,transparent 0 28px,rgba(124,211,255,.12) 28px 29px);
+  -webkit-mask:radial-gradient(circle at 50% 50%,#000 60%,transparent 72%);
+          mask:radial-gradient(circle at 50% 50%,#000 60%,transparent 72%);
+  mix-blend-mode:screen;
+}
+.orbit {
+  position:absolute; inset:0; margin:auto;
+  width:480px; height:480px; border-radius:50%;
+  border:1px dashed rgba(124,211,255,.25); animation:spinR 40s linear infinite;
+}
+.orbit.lg { width:560px; height:560px; border-color:rgba(124,211,255,.12); animation-duration:80s; }
+@keyframes spinR { to{transform:rotate(-360deg)} }
+.fcard {
+  position:absolute; background:#fff; border-radius:16px; padding:14px 16px;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.45), 0 0 0 1px rgba(2,4,42,.05);
+  font-size:13px; color:var(--ink); animation:bob 6s ease-in-out infinite;
+}
+@keyframes bob { 50%{transform:translateY(-10px)} }
+.fcard-pay {
+  top:8%; left:0; width:220px;
+  background:linear-gradient(135deg,#02042A,#161A4E); color:#fff; padding:18px;
+  animation-delay:0s;
+}
+.fcard-pay .brand { font-weight:700; font-size:13px; }
+.fcard-pay .num { font-family:monospace; letter-spacing:.06em; font-size:13px; margin-top:14px; color:rgba(255,255,255,.75); }
+.fcard-pay .chip { width:28px; height:20px; border-radius:4px; background:linear-gradient(135deg,var(--gold),#c89915); display:inline-block; float:right; margin-top:-14px; }
+.fcard-ok { top:40%; right:0; width:220px; animation-delay:-2s; }
+.fcard-ok .head { display:flex; align-items:center; gap:10px; }
+.fcard-ok .dot { width:30px; height:30px; border-radius:50%; background:var(--grass); display:grid; place-items:center; color:#fff; }
+.fcard-ok .amt { font-size:22px; font-weight:600; letter-spacing:-.02em; margin-top:10px; }
+.fcard-ok .prog { height:4px; background:rgba(2,4,42,.08); border-radius:2px; margin-top:12px; overflow:hidden; }
+.fcard-ok .prog::after { content:""; display:block; height:100%; width:72%; background:linear-gradient(90deg,var(--blue),var(--cyan)); }
+.fcard-fira { bottom:8%; left:8%; padding:10px 14px; animation-delay:-1s; font-size:12px; font-weight:500; }
 
-    /* ── MCP Dev section ─────────────────────────────────────────────── */
-    .mcp-section { background: var(--gray-9); color: #fff; }
-    .mcp-section h2 { color: #fff; }
-    .mcp-section p { color: #9ca3af; }
-    .code-block { background: #1f2937; border-radius: var(--radius); padding: 20px; font-family: 'Courier New', monospace; font-size: .85rem; overflow-x: auto; margin: 16px 0; }
-    .code-block .k { color: #93c5fd; }
-    .code-block .s { color: #6ee7b7; }
-    .code-block .c { color: #6b7280; }
+/* ── Ticker ──────────────────────────────────────────────────────────── */
+.ticker {
+  margin-top: 56px; padding: 16px 0;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+          mask-image: linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+}
+.ticker-track { display:flex; gap:56px; width:max-content; animation:tick 50s linear infinite; }
+@keyframes tick { to{transform:translateX(-50%)} }
+.ticker-item { display:flex; align-items:center; gap:12px; color:var(--muted); font-size:14px; white-space:nowrap; }
+.ticker-item b { color:#fff; }
+.ticker-sym { width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,.06); border:1px solid var(--line); display:grid; place-items:center; color:var(--cyan); font-weight:700; font-size:12px; }
 
-    /* ── Disclaimer ──────────────────────────────────────────────────── */
-    .disclaimer { background: #fef3c7; border: 1px solid #fcd34d; border-radius: var(--radius); padding: 16px 20px; margin: 24px 0; font-size: .85rem; color: #92400e; }
+/* ── Razorpay Products section ───────────────────────────────────────── */
+.rzp-hero {
+  background: var(--ink); color: #fff; padding: 120px 0;
+  border-top: 1px solid rgba(255,255,255,.06); position: relative; overflow: hidden;
+}
+.rzp-hero::before {
+  content:""; position:absolute; inset:0;
+  background: radial-gradient(900px 500px at 50% 100%, rgba(51,149,255,.25), transparent 60%),
+              radial-gradient(600px 400px at 10% 20%, rgba(245,197,24,.12), transparent 60%);
+}
+.rzp-products-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+@media(max-width:980px){ .rzp-products-grid{ grid-template-columns:1fr 1fr; } }
+@media(max-width:640px){ .rzp-products-grid{ grid-template-columns:1fr; } }
+.rzp-pcard {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 24px; padding: 28px;
+  transition: background .25s, border-color .25s, transform .3s;
+}
+.rzp-pcard:hover { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.15); transform: translateY(-4px); }
+.rzp-pcard .ico {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+  display: grid; place-items: center; margin-bottom: 18px;
+}
+.rzp-pcard h3 { font-size: 18px; color: #fff; margin-bottom: 10px; }
+.rzp-pcard p { font-size: 14px; color: rgba(255,255,255,.62); line-height: 1.6; }
+.rzp-pcard .stat { margin-top: 16px; font-size: 24px; font-weight: 600; color: var(--cyan); letter-spacing: -.02em; }
+.rzp-pcard .stat small { display:block; font-size:12px; color:rgba(255,255,255,.5); font-weight:400; margin-top:2px; }
+.rzp-cta-strip {
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 24px; padding: 32px 40px; margin-top: 40px;
+  gap: 24px; flex-wrap: wrap;
+}
+.rzp-cta-strip .copy h3 { font-size: clamp(20px, 2vw, 28px); color: #fff; }
+.rzp-cta-strip .copy p { font-size: 15px; color: rgba(255,255,255,.62); margin-top: 8px; }
+.rzp-cta-strip .btns { display:flex; gap:12px; flex-wrap:wrap; flex-shrink:0; }
 
-    /* ── Footer ─────────────────────────────────────────────────────── */
-    footer { background: var(--gray-9); color: #9ca3af; padding: 40px 0 24px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 32px; }
-    .footer-brand h3 { color: #fff; font-size: 1.1rem; margin-bottom: 8px; }
-    .footer-brand p { font-size: .85rem; line-height: 1.7; }
-    .footer-col h4 { color: #e5e7eb; font-size: .9rem; margin-bottom: 12px; }
-    .footer-col ul { list-style: none; }
-    .footer-col li { margin-bottom: 8px; }
-    .footer-col a { color: #9ca3af; font-size: .85rem; }
-    .footer-col a:hover { color: #fff; text-decoration: none; }
-    .footer-bottom { border-top: 1px solid #374151; padding-top: 20px; font-size: .8rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+/* ── Steps accordion ─────────────────────────────────────────────────── */
+.steps-list { display: flex; flex-direction: column; gap: 10px; }
+.step-item { border: 1px solid var(--line-d); border-radius: 18px; overflow: hidden; background: #fff; }
+.step-hdr {
+  display: flex; align-items: flex-start; gap: 18px; padding: 20px 24px;
+  cursor: pointer; user-select: none; transition: background .15s;
+}
+.step-hdr:hover { background: var(--paper); }
+.step-n {
+  width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+  background: var(--ink); color: #fff; display: grid; place-items: center;
+  font-weight: 700; font-size: 13px;
+}
+.step-item.open .step-n { background: var(--blue); }
+.step-meta { flex: 1; }
+.step-meta strong { font-size: 15px; font-weight: 600; display: block; }
+.step-meta span { font-size: 13px; color: var(--muted-d); margin-top: 3px; display: block; }
+.step-chevron { color: var(--muted-d); font-size: 18px; margin-top: 6px; transition: transform .25s; flex-shrink:0; }
+.step-item.open .step-chevron { transform: rotate(90deg); color: var(--blue); }
+.step-body { display: none; padding: 0 24px 22px 76px; font-size: 14px; color: var(--muted-d); line-height: 1.7; }
+.step-item.open .step-body { display: block; }
+.step-body ul { margin: 10px 0 10px 18px; }
+.step-body li { margin-bottom: 6px; }
+.step-body .warn { background: #fef3c7; border-left: 3px solid #f59e0b; padding: 10px 14px; border-radius: 6px; margin-top: 10px; font-size: 13px; color: var(--ink); }
+.step-body .tip  { background: #d1fae5; border-left: 3px solid #10b981; padding: 10px 14px; border-radius: 6px; margin-top: 10px; font-size: 13px; color: var(--ink); }
 
-    /* ── Responsive ──────────────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 1.8rem; }
-      .nav-links { display: none; }
-      .footer-grid { grid-template-columns: 1fr; gap: 24px; }
-      section { padding: 40px 0; }
-    }
-  </style>
+/* ── Cards grid (regulations, tips, schemes) ─────────────────────────── */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+.card {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 20px; padding: 24px;
+  transition: background .2s, transform .3s;
+}
+.sec-paper .card, .sec-paper2 .card {
+  background: #fff; border-color: var(--line-d);
+  box-shadow: 0 1px 3px rgba(2,4,42,.06), 0 20px 40px -30px rgba(2,4,42,.12);
+}
+.card:hover { transform: translateY(-3px); }
+.sec-paper .card:hover, .sec-paper2 .card:hover { box-shadow: 0 8px 32px -10px rgba(2,4,42,.18); }
+.ctag {
+  font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 4px;
+  text-transform: uppercase; letter-spacing: .05em; display: inline-block; margin-bottom: 12px;
+}
+.card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+.card p { font-size: 13px; line-height: 1.65; }
+.sec-dark .card h3 { color: #fff; }
+.sec-dark .card p { color: rgba(255,255,255,.62); }
+.card-link { display: inline-block; margin-top: 14px; font-size: 13px; font-weight: 600; color: var(--cyan); }
+.sec-paper .card-link, .sec-paper2 .card-link { color: var(--blue); }
+.card-savings {
+  display: inline-block; margin-top: 10px; font-size: 12px;
+  background: rgba(74,222,128,.15); color: #065f46; padding: 3px 10px; border-radius: 4px; font-weight: 600;
+}
+.sec-dark .card-savings { background: rgba(74,222,128,.12); color: var(--grass); }
+.fta-yes  { background: rgba(74,222,128,.15); color: #065f46; }
+.fta-no   { background: rgba(255,106,77,.15); color: #b3382a; }
+.fta-part { background: rgba(245,197,24,.15); color: #92400e; }
+.card-fta { font-size: 12px; padding: 3px 10px; border-radius: 4px; font-weight: 600; display: inline-block; margin-top: 10px; }
+.sec-dark .fta-yes  { background: rgba(74,222,128,.15); color: var(--grass); }
+.sec-dark .fta-no   { background: rgba(255,106,77,.15); color: var(--coral); }
+.sec-dark .fta-part { background: rgba(245,197,24,.15); color: var(--gold); }
+
+/* ── Market filter ───────────────────────────────────────────────────── */
+.mkt-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+.mf-btn {
+  padding: 8px 18px; border-radius: 999px; border: 1px solid var(--line-d);
+  background: #fff; font-size: 13px; cursor: pointer; color: var(--ink);
+  font-family: inherit; font-weight: 500; transition: all .15s;
+}
+.mf-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.market-card.hidden { display: none; }
+
+/* ── Scheme cards ────────────────────────────────────────────────────── */
+.scheme-card { background: #fff; border: 1px solid var(--line-d); border-radius: 20px; padding: 26px; }
+.scheme-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+.scheme-benefit {
+  font-size: 12px; background: rgba(99,102,241,.1); color: #4c1d95;
+  padding: 3px 10px; border-radius: 4px; font-weight: 600; display: inline-block; margin-bottom: 12px;
+}
+.scheme-card p { font-size: 13px; color: var(--muted-d); margin-bottom: 14px; }
+.scheme-card ol { font-size: 13px; color: var(--ink); padding-left: 18px; }
+.scheme-card li { margin-bottom: 5px; }
+
+/* ── Case study cards ────────────────────────────────────────────────── */
+.case-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 26px; }
+.case-card .merchant { font-weight: 700; color: var(--cyan); margin-bottom: 4px; font-size: 15px; }
+.case-card .category { font-size: 12px; color: rgba(255,255,255,.5); margin-bottom: 14px; }
+.case-card p { font-size: 14px; color: rgba(255,255,255,.65); line-height: 1.65; }
+.case-result { background: rgba(74,222,128,.08); border-radius: 10px; padding: 12px 16px; margin-top: 14px; font-size: 13px; color: rgba(255,255,255,.75); }
+.case-result strong { color: var(--grass); }
+
+/* ── Resource list ───────────────────────────────────────────────────── */
+.resource-item { display:flex; align-items:flex-start; gap:16px; padding:18px 0; border-bottom:1px solid var(--line-d); }
+.resource-item:last-child { border-bottom:none; }
+.resource-ico { font-size:24px; flex-shrink:0; }
+.resource-meta h4 { font-size:15px; font-weight:600; margin-bottom:4px; }
+.resource-meta p { font-size:13px; color:var(--muted-d); }
+.resource-meta a { font-size:13px; font-weight:600; color:var(--blue); display:inline-block; margin-top:4px; }
+
+/* ── FAQ ──────────────────────────────────────────────────────────────── */
+.faq-grid { display:grid; grid-template-columns:.55fr 1fr; gap:60px; }
+@media(max-width:880px){ .faq-grid{ grid-template-columns:1fr; } }
+.faq-item { border-top: 1px solid var(--line-d); }
+.faq-item:last-child { border-bottom: 1px solid var(--line-d); }
+.faq-q {
+  display:flex; align-items:center; justify-content:space-between; padding:20px 0;
+  cursor:pointer; font-size:17px; font-weight:500; gap:12px; transition:color .2s;
+}
+.faq-q:hover { color: var(--blue-2); }
+.faq-plus {
+  width:32px; height:32px; border-radius:50%; border:1px solid var(--line-d);
+  display:grid; place-items:center; font-size:18px; flex-shrink:0;
+  transition:transform .3s, background .3s, color .3s;
+}
+.faq-item.open .faq-plus { transform:rotate(45deg); background:var(--ink); color:#fff; border-color:var(--ink); }
+.faq-a { display:none; padding:0 0 18px; font-size:15px; color:var(--muted-d); line-height:1.7; }
+.faq-item.open .faq-a { display:block; }
+
+/* ── MCP Dev section ──────────────────────────────────────────────────── */
+.mcp-sec { background: var(--ink-2); border-top: 1px solid rgba(255,255,255,.06); padding: 80px 0; }
+.mcp-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+@media(max-width:780px){ .mcp-grid{ grid-template-columns:1fr; } }
+.code-block {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px; padding: 20px; font-family: 'Courier New', monospace;
+  font-size: 13px; overflow-x: auto; margin: 14px 0; line-height: 1.6;
+}
+.code-block .k { color: #93c5fd; }
+.code-block .s { color: #6ee7b7; }
+.code-block .c { color: rgba(255,255,255,.35); }
+.corpus-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+.corpus-chip {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 8px; padding: 6px 14px; font-size: 12px; color: rgba(255,255,255,.65);
+}
+
+/* ── Disclaimer ───────────────────────────────────────────────────────── */
+.disclaimer-bar {
+  background: rgba(245,197,24,.1); border: 1px solid rgba(245,197,24,.25);
+  border-radius: 14px; padding: 14px 20px; margin: 24px 0;
+  font-size: 13px; color: var(--ink);
+}
+
+/* ── Closing CTA ──────────────────────────────────────────────────────── */
+.cta-sec {
+  background: var(--ink); color: #fff; padding: 140px 0;
+  position: relative; overflow: hidden;
+}
+.cta-sec::before {
+  content:""; position:absolute; inset:0;
+  background: radial-gradient(900px 500px at 50% 100%, rgba(51,149,255,.3), transparent 60%),
+              radial-gradient(600px 400px at 15% 0%, rgba(245,197,24,.14), transparent 60%);
+}
+.cta-inner { position:relative; text-align:center; }
+.cta-inner h2 { font-size:clamp(44px, 8vw, 112px); line-height:.95; letter-spacing:-.04em; }
+.cta-inner .subby { margin:20px auto 0; max-width:500px; color:rgba(255,255,255,.7); font-size:18px; }
+.cta-inner .btns { margin-top:44px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+
+/* ── Footer ───────────────────────────────────────────────────────────── */
+footer { background: var(--ink); color: rgba(255,255,255,.55); padding: 48px 0 32px; border-top: 1px solid var(--line); }
+.foot { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; font-size:13px; }
+.foot .links { display:flex; gap:18px; }
+.foot a { color:inherit; text-decoration:none; }
+.foot a:hover { color:#fff; }
+.foot .rzp-badge { display:flex; align-items:center; gap:8px; }
+.rzp-mark { width:22px; height:22px; border-radius:6px; background:linear-gradient(135deg,var(--blue),var(--cyan)); display:grid; place-items:center; color:#fff; font-size:10px; font-weight:800; }
+
+/* ── Responsive ───────────────────────────────────────────────────────── */
+@media(max-width:640px) {
+  .sec { padding: 72px 0; }
+  .hero { padding: 110px 0 60px; }
+  h2 { font-size: clamp(28px, 8vw, 44px); }
+}
+</style>
 </head>
 <body>
 
-<!-- ── Navigation ─────────────────────────────────────────────────────── -->
-<nav>
-  <div class="nav-inner">
-    <div class="nav-logo">🌏 GoingGlobal</div>
-    <div class="nav-links">
-      <a href="#steps">10 Steps</a>
-      <a href="#regulations">Regulations</a>
-      <a href="#markets">Markets</a>
-      <a href="#schemes">Schemes</a>
-      <a href="#tips">Tips</a>
-      <a href="#razorpay">Razorpay</a>
-      <a href="#mcp">MCP API</a>
-    </div>
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<nav class="nav" id="nav">
+  <a class="nav-logo" href="#">
+    <div class="nav-mark">G</div>
+    <span>GoingGlobal</span>
+  </a>
+  <div class="nav-links">
+    <a href="#steps">10 Steps</a>
+    <a href="#rzp-products">Payments</a>
+    <a href="#regulations">Regulations</a>
+    <a href="#markets">Markets</a>
+    <a href="#schemes">Schemes</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <div class="nav-cta">
+    <a class="btn btn-gold btn-sm" href="https://dashboard.razorpay.com/signup" target="_blank" rel="noopener">
+      Sign Up — Free
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
   </div>
 </nav>
 
-<!-- ── Hero ───────────────────────────────────────────────────────────── -->
-<section class="hero">
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<header class="hero">
+  <div class="hero-gradient"></div>
+  <div class="hero-grain"></div>
   <div class="container">
-    <h1>India's Export Intelligence Hub</h1>
-    <p>Every regulation, tip, and scheme an Indian SME exporter needs — in plain English, with AI-powered search backed by real government documents.</p>
-    <div class="hero-badges">
-      <span class="badge">RBI Master Directions</span>
-      <span class="badge">DGFT FTP 2023</span>
-      <span class="badge">FEMA Compliant</span>
-      <span class="badge">GST Zero-Rating</span>
-      <span class="badge">EXIM Bank</span>
-      <span class="badge">ECGC NIRVIK</span>
-    </div>
-    <div class="search-wrap" id="hero-search">
-      <input class="search-input" type="text" id="search-input" placeholder="Ask anything: &quot;How do I file a LUT for zero-rated exports?&quot;" autocomplete="off" />
-      <button class="search-btn" onclick="doSearch()">Search</button>
-      <div class="search-results" id="search-results">
-        <div class="search-filter" id="search-filter">
-          <span class="filter-chip active" data-filter="">All</span>
-          <span class="filter-chip" data-filter="RBI">RBI</span>
-          <span class="filter-chip" data-filter="FEMA">FEMA</span>
-          <span class="filter-chip" data-filter="DGFT">DGFT</span>
-          <span class="filter-chip" data-filter="GST">GST</span>
-          <span class="filter-chip" data-filter="EXIM">EXIM</span>
-          <span class="filter-chip" data-filter="ECGC">ECGC</span>
+    <div class="hero-inner">
+      <div>
+        <span class="eyebrow reveal">India's Export Intelligence Hub</span>
+        <h1 class="reveal d1">
+          Export smarter.<br>
+          Get paid <span class="underlined gold-line">faster.</span>
+        </h1>
+        <p class="hero-sub reveal d2">
+          Every regulation, scheme, and compliance tool an Indian SME exporter needs — in plain English. Plus Razorpay's cross-border payment stack to get your money home.
+        </p>
+
+        <div class="search-wrap reveal d2" id="hero-search">
+          <div class="search-box">
+            <input type="text" id="search-input" placeholder='Ask anything: "How to file LUT for zero-rated exports?"' autocomplete="off" />
+            <button onclick="doSearch()">Search</button>
+          </div>
+          <div class="search-results" id="search-results">
+            <div class="search-filter-bar" id="search-filter">
+              <span class="sf-chip active" data-filter="">All</span>
+              <span class="sf-chip" data-filter="RBI">RBI</span>
+              <span class="sf-chip" data-filter="FEMA">FEMA</span>
+              <span class="sf-chip" data-filter="DGFT">DGFT</span>
+              <span class="sf-chip" data-filter="GST">GST</span>
+              <span class="sf-chip" data-filter="EXIM">EXIM</span>
+              <span class="sf-chip" data-filter="ECGC">ECGC</span>
+            </div>
+            <div id="search-body"></div>
+          </div>
         </div>
-        <div id="search-body"></div>
+
+        <div class="hero-badges reveal d3">
+          <span class="pill-dark"><span class="dot-green"></span>RBI Master Directions</span>
+          <span class="pill-dark">DGFT FTP 2023</span>
+          <span class="pill-dark">FEMA Compliant</span>
+          <span class="pill-dark">GST Zero-Rating</span>
+        </div>
+      </div>
+
+      <div class="hero-vis reveal d2" aria-hidden="true">
+        <div class="orbit lg"></div>
+        <div class="orbit"></div>
+        <div class="globe"></div>
+        <div class="fcard fcard-pay">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span class="brand">Razorpay Cross-Border</span>
+            <span class="chip"></span>
+          </div>
+          <div class="num">•••• •••• •••• 4291</div>
+          <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:11px;color:rgba(255,255,255,.55);">
+            <span>RAVI MEHRA</span><span>FIRA Auto-Generated</span>
+          </div>
+        </div>
+        <div class="fcard fcard-ok">
+          <div class="head">
+            <div class="dot">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <div style="font-size:12px;font-weight:600;">Payment Settled</div>
+              <div style="font-size:11px;color:var(--muted-d)">From New York, USA</div>
+            </div>
+          </div>
+          <div class="amt">$2,480.00</div>
+          <div class="prog"></div>
+        </div>
+        <div class="fcard fcard-fira">
+          ✅ EDPMS auto-matched · FIRA ready
+        </div>
       </div>
     </div>
-    <p style="margin-top:12px;font-size:.78rem;opacity:.6;">Powered by Voyage AI embeddings · Sources cited from official government documents</p>
-  </div>
-</section>
 
-<!-- ── Disclaimer ─────────────────────────────────────────────────────── -->
+    <!-- Ticker -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track" id="ticker"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ═════════════ DISCLAIMER ═════════════ -->
 <div class="container">
-  <div class="disclaimer">
-    ⚠️ <strong>Disclaimer:</strong> GoingGlobal is an unofficial educational resource. It is not affiliated with RBI, DGFT, CBIC, or any government body. All information is for guidance only. Verify with a qualified CA or customs broker before acting. Regulations change frequently.
+  <div class="disclaimer-bar">
+    ⚠️ <strong>Disclaimer:</strong> GoingGlobal is an unofficial educational resource by Razorpay. Not affiliated with RBI, DGFT, CBIC, or any government body. All regulatory information is for guidance only — verify with a qualified CA before acting.
   </div>
 </div>
 
-<!-- ── 10 Steps to Export ─────────────────────────────────────────────── -->
-<section id="steps">
-  <div class="container">
-    <div class="section-header">
-      <h2>10 Steps to Export from India</h2>
-      <p>A complete walkthrough from idea to first payment received, in the right order.</p>
+<!-- ═══════════════════════ RAZORPAY PRODUCTS ═══════════════════════ -->
+<section class="sec rzp-hero" id="rzp-products">
+  <div class="container" style="position:relative;z-index:2;">
+    <div class="sec-head reveal">
+      <div class="l">
+        <span class="eyebrow" style="color:var(--cyan);">Razorpay Cross-Border</span>
+        <h2 style="margin-top:18px;color:#fff;">
+          Get paid from anywhere.<br>
+          <span class="serif" style="color:var(--gold);">Settle in INR, same day.</span>
+        </h2>
+        <p>India's most complete international payments stack — built for exporters, compliant with FEMA, and backed by India-based support.</p>
+      </div>
     </div>
-    <div class="steps" id="steps-list">
 
-      <div class="step">
-        <div class="step-header" onclick="toggleStep(this)">
-          <div class="step-num">1</div>
-          <div class="step-title-wrap">
-            <div class="step-title">Register your business as an exporter</div>
-            <div class="step-sub">IEC code, GST, RCMC — the three mandatory registrations</div>
-          </div>
-          <div class="step-arrow">›</div>
+    <div class="rzp-products-grid">
+      <div class="rzp-pcard reveal d1">
+        <div class="ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>
         </div>
-        <div class="step-body">
-          <p>Before your first export shipment, three registrations are mandatory:</p>
-          <ul>
-            <li><strong>Importer-Exporter Code (IEC):</strong> Issued by DGFT. Apply online at dgft.gov.in. Takes 2–3 working days. Lifetime validity. Fee: ₹500.</li>
-            <li><strong>GST Registration:</strong> Required to claim zero-rating on exports and file LUT/bond for exports without payment of IGST. If already GST registered, no fresh registration needed.</li>
-            <li><strong>RCMC (Registration-cum-Membership Certificate):</strong> Required for claiming MEIS/RODTEP benefits. Issued by relevant export promotion council (APEDA for agri, EEPC for engineering, etc.). Annual fee varies.</li>
-          </ul>
-          <div class="tip">💡 Tip: Apply for all three simultaneously. IEC is instant; RCMC takes 1–2 weeks. Don't wait for one to get the other.</div>
-          <div class="warn">⚠️ Warning: You cannot legally export goods without a valid IEC. Customs will not process your shipping bill without it.</div>
+        <h3>International Payment Gateway</h3>
+        <p>Accept cards, Apple Pay, Google Wallet, and UPI from 180+ countries. Smart routing lifts success rates by up to 10%.</p>
+        <div class="stat">90–95%<small>Card success rate</small></div>
+      </div>
+
+      <div class="rzp-pcard reveal d2">
+        <div class="ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8"><path d="M3 9h18l-2 9H5L3 9Z"/><path d="M9 9V5h6v4"/></svg>
         </div>
+        <h3>Multi-Currency Virtual Accounts</h3>
+        <p>Get a US bank account, EU IBAN, and UK sort code. Receive USD, EUR, GBP like a local. Save up to 75% on wire fees.</p>
+        <div class="stat">75%<small>Saved on bank transfer fees</small></div>
       </div>
 
-      <div class="step">
-        <div class="step-header" onclick="toggleStep(this)">
-          <div class="step-num">2</div>
-          <div class="step-title-wrap">
-            <div class="step-title">Choose your export product and HS code</div>
-            <div class="step-sub">The right HS code determines your duty drawback, RODTEP rate, and export restrictions</div>
-          </div>
-          <div class="step-arrow">›</div>
+      <div class="rzp-pcard reveal d3">
+        <div class="ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--grass)" stroke-width="1.8"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg>
         </div>
-        <div class="step-body">
-          <p>Every exported product must be classified under the Harmonised System (HS) of nomenclature — an 8-digit code in India's ITC-HS system.</p>
-          <ul>
-            <li>Use the DGFT Trade Portal (tradeservices.dgft.gov.in) to search by product keyword.</li>
-            <li>Your HS code determines: export duty (if any), RODTEP rate, duty drawback rate, and whether a licence or restriction applies.</li>
-            <li>Some products are "Prohibited" (can't export), "Restricted" (need licence), or "Canalised" (only through STC/MMTC).</li>
-            <li>For multi-component products (e.g., machinery), use the rule of "essential character" from HS Chapter Notes.</li>
-          </ul>
-          <div class="warn">⚠️ Warning: Wrong HS code declaration on the shipping bill is a customs offence. Get it verified by a customs broker if unsure.</div>
+        <h3>FIRA & EDPMS Compliance</h3>
+        <p>Auto-generated Foreign Inward Remittance Advice for every payment. Match inward remittances to shipping bills in minutes, not weeks.</p>
+        <div class="stat">Same-day<small>EDPMS reconciliation</small></div>
+      </div>
+
+      <div class="rzp-pcard reveal d1">
+        <div class="ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
         </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header" onclick="toggleStep(this)">
-          <div class="step-num">3</div>
-          <div class="step-title-wrap">
-            <div class="step-title">Choose your Incoterms and price your export</div>
-            <div class="step-sub">FOB vs CIF vs DAP — who bears what cost and risk</div>
-          </div>
-          <div class="step-arrow">›</div>
-        </div>
-        <div class="step-body">
-          <p>Incoterms (International Commercial Terms) define who — buyer or seller — is responsible for freight, insurance, customs, and delivery risk at each point of the journey.</p>
-          <ul>
-            <li><strong>FOB (Free On Board):</strong> Most common for Indian exporters. Your responsibility ends when goods are loaded on the ship at origin port. Buyer pays freight and insurance.</li>
-            <li><strong>CIF (Cost, Insurance, Freight):</strong> You pay freight and insurance to destination port. Higher invoice value → higher RODTEP benefit base.</li>
-            <li><strong>DAP (Delivered At Place):</strong> You deliver to buyer's door — maximum risk, but possible with established buyers.</li>
-          </ul>
-          <div class="tip">💡 Tip: Indian RBI regulations require that export proceeds must be realised within 9 months of the date of export (15 months for certain countries). FOB is simplest for tracking payment timelines.</div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header" onclick="toggleStep(this)">
-          <div class="step-num">4</div>
-          <div class="step-title-wrap">
-            <div class="step-title">Open a dedicated export current account and get an EEFC account</div>
-            <div class="step-sub">Separate your export proceeds — required for FEMA compliance</div>
-          </div>
-          <div class="step-arrow">›</div>
-        </div>
-        <div class="step-body">
-          <p>FEMA (Foreign Exchange Management Act) requires all export proceeds to be received through authorised banking channels.</p>
-          <ul>
-            <li><strong>Current account with AD (Authorised Dealer) bank:</strong> Mandatory for all exporters. Your export proceeds must be credited here.</li>
-            <li><strong>EEFC Account (Exchange Earners' Foreign Currency):</strong> Holds up to 100% of your foreign exchange earnings in USD/EUR/GBP. Use this balance to pay import invoices, travel expenses, or foreign services without conversion.</li>
-            <li>EEFC balance must be used within a reasonable period — RBI has guidelines on minimum utilisation if you hold large balances.</li>
-          </ul>
-          <div class="warn">⚠️ FEMA Warning: Accepting payments in Indian rupees from a non-resident account outside India, or through crypto, is non-compliant and attracts penalty up to 3× the forex amount.</div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header" onclick="toggleStep(this)">
-          <div class="step-num">5</div>
-          <div class="step-title-wrap">
-            <div class="step-title">File a Letter of Undertaking (LUT) for GST-free exports</div>
-            <div class="step-sub">Export without paying IGST — the single biggest cash flow benefit for SME exporters</div>
-          </div>
-          <div class="step-arrow">›</div>
-        </div>
-        <div class="step-body">
-          <p>Under GST, exports are "zero-rated". This means you can export without paying IGST, by filing a LUT (Letter of Undertaking) with your GST jurisdiction.</p>
-          <ul>
-            <li>File LUT online at GST portal (gst.gov.in) under Services → User Services → Furnish Letter of Undertaking (LUT).</li>
-            <li>LUT must be filed for <em>each financial year</em> before your first export of that year. One-time filing, valid for the full FY.</li>
-            <li>With LUT: Export without paying IGST, and claim refund of ITC (input tax credit) on inputs used in exported goods.</li>
-            <li>Without LUT: Pay IGST at export and claim refund later — ties up working capital for months.</li>
-          </ul>
-          <div class="tip">💡 Tip: File your LUT in the first week of April every year. Processing is instant on the GST portal. Don't forget — penalties for exporting without LUT or bond are significant.</div>
-          <div class="warn">⚠️ Warning: If you are a "defaulter" on any previous GST obligation, you cannot file LUT — you must submit a bond with surety instead.</div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header" onclick="toggleStep(this)">
-          <div class="step-num">6</div>
-          <div class="step-title-wrap">
-            <div class="step-title">Get export finance: pre-shipment and post-shipment credit</div>
-            <div class="step-sub">Banks offer concessional rates for export credit — often 2–4% cheaper than regular working capital</div>
-          </div>
-          <div class="step-arrow">›</div>
-        </div>
-        <div class="step-body">
-          <p>Export credit is regulated by RBI and offered at concessional interest rates under the Priority Sector Lending framework.</p>
-          <ul>
-            <li><strong>Pre-shipment credit (Packing Credit):</strong> Working capital loan from the date of receiving purchase order/LC to the date of shipment. Available in INR or foreign currency (PCFC — cheaper as it's linked to LIBOR/SOFR).</li>
-            <li><strong>Post-shipment credit:</strong> Finance against documents after shipment. Types include: Negotiation of LC bills, Purchase of DP/DA bills, Export Bill Discounting.</li>
-            <li><strong>EXIM Bank schemes:</strong> For medium/long-term export credit, buyer's credit, and overseas investment financing.</li>
-          </ul>
-          <div class="tip">💡 Tip: ECGC credit insurance (NIRVIK scheme) allows you to get higher credit limits from banks at lower collateral — because the bank's risk is covered by ECGC up to 90%.</div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header" onclick="toggleStep(this)">
-          <div class="step-num">7</div>
-          <div class="step-title-wrap">
-            <div class="step-title">Prepare your export documentation</div>
-            <div class="step-sub">Commercial invoice, packing list, certificate of origin, and the shipping bill</div>
-          </div>
-          <div class="step-arrow">›</div>
-        </div>
-        <div class="step-body">
-          <p>Incorrect documentation is the #1 reason export shipments get stuck. Every document must be consistent — same value, same description, same quantity.</p>
-          <ul>
-            <li><strong>Commercial Invoice:</strong> Must mention IEC, GST number, buyer details, HS code, INCOTERMS, and LUT/bond reference number.</li>
-            <li><strong>Packing List:</strong> Gross weight, net weight, number of packages, dimensions.</li>
-            <li><strong>Certificate of Origin (CoO):</strong> Required by buyer's country customs. Issued by DGFT (Form A for GSP countries), or Chamber of Commerce (general CoO).</li>
-            <li><strong>Shipping Bill:</strong> Filed by your CHA (Customs Handling Agent) on ICEGATE portal. This is the primary customs export declaration.</li>
-            <li><strong>Bill of Lading / Airway Bill:</strong> Issued by shipping line/airline. Original B/L is a title document — handle carefully.</li>
-          </ul>
-          <div class="warn">⚠️ Warning: The description, value, and quantity on your invoice, packing list, and shipping bill must match exactly. Discrepancies cause customs examination, demurrage, and possible penalty.</div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header" onclick="toggleStep(this)">
-          <div class="step-num">8</div>
-          <div class="step-title-wrap">
-            <div class="step-title">Get paid: choose the right payment instrument</div>
-            <div class="step-sub">Letter of Credit vs. advance payment vs. DP/DA — matching risk to reward</div>
-          </div>
-          <div class="step-arrow">›</div>
-        </div>
-        <div class="step-body">
-          <p>Getting paid for exports is not automatic. Payment terms determine your risk exposure and cost of credit.</p>
-          <ul>
-            <li><strong>Advance Payment (T/T advance):</strong> Best for you, riskiest for buyer. Common for small first orders and trusted buyers. Bank will give pre-shipment credit against purchase order.</li>
-            <li><strong>Letter of Credit (LC):</strong> Bank guarantee from buyer's bank that payment will be made if documents comply. Most secure for large orders. Get it confirmed by your Indian bank for maximum protection.</li>
-            <li><strong>Documents against Payment (DP/Sight):</strong> Buyer pays on sight of documents. Moderate risk — buyer could refuse documents.</li>
-            <li><strong>Documents against Acceptance (DA/Usance):</strong> Buyer accepts bill and pays in 30/60/90 days. Higher risk — use ECGC cover.</li>
-            <li><strong>Open Account:</strong> Ship first, get paid later. Only for very established buyers. Must have ECGC credit insurance.</li>
-          </ul>
-          <div class="tip">💡 Razorpay Cross-Border: For digital service exports and e-commerce, Razorpay's payment gateway supports receipt of foreign currency in compliance with FEMA — no banking paperwork needed for payments under $25,000 per transaction.</div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header" onclick="toggleStep(this)">
-          <div class="step-num">9</div>
-          <div class="step-title-wrap">
-            <div class="step-title">Realise and repatriate your export proceeds</div>
-            <div class="step-sub">RBI requires proceeds within 9 months — this is the most critical FEMA compliance requirement</div>
-          </div>
-          <div class="step-arrow">›</div>
-        </div>
-        <div class="step-body">
-          <p>Under RBI Master Direction on Export of Goods and Services (2016), all export proceeds must be realised and repatriated to India within <strong>9 months</strong> from the date of export.</p>
-          <ul>
-            <li>Your bank will generate an Export Data Processing and Monitoring System (EDPMS) entry for every shipping bill. Payment must be matched against this entry.</li>
-            <li>If proceeds are not received within 9 months, you must apply to your AD bank for an extension with justification. Bank can extend up to 9+9 = 18 months for exceptional cases.</li>
-            <li>For software/IT service exports, the time limit is 9 months from invoice date.</li>
-            <li>Write-off of unrealised export proceeds is allowed (subject to RBI limits) only after genuine efforts to recover payment.</li>
-          </ul>
-          <div class="warn">⚠️ FEMA Warning: Failure to realise proceeds within the permitted period attracts penalty under FEMA Section 13 — minimum penalty is equal to the unpaid amount, with compounding interest. Banks are required to report unrealised proceeds to RBI.</div>
-          <div class="tip">💡 Tip: Razorpay's cross-border collection product automatically matches inward remittances to your export invoices and generates FIRA (Foreign Inward Remittance Advice) documents — reducing EDPMS reconciliation time from days to minutes.</div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-header" onclick="toggleStep(this)">
-          <div class="step-num">10</div>
-          <div class="step-title-wrap">
-            <div class="step-title">Claim your export incentives: RODTEP, Duty Drawback, EPCG</div>
-            <div class="step-sub">Most SMEs leave 2–5% of export value on the table by not claiming these</div>
-          </div>
-          <div class="step-body">
-            <div class="step-body">
-              <p>Three main incentive schemes are available to almost all exporters:</p>
-              <ul>
-                <li><strong>RODTEP (Remission of Duties and Taxes on Exported Products):</strong> Remission of embedded taxes (state levies, electricity duty, mandi tax, etc.) that aren't refunded through other mechanisms. Rate varies by HS code — check DGFT schedule. Credited as transferable e-scrip in the ICEGATE portal.</li>
-                <li><strong>Duty Drawback:</strong> Refund of Customs duty paid on imported inputs used in exported goods. Two schemes: All Industry Rate (AIR — automatic, based on HS code) and Brand Rate (for large volumes, requires calculation of actual duty paid).</li>
-                <li><strong>EPCG (Export Promotion Capital Goods):</strong> Import capital goods at 0% customs duty, in exchange for exporting 6× the duty saved over 6 years. Ideal for manufacturers who need to upgrade machinery.</li>
-              </ul>
-              <div class="tip">💡 Tip: RODTEP and Duty Drawback are declared at the time of filing the shipping bill. If you forget, you cannot claim them later on the same bill. Make sure your CHA declares both.</div>
-            </div>
-          </div>
-          <div class="step-arrow">›</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── Regulations ─────────────────────────────────────────────────────── -->
-<section id="regulations">
-  <div class="container">
-    <div class="section-header">
-      <h2>Key Export Regulations</h2>
-      <p>Plain-English summaries of the six regulatory frameworks every Indian exporter must understand.</p>
-    </div>
-    <div class="cards">
-
-      <div class="card">
-        <div class="card-tag tag-rbi">RBI</div>
-        <h3>RBI Master Direction on Export of Goods & Services</h3>
-        <p>The primary RBI regulation governing all exports. Covers: 9-month repatriation rule, EDPMS, write-off limits, agency commission deductions, and advance remittances received.</p>
-        <a class="card-link" href="https://rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=10287" target="_blank" rel="noopener">Official Source →</a>
-      </div>
-
-      <div class="card">
-        <div class="card-tag tag-fema">FEMA</div>
-        <h3>FEMA Notification 23 — Export of Goods & Services</h3>
-        <p>Defines which entities can export, in which currencies, through which banking channels. Prohibits export proceeds via informal channels, hawala, or cryptocurrency. Mandates realisation through AD-category banks.</p>
-        <a class="card-link" href="https://rbi.org.in/Scripts/NotificationUser.aspx?Id=2612" target="_blank" rel="noopener">Official Source →</a>
-      </div>
-
-      <div class="card">
-        <div class="card-tag tag-dgft">DGFT</div>
-        <h3>Foreign Trade Policy 2023–28</h3>
-        <p>India's 5-year export policy covering IEC, RCMC, export prohibitions/restrictions, advance authorisation, EPCG, and DFIA. The master document for all trade incentive schemes.</p>
-        <a class="card-link" href="https://dgft.gov.in/CP/?opt=ftp" target="_blank" rel="noopener">Official Source →</a>
-      </div>
-
-      <div class="card">
-        <div class="card-tag tag-dgft">DGFT</div>
-        <h3>DGFT Handbook of Procedures 2023</h3>
-        <p>Operational companion to the FTP. Step-by-step procedures for applying for RCMC, Advance Authorisation, EPCG licence, filing EFC, and more. Updated quarterly.</p>
-        <a class="card-link" href="https://dgft.gov.in" target="_blank" rel="noopener">Official Source →</a>
-      </div>
-
-      <div class="card">
-        <div class="card-tag tag-gst">GST</div>
-        <h3>GST Zero-Rating & LUT Rules</h3>
-        <p>Exports are "zero-rated supply" under IGST Act. Exporters can either: (a) export under LUT without paying IGST and claim ITC refund, or (b) pay IGST and claim cash refund. LUT is almost always better.</p>
-        <a class="card-link" href="https://cbic.gov.in" target="_blank" rel="noopener">Official Source →</a>
-      </div>
-
-      <div class="card">
-        <div class="card-tag tag-gst">GST</div>
-        <h3>GST ITC Refund on Exports</h3>
-        <p>Exporters can claim refund of accumulated ITC (on inputs, capital goods, input services) if used in zero-rated supplies. File RFD-01 on GST portal within 2 years from the date of relevant shipping bill.</p>
-        <a class="card-link" href="https://cbic.gov.in" target="_blank" rel="noopener">Official Source →</a>
-      </div>
-
-      <div class="card">
-        <div class="card-tag tag-exim">EXIM</div>
-        <h3>EXIM Bank Export Finance</h3>
-        <p>India's apex export finance institution. Offers: pre-shipment credit, buyer's credit lines to foreign buyers, overseas investment loans, and lines of credit to foreign governments for Indian project exports.</p>
-        <a class="card-link" href="https://eximbankindia.in" target="_blank" rel="noopener">Official Source →</a>
-      </div>
-
-      <div class="card">
-        <div class="card-tag tag-ecgc">ECGC</div>
-        <h3>ECGC Credit Risk Insurance</h3>
-        <p>Export Credit Guarantee Corporation insures exporters against: buyer default, country risk, political risk. NIRVIK scheme covers 90% of principal and 90% of interest for banks — enabling higher credit limits.</p>
-        <a class="card-link" href="https://ecgc.in" target="_blank" rel="noopener">Official Source →</a>
-      </div>
-
-      <div class="card">
-        <div class="card-tag tag-customs">Customs</div>
-        <h3>Customs Duty Drawback Rules</h3>
-        <p>Exporters can claim refund of customs duty paid on imported inputs. All Industry Rate (AIR) is automatic based on HS code. Brand Rate for high-volume exporters with specific duty data. Processed through ICEGATE.</p>
-        <a class="card-link" href="https://cbic.gov.in" target="_blank" rel="noopener">Official Source →</a>
-      </div>
-
-      <div class="card">
-        <div class="card-tag tag-rbi">RBI</div>
-        <h3>EDPMS — Export Data Processing & Monitoring System</h3>
-        <p>RBI's monitoring system tracking every export shipment against payment receipt. Your bank generates EDPMS entries from shipping bills. Unmatched entries older than 9 months trigger compliance action.</p>
-        <a class="card-link" href="https://rbi.org.in" target="_blank" rel="noopener">Official Source →</a>
-      </div>
-
-      <div class="card">
-        <div class="card-tag tag-dgft">DGFT</div>
-        <h3>Advance Authorisation Scheme</h3>
-        <p>Allows duty-free import of inputs used in export production, subject to actual user condition and export obligation. Covers basic customs duty, CVD, SAD, and anti-dumping duty on eligible inputs.</p>
-        <a class="card-link" href="https://dgft.gov.in" target="_blank" rel="noopener">Official Source →</a>
-      </div>
-
-      <div class="card">
-        <div class="card-tag tag-dgft">DGFT</div>
-        <h3>RODTEP — Remission of Duties & Taxes</h3>
-        <p>Replaced MEIS in 2021. Remits embedded taxes (state levies, coal cess, mandi tax, electricity duty) that aren't covered elsewhere. Rates are HS code-specific — ranging from 0.3% to 4.3% of FOB value. Credits are e-scrips tradeable on ICEGATE.</p>
-        <a class="card-link" href="https://dgft.gov.in" target="_blank" rel="noopener">Official Source →</a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── Markets ────────────────────────────────────────────────────────── -->
-<section id="markets">
-  <div class="container">
-    <div class="section-header">
-      <h2>Key Export Markets</h2>
-      <p>India's FTA status, tariff advantages, and entry tips for the 8 most important markets.</p>
-    </div>
-    <div class="market-filters">
-      <button class="mf-btn active" onclick="filterMarkets('all', this)">All Markets</button>
-      <button class="mf-btn" onclick="filterMarkets('fta', this)">FTA Active</button>
-      <button class="mf-btn" onclick="filterMarkets('gsp', this)">GSP Benefits</button>
-      <button class="mf-btn" onclick="filterMarkets('tech', this)">Tech/IT Exports</button>
-    </div>
-    <div class="cards" id="markets-grid">
-
-      <div class="card market-card" data-tags="fta gsp">
-        <div class="card-icon">🇺🇸</div>
-        <h3>United States</h3>
-        <p>India's #1 export destination. GSP benefits suspended since 2019 but bilateral trade is buoyant. Strong demand for pharma, engineering, garments, and IT services.</p>
-        <span class="card-fta fta-no">No FTA (negotiations ongoing)</span>
-        <div style="margin-top:8px;font-size:.82rem;color:var(--gray-5)">Key sectors: Pharmaceuticals · Gems & Jewellery · Engineering · IT Services</div>
-      </div>
-
-      <div class="card market-card" data-tags="fta tech">
-        <div class="card-icon">🇬🇧</div>
-        <h3>United Kingdom</h3>
-        <p>FTA negotiations at advanced stage (2024). Tariff reduction expected on textiles, chemicals, and auto components. UK is India's 4th largest export partner.</p>
-        <span class="card-fta fta-part">FTA Negotiations Advanced</span>
-        <div style="margin-top:8px;font-size:.82rem;color:var(--gray-5)">Key sectors: Textiles · Chemicals · Machinery · IT Services</div>
-      </div>
-
-      <div class="card market-card" data-tags="fta">
-        <div class="card-icon">🇦🇪</div>
-        <h3>UAE</h3>
-        <p>India-UAE CEPA signed in 2022 — India's first FTA in a decade. Covers 90%+ of tariff lines. UAE acts as re-export hub to Africa and GCC. Zero duty on most Indian goods.</p>
-        <span class="card-fta fta-yes">CEPA Active (2022)</span>
-        <div style="margin-top:8px;font-size:.82rem;color:var(--gray-5)">Key sectors: Gems · Machinery · Pharma · Food · Textiles</div>
-      </div>
-
-      <div class="card market-card" data-tags="fta">
-        <div class="card-icon">🇸🇬</div>
-        <h3>Singapore</h3>
-        <p>India-Singapore CECA (2005) is one of India's broadest FTAs. Singapore is a gateway to ASEAN and has no import duties on most goods. Top destination for Indian IT and business services.</p>
-        <span class="card-fta fta-yes">CECA Active</span>
-        <div style="margin-top:8px;font-size:.82rem;color:var(--gray-5)">Key sectors: IT Services · Financial Services · Pharma · Chemicals</div>
-      </div>
-
-      <div class="card market-card" data-tags="gsp tech">
-        <div class="card-icon">🇩🇪</div>
-        <h3>Germany / EU</h3>
-        <p>EU-India FTA negotiations restarted in 2022. Currently, India benefits from EU GSP (Generalised System of Preferences) on eligible goods — check TARIC database for your HS code.</p>
-        <span class="card-fta fta-part">FTA Negotiations Ongoing</span>
-        <div style="margin-top:8px;font-size:.82rem;color:var(--gray-5)">Key sectors: Auto Components · Pharmaceuticals · Chemicals · IT</div>
-      </div>
-
-      <div class="card market-card" data-tags="fta">
-        <div class="card-icon">🇯🇵</div>
-        <h3>Japan</h3>
-        <p>India-Japan CEPA (2011) covers 94% of trade by value. Japanese market is quality-sensitive — certifications (JIS, JAS for food) critical. Growing demand for Indian pharmaceuticals and chemicals.</p>
-        <span class="card-fta fta-yes">CEPA Active (2011)</span>
-        <div style="margin-top:8px;font-size:.82rem;color:var(--gray-5)">Key sectors: Pharma · Auto Parts · Chemicals · Marine Products</div>
-      </div>
-
-      <div class="card market-card" data-tags="fta">
-        <div class="card-icon">🇦🇺</div>
-        <h3>Australia</h3>
-        <p>India-Australia ECTA signed April 2022, in force May 2023. Eliminates tariffs on 96% of Indian exports. Strong opportunities in textiles, pharma, engineering, and food processing.</p>
-        <span class="card-fta fta-yes">ECTA Active (2023)</span>
-        <div style="margin-top:8px;font-size:.82rem;color:var(--gray-5)">Key sectors: Textiles · Pharma · Engineering · Processed Food</div>
-      </div>
-
-      <div class="card market-card" data-tags="tech">
-        <div class="card-icon">🇸🇦</div>
-        <h3>Saudi Arabia</h3>
-        <p>India-GCC FTA negotiations ongoing. Saudi Arabia is India's 3rd largest trade partner. Vision 2030 creating demand for Indian construction materials, food, healthcare, and IT services.</p>
-        <span class="card-fta fta-part">GCC FTA Negotiations Ongoing</span>
-        <div style="margin-top:8px;font-size:.82rem;color:var(--gray-5)">Key sectors: Engineering · Food Products · Pharma · IT Services</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── Tips & Tricks ───────────────────────────────────────────────────── -->
-<section id="tips">
-  <div class="container">
-    <div class="section-header">
-      <h2>12 Tips That Save Exporters Money</h2>
-      <p>Practical, proven moves that most first-time exporters miss.</p>
-    </div>
-    <div class="cards">
-
-      <div class="card">
-        <h3>Always declare RODTEP on your shipping bill</h3>
-        <p>RODTEP credit (0.3%–4.3% of FOB value) must be declared by your CHA at the time of filing the shipping bill. You cannot claim it retroactively.</p>
-        <span class="card-savings">Saves: 0.3%–4.3% of FOB value</span>
-      </div>
-
-      <div class="card">
-        <h3>File LUT on April 1st every year</h3>
-        <p>LUT must be renewed annually. Filing on Day 1 of the financial year ensures you never accidentally export without it and get stuck paying IGST on your first shipment.</p>
-        <span class="card-savings">Saves: 18% IGST on invoice value</span>
-      </div>
-
-      <div class="card">
-        <h3>Use PCFC instead of rupee packing credit</h3>
-        <p>Pre-shipment Credit in Foreign Currency (PCFC) is typically 3–5% cheaper than rupee-denominated packing credit, as it's linked to SOFR/LIBOR + spread.</p>
-        <span class="card-savings">Saves: ~2–4% on working capital cost</span>
-      </div>
-
-      <div class="card">
-        <h3>Get ECGC cover before extending open-account terms</h3>
-        <p>ECGC's SME-specific policies (NIRVIK, SEPL) insure up to 90% of invoice value against buyer default. Premium is tax-deductible. Banks also increase credit limits for insured exporters.</p>
-        <span class="card-savings">Protects: 90% of invoice from buyer default</span>
-      </div>
-
-      <div class="card">
-        <h3>Confirm your LC — don't just accept it</h3>
-        <p>An unconfirmed LC protects against buyer risk but not country risk (sanctions, forex crisis). Ask your bank to add its confirmation — small fee (0.25–0.75%) for full payment guarantee.</p>
-        <span class="card-savings">Eliminates: country/bank default risk</span>
-      </div>
-
-      <div class="card">
-        <h3>Apply for Advance Authorisation for inputs</h3>
-        <p>If you import any raw materials or components used in your export product, Advance Authorisation gives duty-free import. Covers basic customs duty, CVD, and often anti-dumping duty.</p>
-        <span class="card-savings">Saves: 10–25% on imported input cost</span>
-      </div>
-
-      <div class="card">
-        <h3>Use EEFC account to hedge naturally</h3>
-        <p>Retain up to 100% of forex earnings in EEFC. Pay your import invoices or overseas subscriptions directly from EEFC — zero conversion cost, natural hedge against rupee movements.</p>
-        <span class="card-savings">Saves: 0.5–1.5% on forex conversion</span>
-      </div>
-
-      <div class="card">
-        <h3>Track EDPMS entries monthly, not yearly</h3>
-        <p>Every unmatched EDPMS entry older than 9 months triggers RBI scrutiny. Reconcile inward remittances against shipping bills monthly — your bank's trade finance team can help.</p>
-        <span class="card-savings">Avoids: FEMA penalty (equal to unpaid amount)</span>
-      </div>
-
-      <div class="card">
-        <h3>Get a Brand Rate for Duty Drawback if volume is high</h3>
-        <p>All Industry Rate (AIR) is lower than actual duty paid for most products. If your annual export value exceeds ₹5 crore, apply for Brand Rate — refund of actual customs duty paid on inputs.</p>
-        <span class="card-savings">Saves: 1–3% additional vs. AIR</span>
-      </div>
-
-      <div class="card">
-        <h3>Use MAI grant for your first trade fair</h3>
-        <p>Market Access Initiative (MAI) scheme reimburses 50%–75% of stall costs at approved international trade fairs. First-time exporters from Tier-2/3 cities get priority. Apply via your export promotion council.</p>
-        <span class="card-savings">Saves: 50–75% of trade fair cost</span>
-      </div>
-
-      <div class="card">
-        <h3>Apply for EPCG before buying capital goods</h3>
-        <p>Import capital goods at 0% customs duty under EPCG. Commit to 6× the duty saved in exports over 6 years. For a manufacturer importing ₹1 crore of machinery, customs duty savings = ₹15–25 lakh.</p>
-        <span class="card-savings">Saves: 15–25% of capital goods cost</span>
-      </div>
-
-      <div class="card">
-        <h3>Register on government e-marketplaces for B2B leads</h3>
-        <p>DGFT's B2B portal, Indian Trade Portal (www.indiantradeportal.in), and APEDA's AGRI Exchange give free export leads and buyer databases. Most exporters don't know these exist.</p>
-        <span class="card-savings">Generates: Free qualified export leads</span>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── Government Schemes ─────────────────────────────────────────────── -->
-<section id="schemes">
-  <div class="container">
-    <div class="section-header">
-      <h2>6 Government Schemes Every Exporter Should Use</h2>
-      <p>Schemes with the highest impact and easiest eligibility for SMEs.</p>
-    </div>
-    <div class="cards">
-
-      <div class="scheme-card card">
-        <h3>RODTEP — Remission of Duties &amp; Taxes</h3>
-        <span class="benefit">0.3%–4.3% of FOB value</span>
-        <p>Refunds embedded taxes (state levies, electricity duty, mandi tax, coal cess) that aren't captured by GST or customs drawback. Replaced MEIS in January 2021. Rates are HS code-specific.</p>
-        <ol>
-          <li>Check your HS code rate in DGFT's RODTEP schedule</li>
-          <li>Ensure your CHA declares RODTEP claim on the shipping bill</li>
-          <li>E-scrip credit appears in your ICEGATE login within 5–7 days of LEO (Let Export Order)</li>
-          <li>Transfer e-scrip to importer for customs duty payment, or sell to a broker</li>
-        </ol>
-      </div>
-
-      <div class="scheme-card card">
-        <h3>NIRVIK — ECGC Enhanced Cover Scheme</h3>
-        <span class="benefit">90% credit insurance cover</span>
-        <p>ECGC's flagship scheme for SME exporters covers 90% of principal and 90% of interest for MSMEs with export credit up to ₹50 crore. Enables banks to sanction higher credit limits.</p>
-        <ol>
-          <li>Apply through your AD bank (not directly to ECGC)</li>
-          <li>Bank enrolls you in NIRVIK; premium is ~0.65% p.a. of credit limit</li>
-          <li>In case of buyer default, file claim within 30 days of non-payment</li>
-          <li>ECGC settles 90% of principal + 90% of interest within 30–45 days</li>
-        </ol>
-      </div>
-
-      <div class="scheme-card card">
-        <h3>EPCG — Export Promotion Capital Goods</h3>
-        <span class="benefit">0% customs duty on capital goods</span>
-        <p>Import capital goods (machinery, testing equipment, computers) at zero customs duty in exchange for an export obligation of 6× the duty saved, fulfilled within 6 years.</p>
-        <ol>
-          <li>Apply for EPCG licence at DGFT regional office before importing</li>
-          <li>Import capital goods and install them</li>
-          <li>Export goods produced using these capital goods (6× duty saved in 6 years)</li>
-          <li>Submit export obligation discharge certificate (EODC) to DGFT on completion</li>
-        </ol>
-      </div>
-
-      <div class="scheme-card card">
-        <h3>MAI — Market Access Initiative</h3>
-        <span class="benefit">50–75% grant on market development costs</span>
-        <p>DGFT scheme that reimburses exporters and export promotion councils for international marketing activities — trade fairs, reverse buyer-seller meets, product registration abroad, market studies.</p>
-        <ol>
-          <li>Apply through your export promotion council (APEDA, EEPC, CLE, etc.)</li>
-          <li>Activities must be pre-approved — apply 3 months before the event</li>
-          <li>Submit utilisation certificate and bills after the activity</li>
-          <li>Reimbursement processed within 60–90 days</li>
-        </ol>
-      </div>
-
-      <div class="scheme-card card">
-        <h3>IES — Interest Equalisation Scheme</h3>
-        <span class="benefit">2–5% interest rate subvention</span>
-        <p>RBI-administered scheme providing interest rate subvention (subsidy) on pre- and post-shipment rupee export credit. MSME exporters of all products get 3% subvention; merchant exporters get 2%.</p>
-        <ol>
-          <li>No separate application needed — automatically applied by your bank</li>
-          <li>Ensure your bank account is tagged as an "export account" under the scheme</li>
-          <li>Benefit is passed on as reduced interest rate on packing credit and post-shipment credit</li>
-          <li>Bank claims reimbursement from RBI on your behalf</li>
-        </ol>
-      </div>
-
-      <div class="scheme-card card">
-        <h3>ODOP — One District One Product</h3>
-        <span class="benefit">Cluster-based export support</span>
-        <p>DGFT's initiative to develop each of India's 739 districts as a hub for one product with export potential. Provides market development assistance, branding support, common facility centres, and buyer connections for artisans and small manufacturers.</p>
-        <ol>
-          <li>Check if your district and product are covered at onedistrict.oneproduct.gov.in</li>
-          <li>Register as an ODOP artisan/producer through your district collector's office</li>
-          <li>Access GI tagging support, quality certification assistance, and export linkage</li>
-          <li>Apply for ODOP marketing fund through the DGFT regional office</li>
-        </ol>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── Case Studies ───────────────────────────────────────────────────── -->
-<section>
-  <div class="container">
-    <div class="section-header">
-      <h2>Merchant Case Studies</h2>
-      <p>How Indian SMEs on Razorpay solved real export compliance challenges.</p>
-    </div>
-    <div class="cards">
-
-      <div class="case-card card">
-        <div class="merchant">Artisanal Textile Exporter, Jaipur</div>
-        <div class="category">Handicrafts & Textiles · UAE + UK Markets</div>
-        <p>A handloom textile business was losing 3 weeks per shipment on manual EDPMS reconciliation. Foreign buyers were paying via multiple wire transfers split by collection agent — creating dozens of unmatchable EDPMS entries.</p>
-        <div class="result"><strong>Solution:</strong> Razorpay cross-border collection with auto-FIRA generation. Each payment now auto-matches to the corresponding invoice and shipping bill. EDPMS reconciliation time dropped from 3 weeks to same-day.</div>
-      </div>
-
-      <div class="case-card card">
-        <div class="merchant">B2B SaaS Startup, Bengaluru</div>
-        <div class="category">Software Services · US + EU Markets</div>
-        <p>A 40-person SaaS company was invoicing US clients in USD but receiving payments via PayPal — which doesn't issue FIRA documents. This created a FEMA compliance gap since they couldn't prove export service realisation to their bank.</p>
-        <div class="result"><strong>Solution:</strong> Switched to Razorpay's payment page with USD collection. Each payment comes with a valid FIRA, which is directly submitted to the bank for SOFTEX filing and EDPMS matching. Zero compliance gaps.</div>
-      </div>
-
-      <div class="case-card card">
-        <div class="merchant">Spice Exporter, Kochi</div>
-        <div class="category">Food Processing · Saudi Arabia + Japan</div>
-        <p>A spice processing unit was not claiming RODTEP (declared by their CHA incorrectly as "nil") — leaving approximately ₹18 lakh in e-scrip credits per year unclaimed. Discovered this only during a CA audit.</p>
-        <div class="result"><strong>Solution:</strong> Appointed a new CHA trained in RODTEP. Filed retrospective correction for the last two financial years (where shipping bills were still within the 1-year correction window). Recovered ₹26 lakh in backdated credits.</div>
-      </div>
-
-      <div class="case-card card">
-        <div class="merchant">Pharma Components Manufacturer, Ahmedabad</div>
-        <div class="category">Pharmaceuticals · Germany + Singapore</div>
-        <p>A pharma component manufacturer was paying 18% GST on all inputs and waiting 4–6 months for ITC refunds — severely straining cash flow on ₹3 crore monthly exports.</p>
-        <div class="result"><strong>Solution:</strong> Switched from bond to LUT filing. Eliminated upfront IGST outgo entirely. Combined with Advance Authorisation for key imported APIs. Working capital freed up: ₹54 lakh per month. Cash flow improved by 40%.</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── Razorpay Products ───────────────────────────────────────────────── -->
-<section id="razorpay" style="background: #f0f4ff;">
-  <div class="container">
-    <div class="section-header">
-      <h2>Razorpay for Exporters</h2>
-      <p>India's most widely used payment infrastructure, built for cross-border compliance.</p>
-    </div>
-    <div class="cards">
-
-      <div class="rzp-card card">
-        <h3>Cross-Border Payment Collection</h3>
-        <p>Accept payments in 100+ currencies from global buyers. Auto-generate FIRA documents for every inward remittance. FEMA-compliant by design — approved by RBI for cross-border receipt.</p>
-        <a href="https://razorpay.com/payment-gateway/" target="_blank" rel="noopener">Learn More →</a>
-      </div>
-
-      <div class="rzp-card card">
-        <h3>EDPMS Reconciliation</h3>
-        <p>Automatically match inward remittances to your export invoices and shipping bills. Reduce EDPMS reconciliation from weeks to hours. Integrates with your bank's trade finance portal.</p>
-        <a href="https://razorpay.com" target="_blank" rel="noopener">Learn More →</a>
-      </div>
-
-      <div class="rzp-card card">
         <h3>Export Invoicing</h3>
-        <p>Create FEMA-compliant export invoices with auto-populated IEC, GST number, LUT reference, and HS code. Send payment links in buyer's currency. Invoice in USD, EUR, GBP, AED, SGD, and more.</p>
-        <a href="https://razorpay.com/invoices/" target="_blank" rel="noopener">Learn More →</a>
+        <p>Create FEMA-compliant export invoices with auto-populated IEC, GST, LUT reference, and HS code. Invoice in USD, EUR, GBP, AED, SGD.</p>
+        <div class="stat">135<small>Currencies supported</small></div>
       </div>
 
-      <div class="rzp-card card">
-        <h3>Export Payout &amp; Treasury</h3>
-        <p>Pay overseas suppliers, agents, and freelancers directly from your EEFC account balance. Schedule recurring payouts. Competitive FX rates — up to 1.5% better than traditional bank wires.</p>
-        <a href="https://razorpay.com/payouts/" target="_blank" rel="noopener">Learn More →</a>
+      <div class="rzp-pcard reveal d2">
+        <div class="ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="1.8"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        </div>
+        <h3>Working Capital for Exporters</h3>
+        <p>Export-linked working capital up to ₹5 crore, disbursed in 24 hours against your invoice history. No collateral. Integrates with ECGC insurance.</p>
+        <div class="stat">₹5 Cr<small>Max credit limit</small></div>
       </div>
 
-      <div class="rzp-card card">
-        <h3>Working Capital Loans for Exporters</h3>
-        <p>Export-linked working capital up to ₹5 crore, disbursed in 24 hours against your invoice history. No collateral required. Integrates with your ECGC insurance to unlock higher limits.</p>
-        <a href="https://razorpay.com/capital/" target="_blank" rel="noopener">Learn More →</a>
+      <div class="rzp-pcard reveal d3">
+        <div class="ico">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+        </div>
+        <h3>Payment Pages & Links</h3>
+        <p>Embeddable pages for SaaS, services, and e-commerce. Accept global cards with automatic FIRA generation and GST invoicing. No code needed.</p>
+        <div class="stat">48 hrs<small>Time to go live</small></div>
+      </div>
+    </div>
+
+    <!-- CTA Strip -->
+    <div class="rzp-cta-strip reveal">
+      <div class="copy">
+        <h3>Ready to go global with Razorpay?</h3>
+        <p>Two minutes to sign up. 48 hours to live. 180+ countries to sell to.</p>
+      </div>
+      <div class="btns">
+        <a class="btn btn-gold" href="https://dashboard.razorpay.com/signup" target="_blank" rel="noopener">
+          Sign Up on Razorpay — Free
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn-ghost-light" href="https://razorpay.com/international-payments/" target="_blank" rel="noopener">Learn more</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ 10 STEPS ═══════════════════════ -->
+<section class="sec sec-paper" id="steps">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="l">
+        <span class="eyebrow">The Playbook</span>
+        <h2 style="margin-top:18px;">10 Steps to<br><span class="serif" style="color:var(--blue-2);">Export from India.</span></h2>
+        <p>From company registration to first payment received — the right order, with every warning you need.</p>
+      </div>
+    </div>
+    <div class="steps-list" id="steps-list">
+
+      <div class="step-item">
+        <div class="step-hdr" onclick="toggleStep(this)">
+          <div class="step-n">1</div>
+          <div class="step-meta">
+            <strong>Register as an exporter</strong>
+            <span>IEC code, GST, RCMC — the three mandatory registrations</span>
+          </div>
+          <div class="step-chevron">›</div>
+        </div>
+        <div class="step-body">
+          <ul>
+            <li><strong>IEC (Importer-Exporter Code):</strong> Apply at dgft.gov.in. ₹0 fee. Takes 2–3 working days. Lifetime validity. Mandatory — no shipment clears customs without it.</li>
+            <li><strong>GST Registration:</strong> Required to file LUT and claim zero-rated exports. If already registered, no new registration needed.</li>
+            <li><strong>RCMC (Registration-cum-Membership Certificate):</strong> Issued by your export promotion council (APEDA for agri, EEPC for engineering). Required for RODTEP and scheme benefits.</li>
+          </ul>
+          <div class="tip">💡 Apply for all three simultaneously — IEC is instant; RCMC takes 1–2 weeks.</div>
+          <div class="warn">⚠️ You cannot legally export without a valid IEC. Customs will reject your shipping bill.</div>
+        </div>
       </div>
 
-      <div class="rzp-card card">
-        <h3>International Payment Pages</h3>
-        <p>Embeddable payment pages for digital exporters (SaaS, services, e-commerce) that accept global cards, PayPal, and local payment methods — all with automatic FIRA generation and GST invoicing.</p>
-        <a href="https://razorpay.com/payment-pages/" target="_blank" rel="noopener">Learn More →</a>
+      <div class="step-item">
+        <div class="step-hdr" onclick="toggleStep(this)">
+          <div class="step-n">2</div>
+          <div class="step-meta">
+            <strong>Choose your export product and HS code</strong>
+            <span>The right HS code determines your RODTEP rate, duty drawback, and export restrictions</span>
+          </div>
+          <div class="step-chevron">›</div>
+        </div>
+        <div class="step-body">
+          <ul>
+            <li>Search by product keyword at the DGFT Trade Portal (tradeservices.dgft.gov.in).</li>
+            <li>HS code determines: export duty (if any), RODTEP rate, duty drawback rate, and any licence requirement.</li>
+            <li>Products are classified as: <strong>Prohibited</strong> (can't export), <strong>Restricted</strong> (need licence), or <strong>Free</strong> (no restriction).</li>
+          </ul>
+          <div class="warn">⚠️ Wrong HS code on the shipping bill is a customs offence. Get it verified by a licensed customs broker if unsure.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-hdr" onclick="toggleStep(this)">
+          <div class="step-n">3</div>
+          <div class="step-meta">
+            <strong>Choose your Incoterms and price your export</strong>
+            <span>FOB vs CIF vs DAP — who bears what cost and risk</span>
+          </div>
+          <div class="step-chevron">›</div>
+        </div>
+        <div class="step-body">
+          <ul>
+            <li><strong>FOB (Free On Board):</strong> Your responsibility ends when goods are loaded. Buyer pays freight and insurance. Most common for Indian exporters.</li>
+            <li><strong>CIF (Cost, Insurance, Freight):</strong> You pay freight and insurance to destination port. Higher invoice value → higher RODTEP base.</li>
+            <li><strong>DAP (Delivered At Place):</strong> You deliver to buyer's door. Maximum control, maximum risk.</li>
+          </ul>
+          <div class="tip">💡 For digital service exports, Razorpay supports USD/EUR collection with automatic FIRA — zero paperwork for your bank's EDPMS matching.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-hdr" onclick="toggleStep(this)">
+          <div class="step-n">4</div>
+          <div class="step-meta">
+            <strong>Open an export current account and EEFC account</strong>
+            <span>Separate your export proceeds — required for FEMA compliance</span>
+          </div>
+          <div class="step-chevron">›</div>
+        </div>
+        <div class="step-body">
+          <ul>
+            <li><strong>Current account with AD bank:</strong> All export proceeds must be credited through an Authorised Dealer bank. Mandatory.</li>
+            <li><strong>EEFC Account (Exchange Earners' Foreign Currency):</strong> Retain up to 100% of forex earnings in USD/EUR/GBP. Use to pay import invoices, overseas subscriptions, or agent commissions without conversion.</li>
+          </ul>
+          <div class="warn">⚠️ Accepting payments in INR from non-resident accounts, or via crypto, violates FEMA and attracts penalties of up to 3× the forex amount.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-hdr" onclick="toggleStep(this)">
+          <div class="step-n">5</div>
+          <div class="step-meta">
+            <strong>File a Letter of Undertaking (LUT) for GST-free exports</strong>
+            <span>Export without paying IGST — biggest cash flow benefit for SME exporters</span>
+          </div>
+          <div class="step-chevron">›</div>
+        </div>
+        <div class="step-body">
+          <ul>
+            <li>File at gst.gov.in → Services → User Services → Furnish LUT. Instant processing.</li>
+            <li>Must be filed <em>every financial year</em> before your first export. One filing, valid for the full FY.</li>
+            <li>With LUT: export without paying IGST, claim ITC refund on inputs.</li>
+            <li>Without LUT: pay IGST upfront, wait months for refund — ties up working capital.</li>
+          </ul>
+          <div class="tip">💡 File LUT on April 1st every year. Takes 5 minutes. Missing it on even one shipment means paying 18% IGST upfront.</div>
+          <div class="warn">⚠️ GST defaulters cannot file LUT — they must submit a bond with surety instead.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-hdr" onclick="toggleStep(this)">
+          <div class="step-n">6</div>
+          <div class="step-meta">
+            <strong>Get export finance: pre-shipment and post-shipment credit</strong>
+            <span>Banks offer concessional rates — often 2–4% cheaper than regular working capital</span>
+          </div>
+          <div class="step-chevron">›</div>
+        </div>
+        <div class="step-body">
+          <ul>
+            <li><strong>Pre-shipment credit (Packing Credit):</strong> Working capital from PO receipt to shipment. Available in INR or Foreign Currency (PCFC — cheaper, linked to SOFR).</li>
+            <li><strong>Post-shipment credit:</strong> Finance against export documents. Includes LC negotiation, DP/DA bill discounting.</li>
+            <li><strong>Razorpay Working Capital:</strong> Up to ₹5 Cr in 24 hours against invoice history — no collateral, integrates with ECGC NIRVIK insurance.</li>
+          </ul>
+          <div class="tip">💡 ECGC NIRVIK cover lets banks sanction higher limits at lower collateral — because the bank's risk is 90% covered by ECGC.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-hdr" onclick="toggleStep(this)">
+          <div class="step-n">7</div>
+          <div class="step-meta">
+            <strong>Prepare your export documentation</strong>
+            <span>Commercial invoice, packing list, Certificate of Origin, shipping bill</span>
+          </div>
+          <div class="step-chevron">›</div>
+        </div>
+        <div class="step-body">
+          <ul>
+            <li><strong>Commercial Invoice:</strong> Must include IEC, GST number, LUT reference, HS code, Incoterms. Razorpay's invoicing tool auto-populates all fields.</li>
+            <li><strong>Packing List:</strong> Gross weight, net weight, number of packages, dimensions.</li>
+            <li><strong>Certificate of Origin (CoO):</strong> Required by buyer's customs. DGFT issues Form A for GSP countries; Chamber of Commerce for general CoO.</li>
+            <li><strong>Shipping Bill:</strong> Filed by your CHA on ICEGATE. Primary customs export declaration.</li>
+          </ul>
+          <div class="warn">⚠️ Description, value, and quantity must match exactly across invoice, packing list, and shipping bill. Any discrepancy causes customs examination and demurrage.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-hdr" onclick="toggleStep(this)">
+          <div class="step-n">8</div>
+          <div class="step-meta">
+            <strong>Get paid: choose the right payment instrument</strong>
+            <span>LC vs. advance payment vs. DP/DA — matching risk to reward</span>
+          </div>
+          <div class="step-chevron">›</div>
+        </div>
+        <div class="step-body">
+          <ul>
+            <li><strong>Advance Payment (T/T):</strong> Best for you. Common for small orders and trusted buyers.</li>
+            <li><strong>Letter of Credit (LC):</strong> Bank guarantee. Most secure for large orders. Get your bank to confirm it.</li>
+            <li><strong>DP (Documents against Payment):</strong> Buyer pays on sight of documents. Moderate risk.</li>
+            <li><strong>DA (Documents against Acceptance):</strong> Buyer pays in 30/60/90 days. Use ECGC cover.</li>
+            <li><strong>Razorpay Payment Pages:</strong> For digital service exports and e-commerce — accepts global cards, generates FIRA automatically.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-hdr" onclick="toggleStep(this)">
+          <div class="step-n">9</div>
+          <div class="step-meta">
+            <strong>Realise and repatriate export proceeds</strong>
+            <span>RBI's 9-month rule — the most critical FEMA compliance requirement</span>
+          </div>
+          <div class="step-chevron">›</div>
+        </div>
+        <div class="step-body">
+          <ul>
+            <li>All export proceeds must be realised and repatriated within <strong>9 months</strong> from the date on the shipping bill.</li>
+            <li>Your AD bank creates an EDPMS entry for every shipping bill. Inward payment must be matched to it.</li>
+            <li>After 9 months without payment, apply to your bank for extension with justification.</li>
+            <li>Razorpay auto-matches inward remittances to your invoices and generates FIRA — reducing EDPMS reconciliation from weeks to minutes.</li>
+          </ul>
+          <div class="warn">⚠️ FEMA Section 13 penalty for non-realisation = minimum of the full unpaid amount, with compounding interest. Banks are required to report to RBI.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-hdr" onclick="toggleStep(this)">
+          <div class="step-n">10</div>
+          <div class="step-meta">
+            <strong>Claim your incentives: RODTEP, Duty Drawback, EPCG</strong>
+            <span>Most SMEs leave 2–5% of export value unclaimed every year</span>
+          </div>
+          <div class="step-chevron">›</div>
+        </div>
+        <div class="step-body">
+          <ul>
+            <li><strong>RODTEP:</strong> Remission of embedded state taxes (0.3%–4.3% of FOB). Declared on shipping bill by your CHA. Credited as e-scrip on ICEGATE.</li>
+            <li><strong>Duty Drawback (AIR):</strong> Automatic refund of customs duty on imported inputs based on HS code. Declared at shipping bill stage.</li>
+            <li><strong>EPCG:</strong> Import capital goods at 0% duty in exchange for exporting 6× the duty saved over 6 years.</li>
+          </ul>
+          <div class="warn">⚠️ RODTEP and Duty Drawback must be declared on the shipping bill. They cannot be claimed retroactively on the same bill. Tell your CHA explicitly.</div>
+        </div>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- ── Resource Library ───────────────────────────────────────────────── -->
-<section>
+<!-- ═══════════════════════ REGULATIONS ═══════════════════════ -->
+<section class="sec sec-dark" id="regulations">
   <div class="container">
-    <div class="section-header">
-      <h2>Resource Library</h2>
-      <p>Official government portals and calculators every exporter should bookmark.</p>
-    </div>
-    <div class="resource-item">
-      <div class="resource-icon">🏦</div>
-      <div class="resource-meta">
-        <h4>DGFT Trade Portal</h4>
-        <p>Apply for IEC, RCMC, Advance Authorisation, EPCG, and check FTP 2023 policy documents.</p>
-        <a href="https://dgft.gov.in" target="_blank" rel="noopener">dgft.gov.in →</a>
+    <div class="sec-head reveal">
+      <div class="l">
+        <span class="eyebrow" style="color:var(--cyan);">Know the Law</span>
+        <h2 style="margin-top:18px;color:#fff;">Key export<br><span class="serif" style="color:var(--gold);">regulations.</span></h2>
+        <p>Plain-English summaries of the six regulatory frameworks every Indian exporter must understand.</p>
       </div>
     </div>
-    <div class="resource-item">
-      <div class="resource-icon">🏛️</div>
-      <div class="resource-meta">
-        <h4>RBI Master Direction — Export of Goods & Services</h4>
-        <p>The authoritative RBI regulation. Essential reading for any exporter receiving foreign payments.</p>
-        <a href="https://rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=10287" target="_blank" rel="noopener">rbi.org.in →</a>
+    <div class="cards-grid">
+      <div class="card reveal d1"><span class="ctag tag-rbi">RBI</span><h3>RBI Master Direction — Export of Goods & Services</h3><p>The primary RBI regulation governing all exports. Covers the 9-month repatriation rule, EDPMS, write-off limits, agency commission deductions, and advance remittances.</p><a class="card-link" href="https://rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=10287" target="_blank">Official Source →</a></div>
+      <div class="card reveal d2"><span class="ctag tag-fema">FEMA</span><h3>FEMA Notification 23 — Export of Goods & Services</h3><p>Defines permissible export currencies, banking channels, and prohibitions. Bans export proceeds via informal channels, hawala, or cryptocurrency. All proceeds must route through AD-category banks.</p><a class="card-link" href="https://rbi.org.in/Scripts/NotificationUser.aspx?Id=2612" target="_blank">Official Source →</a></div>
+      <div class="card reveal d3"><span class="ctag tag-dgft">DGFT</span><h3>Foreign Trade Policy 2023–28</h3><p>India's 5-year export policy. Covers IEC, RCMC, export prohibitions/restrictions, Advance Authorisation, EPCG, and DFIA. The master document for all trade incentive schemes.</p><a class="card-link" href="https://dgft.gov.in/CP/?opt=ftp" target="_blank">Official Source →</a></div>
+      <div class="card reveal d1"><span class="ctag tag-dgft">DGFT</span><h3>DGFT Handbook of Procedures 2023</h3><p>Step-by-step procedures for RCMC, Advance Authorisation, EPCG, EFC filing, and more. The operational companion to FTP 2023. Updated quarterly.</p><a class="card-link" href="https://dgft.gov.in" target="_blank">Official Source →</a></div>
+      <div class="card reveal d2"><span class="ctag tag-gst">GST</span><h3>GST Zero-Rating & LUT Rules</h3><p>Exports are zero-rated under IGST. Export under LUT without paying IGST and claim ITC refund — almost always better than paying IGST and claiming cash refund later.</p><a class="card-link" href="https://cbic.gov.in" target="_blank">Official Source →</a></div>
+      <div class="card reveal d3"><span class="ctag tag-gst">GST</span><h3>GST ITC Refund on Exports</h3><p>Claim refund of accumulated ITC on inputs used in zero-rated supplies. File RFD-01 on the GST portal within 2 years from the relevant shipping bill date.</p><a class="card-link" href="https://cbic.gov.in" target="_blank">Official Source →</a></div>
+      <div class="card reveal d1"><span class="ctag tag-exim">EXIM</span><h3>EXIM Bank Export Finance</h3><p>India's apex export finance institution. Pre-shipment credit, buyer's credit lines for foreign buyers, overseas investment loans, and lines of credit to foreign governments.</p><a class="card-link" href="https://eximbankindia.in" target="_blank">Official Source →</a></div>
+      <div class="card reveal d2"><span class="ctag tag-ecgc">ECGC</span><h3>ECGC Credit Risk Insurance</h3><p>NIRVIK scheme covers 90% of principal and interest for MSMEs — enabling higher bank credit limits at lower collateral. Insures against buyer default, country risk, and political risk.</p><a class="card-link" href="https://ecgc.in" target="_blank">Official Source →</a></div>
+      <div class="card reveal d3"><span class="ctag" style="background:rgba(124,211,255,.15);color:var(--cyan);">CUSTOMS</span><h3>Customs Duty Drawback Rules</h3><p>Refund of customs duty paid on imported inputs. All Industry Rate (AIR) is automatic. Brand Rate for high-volume exporters with specific duty data. Claimed via ICEGATE.</p><a class="card-link" href="https://cbic.gov.in" target="_blank">Official Source →</a></div>
+      <div class="card reveal d1"><span class="ctag tag-rbi">RBI</span><h3>EDPMS — Export Data Processing & Monitoring System</h3><p>RBI's tracking system for every export shipment vs. payment receipt. Unmatched entries older than 9 months trigger FEMA compliance action. Razorpay auto-reconciles EDPMS.</p><a class="card-link" href="https://rbi.org.in" target="_blank">Official Source →</a></div>
+      <div class="card reveal d2"><span class="ctag tag-dgft">DGFT</span><h3>Advance Authorisation Scheme</h3><p>Duty-free import of inputs used in export production. Covers basic customs duty, CVD, SAD, and anti-dumping duty on eligible inputs. Subject to actual user condition.</p><a class="card-link" href="https://dgft.gov.in" target="_blank">Official Source →</a></div>
+      <div class="card reveal d3"><span class="ctag tag-dgft">DGFT</span><h3>RODTEP — Remission of Duties & Taxes</h3><p>Replaced MEIS in 2021. Remits embedded state taxes not covered by GST or drawback. Rates: 0.3%–4.3% of FOB value by HS code. Credits are tradeable e-scrips on ICEGATE.</p><a class="card-link" href="https://dgft.gov.in" target="_blank">Official Source →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ MARKETS ═══════════════════════ -->
+<section class="sec sec-paper" id="markets">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="l">
+        <span class="eyebrow">Where to Sell</span>
+        <h2 style="margin-top:18px;">Key export<br><span class="serif" style="color:var(--blue-2);">markets.</span></h2>
+        <p>India's FTA status, tariff advantages, and entry tips for the 8 most important markets.</p>
       </div>
     </div>
-    <div class="resource-item">
-      <div class="resource-icon">📋</div>
-      <div class="resource-meta">
-        <h4>GST Portal — LUT Filing</h4>
-        <p>File and renew your Letter of Undertaking (LUT) for zero-rated exports without IGST payment.</p>
-        <a href="https://gst.gov.in" target="_blank" rel="noopener">gst.gov.in →</a>
+    <div class="mkt-filters">
+      <button class="mf-btn active" onclick="filterMarkets('all',this)">All Markets</button>
+      <button class="mf-btn" onclick="filterMarkets('fta',this)">FTA Active</button>
+      <button class="mf-btn" onclick="filterMarkets('gsp',this)">GSP / Preferential</button>
+      <button class="mf-btn" onclick="filterMarkets('tech',this)">Tech / IT</button>
+    </div>
+    <div class="cards-grid" id="markets-grid">
+      <div class="card market-card" data-tags="gsp tech"><div style="font-size:2rem;margin-bottom:10px;">🇺🇸</div><h3>United States</h3><p>India's #1 export destination. GSP suspended since 2019 but bilateral trade is buoyant. Strong demand for pharma, engineering, textiles, and IT services. FTA negotiations ongoing.</p><span class="card-fta fta-no">No FTA (negotiations ongoing)</span></div>
+      <div class="card market-card" data-tags="fta tech"><div style="font-size:2rem;margin-bottom:10px;">🇬🇧</div><h3>United Kingdom</h3><p>FTA negotiations at advanced stage. Tariff reduction expected on textiles, chemicals, auto components. UK is India's 4th largest export partner.</p><span class="card-fta fta-part">FTA Negotiations Advanced</span></div>
+      <div class="card market-card" data-tags="fta"><div style="font-size:2rem;margin-bottom:10px;">🇦🇪</div><h3>UAE</h3><p>India-UAE CEPA signed 2022 — India's first major FTA in a decade. 90%+ tariff lines covered. UAE is a re-export hub to Africa and GCC. Zero duty on most Indian goods.</p><span class="card-fta fta-yes">CEPA Active (2022)</span></div>
+      <div class="card market-card" data-tags="fta tech"><div style="font-size:2rem;margin-bottom:10px;">🇸🇬</div><h3>Singapore</h3><p>India-Singapore CECA (2005). Gateway to ASEAN, no import duties on most goods. Top destination for Indian IT and business services exports.</p><span class="card-fta fta-yes">CECA Active</span></div>
+      <div class="card market-card" data-tags="gsp tech"><div style="font-size:2rem;margin-bottom:10px;">🇩🇪</div><h3>Germany / EU</h3><p>EU-India FTA negotiations restarted 2022. Currently benefits from EU GSP on eligible goods. Check TARIC database for your HS code preferences.</p><span class="card-fta fta-part">FTA Negotiations Ongoing</span></div>
+      <div class="card market-card" data-tags="fta"><div style="font-size:2rem;margin-bottom:10px;">🇯🇵</div><h3>Japan</h3><p>India-Japan CEPA (2011) covers 94% of trade. Quality-sensitive market — JIS/JAS certifications critical. Growing demand for Indian pharma and chemicals.</p><span class="card-fta fta-yes">CEPA Active (2011)</span></div>
+      <div class="card market-card" data-tags="fta"><div style="font-size:2rem;margin-bottom:10px;">🇦🇺</div><h3>Australia</h3><p>India-Australia ECTA in force May 2023. Eliminates tariffs on 96% of Indian exports. Strong opportunities in textiles, pharma, engineering, processed food.</p><span class="card-fta fta-yes">ECTA Active (2023)</span></div>
+      <div class="card market-card" data-tags="tech"><div style="font-size:2rem;margin-bottom:10px;">🇸🇦</div><h3>Saudi Arabia</h3><p>India-GCC FTA negotiations ongoing. Saudi Vision 2030 creating demand for Indian construction materials, food, healthcare, and IT services.</p><span class="card-fta fta-part">GCC FTA Negotiations Ongoing</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ TIPS ═══════════════════════ -->
+<section class="sec sec-dark" id="tips">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="l">
+        <span class="eyebrow" style="color:var(--cyan);">Money on the Table</span>
+        <h2 style="margin-top:18px;color:#fff;">12 tips that save<br><span class="serif" style="color:var(--gold);">exporters money.</span></h2>
+        <p>Practical moves most first-time exporters miss — with estimated savings on each.</p>
       </div>
     </div>
-    <div class="resource-item">
-      <div class="resource-icon">🚢</div>
-      <div class="resource-meta">
-        <h4>ICEGATE — Customs Portal</h4>
-        <p>Track shipping bills, view RODTEP e-scrip credits, and check duty drawback claims.</p>
-        <a href="https://icegate.gov.in" target="_blank" rel="noopener">icegate.gov.in →</a>
+    <div class="cards-grid">
+      <div class="card reveal d1"><h3>Always declare RODTEP on your shipping bill</h3><p>Must be declared by your CHA at filing time — cannot be claimed retroactively. Rates: 0.3%–4.3% of FOB value by HS code.</p><span class="card-savings">Saves 0.3%–4.3% of FOB value</span></div>
+      <div class="card reveal d2"><h3>File LUT on April 1st every year</h3><p>LUT must be renewed annually. Filing on Day 1 of the FY ensures you never accidentally export without it and pay 18% IGST.</p><span class="card-savings">Saves 18% IGST on invoice value</span></div>
+      <div class="card reveal d3"><h3>Use PCFC instead of rupee packing credit</h3><p>Pre-shipment Credit in Foreign Currency (PCFC) is 3–5% cheaper than rupee packing credit — linked to SOFR + spread.</p><span class="card-savings">Saves ~2–4% on working capital cost</span></div>
+      <div class="card reveal d1"><h3>Get ECGC cover before extending open-account terms</h3><p>ECGC NIRVIK insures up to 90% of invoice value against buyer default. Premium is tax-deductible. Banks also increase your credit limits.</p><span class="card-savings">Protects 90% of invoice from buyer default</span></div>
+      <div class="card reveal d2"><h3>Confirm your LC — don't just accept it</h3><p>An unconfirmed LC protects against buyer risk but not country risk. Ask your bank to add confirmation — small fee (0.25–0.75%) for complete protection.</p><span class="card-savings">Eliminates country / bank default risk</span></div>
+      <div class="card reveal d3"><h3>Apply for Advance Authorisation for inputs</h3><p>Duty-free import of raw materials used in your export product. Covers basic customs duty, CVD, and often anti-dumping duty.</p><span class="card-savings">Saves 10–25% on imported input cost</span></div>
+      <div class="card reveal d1"><h3>Use EEFC account to hedge naturally</h3><p>Retain up to 100% of forex in EEFC. Pay import invoices or overseas subscriptions directly from EEFC — zero conversion cost, natural hedge.</p><span class="card-savings">Saves 0.5–1.5% on FX conversion</span></div>
+      <div class="card reveal d2"><h3>Track EDPMS entries monthly, not yearly</h3><p>Every unmatched entry older than 9 months triggers RBI scrutiny. Razorpay auto-reconciles remittances to shipping bills in real time.</p><span class="card-savings">Avoids FEMA penalty (equal to unpaid amount)</span></div>
+      <div class="card reveal d3"><h3>Get Brand Rate for Duty Drawback if volume is high</h3><p>All Industry Rate (AIR) is lower than actual duty paid for most products. If annual exports exceed ₹5 Cr, apply for Brand Rate — refund of actual customs duty paid.</p><span class="card-savings">Saves 1–3% additional vs. AIR</span></div>
+      <div class="card reveal d1"><h3>Use MAI grant for your first trade fair</h3><p>Market Access Initiative reimburses 50%–75% of stall costs at approved international trade fairs. Apply via your export promotion council 3 months in advance.</p><span class="card-savings">Saves 50–75% of trade fair cost</span></div>
+      <div class="card reveal d2"><h3>Apply for EPCG before buying capital goods</h3><p>Import capital goods at 0% customs duty. Export 6× the duty saved over 6 years. For ₹1 Cr machinery, that's ₹15–25 lakh in customs savings upfront.</p><span class="card-savings">Saves 15–25% of capital goods cost</span></div>
+      <div class="card reveal d3"><h3>Register on government B2B portals for free leads</h3><p>DGFT Trade Portal, Indian Trade Portal (indiantradeportal.in), and APEDA AGRI Exchange provide free export leads and buyer databases most exporters don't know about.</p><span class="card-savings">Generates free qualified export leads</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ SCHEMES ═══════════════════════ -->
+<section class="sec sec-paper" id="schemes">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="l">
+        <span class="eyebrow">Government Incentives</span>
+        <h2 style="margin-top:18px;">6 schemes every<br><span class="serif" style="color:var(--blue-2);">exporter should use.</span></h2>
+        <p>Highest impact, easiest eligibility for SMEs — most go unclaimed.</p>
       </div>
     </div>
-    <div class="resource-item">
-      <div class="resource-icon">🛡️</div>
-      <div class="resource-meta">
-        <h4>ECGC — Export Credit Insurance</h4>
-        <p>Get NIRVIK insurance, check country risk ratings, and file buyer default claims.</p>
-        <a href="https://ecgc.in" target="_blank" rel="noopener">ecgc.in →</a>
+    <div class="cards-grid">
+      <div class="scheme-card reveal d1"><h3>RODTEP</h3><span class="scheme-benefit">0.3%–4.3% of FOB value</span><p>Refunds embedded taxes — state levies, electricity duty, mandi tax, coal cess — not captured by GST or customs drawback. Replaced MEIS in 2021.</p><ol><li>Check your HS code rate in DGFT's RODTEP schedule</li><li>Instruct your CHA to declare RODTEP on every shipping bill</li><li>E-scrip credit appears in ICEGATE login within 5–7 days of LEO</li><li>Transfer e-scrip or sell to a broker at near-face-value</li></ol></div>
+      <div class="scheme-card reveal d2"><h3>NIRVIK — ECGC Enhanced Cover</h3><span class="scheme-benefit">90% credit insurance cover</span><p>Covers 90% of principal and interest for MSMEs with export credit up to ₹50 Cr. Banks sanction higher credit limits when risk is covered.</p><ol><li>Apply through your AD bank (not directly to ECGC)</li><li>Bank enrolls you; premium ~0.65% p.a. of credit limit</li><li>File buyer default claim within 30 days of non-payment</li><li>ECGC settles 90% of principal + interest within 45 days</li></ol></div>
+      <div class="scheme-card reveal d3"><h3>EPCG — Export Promotion Capital Goods</h3><span class="scheme-benefit">0% customs duty on capital goods</span><p>Import machinery, testing equipment, and computers at zero customs duty. Export obligation: 6× the duty saved, fulfilled within 6 years.</p><ol><li>Apply for EPCG licence at DGFT regional office before importing</li><li>Import and install the capital goods</li><li>Export products made using these goods (6× duty saved in 6 years)</li><li>Submit EODC (discharge certificate) to DGFT on completion</li></ol></div>
+      <div class="scheme-card reveal d1"><h3>MAI — Market Access Initiative</h3><span class="scheme-benefit">50–75% grant on market dev costs</span><p>DGFT scheme reimburses exporters for international trade fairs, buyer-seller meets, product registration abroad, and market studies.</p><ol><li>Apply through your export promotion council</li><li>Activities must be pre-approved — apply 3 months before the event</li><li>Submit utilisation certificate and bills after the activity</li><li>Reimbursement processed within 60–90 days</li></ol></div>
+      <div class="scheme-card reveal d2"><h3>IES — Interest Equalisation Scheme</h3><span class="scheme-benefit">2–5% interest rate subvention</span><p>RBI-administered scheme providing interest rate subvention on pre- and post-shipment rupee export credit. MSMEs get 3%; merchant exporters get 2%.</p><ol><li>No separate application — automatically applied by your bank</li><li>Ensure your account is tagged as "export account" under the scheme</li><li>Benefit is reflected as reduced interest rate on packing credit</li><li>Bank claims RBI reimbursement on your behalf</li></ol></div>
+      <div class="scheme-card reveal d3"><h3>ODOP — One District One Product</h3><span class="scheme-benefit">Cluster-based export support</span><p>DGFT initiative to develop each of India's 739 districts as a hub for one export-potential product. Branding, certification, and buyer connection support.</p><ol><li>Check coverage at onedistrict.oneproduct.gov.in</li><li>Register as ODOP producer through your district collector</li><li>Access GI tagging support, quality certification assistance</li><li>Apply for ODOP marketing fund via DGFT regional office</li></ol></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ CASE STUDIES ═══════════════════════ -->
+<section class="sec sec-dark">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="l">
+        <span class="eyebrow" style="color:var(--cyan);">From the Field</span>
+        <h2 style="margin-top:18px;color:#fff;">Merchant<br><span class="serif" style="color:var(--gold);">case studies.</span></h2>
+        <p>How Indian exporters on Razorpay solved real compliance and payment challenges.</p>
       </div>
     </div>
-    <div class="resource-item">
-      <div class="resource-icon">💰</div>
-      <div class="resource-meta">
-        <h4>EXIM Bank India</h4>
-        <p>Export finance schemes, buyer's credit lines, and project export financing.</p>
-        <a href="https://eximbankindia.in" target="_blank" rel="noopener">eximbankindia.in →</a>
+    <div class="cards-grid">
+      <div class="case-card reveal d1"><div class="merchant">Artisanal Textile Exporter, Jaipur</div><div class="category">Handicrafts & Textiles · UAE + UK</div><p>Manual EDPMS reconciliation was taking 3 weeks per shipment. Foreign buyers paid via multiple wire transfers, creating dozens of unmatchable EDPMS entries.</p><div class="case-result"><strong>Result:</strong> Razorpay cross-border collection with auto-FIRA. EDPMS reconciliation dropped from 3 weeks to same-day.</div></div>
+      <div class="case-card reveal d2"><div class="merchant">B2B SaaS Startup, Bengaluru</div><div class="category">Software Services · US + EU</div><p>Invoicing US clients in USD via PayPal — which doesn't issue FIRA. Created a FEMA compliance gap: couldn't prove service export realisation to their AD bank.</p><div class="case-result"><strong>Result:</strong> Switched to Razorpay USD collection. Each payment auto-generates FIRA, filed for SOFTEX and EDPMS matching. Zero compliance gaps.</div></div>
+      <div class="case-card reveal d3"><div class="merchant">Spice Exporter, Kochi</div><div class="category">Food Processing · Saudi Arabia + Japan</div><p>CHA was incorrectly declaring RODTEP as "nil" on all shipping bills — leaving ₹18 lakh/year in unclaimed e-scrip credits.</p><div class="case-result"><strong>Result:</strong> New CHA trained in RODTEP. Retrospective correction filed for two prior FYs. ₹26 lakh recovered in backdated credits.</div></div>
+      <div class="case-card reveal d1"><div class="merchant">Pharma Components Maker, Ahmedabad</div><div class="category">Pharmaceuticals · Germany + Singapore</div><p>Paying 18% GST on all inputs and waiting 4–6 months for ITC refunds — straining cash flow on ₹3 Cr/month exports.</p><div class="case-result"><strong>Result:</strong> Switched to LUT filing + Advance Authorisation for key imported APIs. Working capital freed: ₹54 lakh/month. Cash flow improved 40%.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ RESOURCES ═══════════════════════ -->
+<section class="sec sec-paper2">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="l">
+        <span class="eyebrow">Official Portals</span>
+        <h2 style="margin-top:18px;">Resource<br><span class="serif" style="color:var(--blue-2);">library.</span></h2>
+        <p>Government portals and calculators every Indian exporter should bookmark.</p>
       </div>
     </div>
-    <div class="resource-item">
-      <div class="resource-icon">🌾</div>
-      <div class="resource-meta">
-        <h4>APEDA — Agricultural &amp; Processed Food</h4>
-        <p>Mandatory registration for food product exporters. Market intelligence and buyer listings.</p>
-        <a href="https://apeda.gov.in" target="_blank" rel="noopener">apeda.gov.in →</a>
+    <div class="resource-item reveal d1"><div class="resource-ico">🏛️</div><div class="resource-meta"><h4>DGFT Trade Portal</h4><p>Apply for IEC, RCMC, Advance Authorisation, EPCG. Check FTP 2023 policy documents.</p><a href="https://dgft.gov.in" target="_blank">dgft.gov.in →</a></div></div>
+    <div class="resource-item reveal d2"><div class="resource-ico">🏦</div><div class="resource-meta"><h4>RBI Master Direction — Export of Goods & Services</h4><p>Authoritative RBI regulation for all exporters receiving foreign payments.</p><a href="https://rbi.org.in/Scripts/BS_ViewMasDirections.aspx?id=10287" target="_blank">rbi.org.in →</a></div></div>
+    <div class="resource-item reveal d3"><div class="resource-ico">📋</div><div class="resource-meta"><h4>GST Portal — LUT Filing</h4><p>File and renew your LUT for zero-rated exports without IGST payment.</p><a href="https://gst.gov.in" target="_blank">gst.gov.in →</a></div></div>
+    <div class="resource-item reveal d1"><div class="resource-ico">🚢</div><div class="resource-meta"><h4>ICEGATE — Customs Portal</h4><p>Track shipping bills, view RODTEP e-scrip credits, check duty drawback claims.</p><a href="https://icegate.gov.in" target="_blank">icegate.gov.in →</a></div></div>
+    <div class="resource-item reveal d2"><div class="resource-ico">🛡️</div><div class="resource-meta"><h4>ECGC — Export Credit Insurance</h4><p>Get NIRVIK insurance, check country risk ratings, file buyer default claims.</p><a href="https://ecgc.in" target="_blank">ecgc.in →</a></div></div>
+    <div class="resource-item reveal d3"><div class="resource-ico">💰</div><div class="resource-meta"><h4>EXIM Bank India</h4><p>Export finance schemes, buyer's credit lines, project export financing.</p><a href="https://eximbankindia.in" target="_blank">eximbankindia.in →</a></div></div>
+    <div class="resource-item reveal d1"><div class="resource-ico">🌾</div><div class="resource-meta"><h4>APEDA — Agricultural & Processed Food</h4><p>Mandatory registration for food exporters. Market intelligence and buyer listings.</p><a href="https://apeda.gov.in" target="_blank">apeda.gov.in →</a></div></div>
+    <div class="resource-item reveal d2"><div class="resource-ico">📊</div><div class="resource-meta"><h4>Indian Trade Portal</h4><p>HS code search, FTA tariff calculator, buyer-seller directories, export statistics.</p><a href="https://indiantradeportal.in" target="_blank">indiantradeportal.in →</a></div></div>
+    <div class="resource-item reveal d3"><div class="resource-ico">🗺️</div><div class="resource-meta"><h4>DGFT RODTEP Schedule</h4><p>Full HS code-wise RODTEP rates. Search your 8-digit HS code to find your rate.</p><a href="https://dgft.gov.in/CP/?opt=RODTEP" target="_blank">RODTEP Rates →</a></div></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FAQ ═══════════════════════ -->
+<section class="sec sec-paper" id="faq">
+  <div class="container">
+    <div class="faq-grid">
+      <div class="reveal">
+        <span class="eyebrow">Frequently Asked</span>
+        <h2 style="margin-top:18px;">Questions,<br><span class="serif" style="color:var(--blue-2);">answered.</span></h2>
+        <p style="margin-top:16px;color:var(--muted-d);">Everything you need to know about going global. Still need help? Talk to Razorpay's export specialists.</p>
+        <a class="btn btn-primary" style="margin-top:24px;" href="https://razorpay.com/contact/" target="_blank">
+          Talk to Razorpay
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
-    </div>
-    <div class="resource-item">
-      <div class="resource-icon">📊</div>
-      <div class="resource-meta">
-        <h4>Indian Trade Portal</h4>
-        <p>HS code search, FTA tariff calculator, buyer-seller directories, and export statistics.</p>
-        <a href="https://indiantradeportal.in" target="_blank" rel="noopener">indiantradeportal.in →</a>
-      </div>
-    </div>
-    <div class="resource-item">
-      <div class="resource-icon">🗺️</div>
-      <div class="resource-meta">
-        <h4>DGFT RODTEP Schedule</h4>
-        <p>Full HS code-wise RODTEP rates. Search your product's 8-digit HS code to find your rate.</p>
-        <a href="https://dgft.gov.in/CP/?opt=RODTEP" target="_blank" rel="noopener">RODTEP Rates →</a>
+      <div class="reveal d1">
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is the 9-month rule for export proceeds?<span class="faq-plus">+</span></div><div class="faq-a">Under RBI's Master Direction on Export of Goods & Services, all export proceeds must be realised and repatriated to India within 9 months from the date on the shipping bill or airway bill. For software/service exports, the 9 months runs from the invoice date. Banks track this via the EDPMS system. Failure to realise within the permitted period attracts FEMA penalties equal to the outstanding amount.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can I receive export payment in Indian Rupees?<span class="faq-plus">+</span></div><div class="faq-a">Yes, but only under specific conditions — typically via Vostro accounts of foreign banks, or under special rupee trade arrangements (currently Russia, in limited cases). Payments via PayPal, Wise, or informal channels in rupees are NOT FEMA-compliant. Always use USD/EUR/GBP or other freely convertible currencies unless your CA confirms a specific rupee arrangement.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Do I need to pay GST on exports?<span class="faq-plus">+</span></div><div class="faq-a">No. Exports are zero-rated under the IGST Act. File a Letter of Undertaking (LUT) before your first export of each financial year — this lets you export without paying any IGST and claim a refund of input tax credit. LUT filing is instant on the GST portal. Always better than paying IGST and claiming a cash refund later.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is the difference between RODTEP and Duty Drawback?<span class="faq-plus">+</span></div><div class="faq-a">Duty Drawback refunds customs duties paid on imported inputs. RODTEP refunds embedded state-level taxes (mandi tax, electricity duty, coal cess) that aren't captured by Drawback. Both can be claimed simultaneously on the same shipping bill, and both must be declared by your CHA at the time of filing — they cannot be claimed retroactively.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How does Razorpay handle FEMA compliance?<span class="faq-plus">+</span></div><div class="faq-a">Razorpay is an RBI-authorised Payment Aggregator. Every cross-border payment settled through Razorpay comes with a Foreign Inward Remittance Advice (FIRA) document — the proof of forex receipt your AD bank needs for EDPMS matching, SOFTEX filing, and RBI compliance. Razorpay auto-generates FIRA and matches it to your export invoices, eliminating the manual reconciliation burden.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is SOFTEX and when do I need to file it?<span class="faq-plus">+</span></div><div class="faq-a">SOFTEX is the mandatory export declaration for software and IT service exports (equivalent of the Shipping Bill for goods). Filed through the STPI or NASSCOM e-SOFTEX portal — not through customs. Required for every export invoice above ₹25,000. Razorpay FIRA documents can be matched directly against filed SOFTEX entries to satisfy FEMA requirements.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can a sole proprietor export?<span class="faq-plus">+</span></div><div class="faq-a">Yes. You need an IEC linked to your PAN. If annual export turnover exceeds ₹20 lakh, GST registration is mandatory. Below that threshold, registration is optional but advisable for filing LUT and claiming ITC refunds. FEMA compliance obligations are identical to any other exporter.</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── FAQ ────────────────────────────────────────────────────────────── -->
-<section style="background: var(--gray-1);">
+<!-- ═══════════════════════ MCP DEV ═══════════════════════ -->
+<section class="mcp-sec" id="mcp">
   <div class="container">
-    <div class="section-header">
-      <h2>Frequently Asked Questions</h2>
+    <div style="max-width:800px;margin:0 auto;text-align:center;margin-bottom:48px;">
+      <span class="eyebrow" style="color:var(--cyan);">For Developers</span>
+      <h2 style="margin-top:18px;color:#fff;">GoingGlobal as an <span class="serif" style="color:var(--gold);">MCP Server.</span></h2>
+      <p style="margin-top:16px;color:rgba(255,255,255,.65);font-size:17px;">Plug GoingGlobal into Claude, Cursor, or any MCP-compatible AI. Ask questions, get answers grounded in actual RBI / DGFT / FEMA documents — with page citations.</p>
     </div>
-    <div style="max-width: 760px; margin: 0 auto;">
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          What is the 9-month rule for export proceeds?
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-a">Under RBI's Master Direction on Export of Goods & Services, all export proceeds must be realised and repatriated to India within 9 months from the date of export (as evidenced by the date on the shipping bill or airway bill). For software and services exports, the 9 months runs from the invoice date. Banks track this through the EDPMS system. If payment is not received within 9 months, you must apply to your bank (AD Category-I) for an extension. Failure to realise within the permitted period attracts FEMA penalties equal to the outstanding amount.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          Can I receive export payment in Indian Rupees from a foreign buyer?
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-a">Yes, but only under specific conditions. Rupee payments from foreign buyers are permitted if: (a) the payment comes from a Vostro account of a foreign bank, or (b) the buyer is in a country that has agreed to a special rupee trade arrangement with India (currently Russia, in limited cases). Payments in rupees via PayPal, Wise, or other informal channels are NOT compliant under FEMA. Always insist on USD/EUR/GBP or other freely convertible currencies unless your CA confirms a compliant rupee arrangement.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          Do I need to pay GST on exports?
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-a">Exports are "zero-rated supplies" under the IGST Act. This means the effective GST rate on exports is 0%. However, you need to formally elect zero-rating by either: (a) Filing a Letter of Undertaking (LUT) before exporting — this allows you to export without paying IGST, and claim refund of accumulated ITC on inputs, or (b) Paying IGST at export and claiming a cash refund later. Option (a) is almost always better since it doesn't tie up your working capital. LUT must be filed annually on the GST portal before your first export of each financial year.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          What is the difference between RODTEP and Duty Drawback?
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-a">Both are export incentive schemes but they cover different taxes. Duty Drawback refunds customs duties paid on imported inputs used in the exported product. RODTEP (Remission of Duties and Taxes on Exported Products) covers embedded taxes that aren't captured by Duty Drawback — such as state-level taxes (mandi tax, electricity duty, coal cess, etc.). Both can be claimed simultaneously on the same shipping bill. Rates for Duty Drawback are at drawback.net.in; RODTEP rates are in the DGFT schedule. Both must be declared by your CHA on the shipping bill — they cannot be claimed after the fact.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          What is an IEC and do I really need one?
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-a">Yes, an Importer-Exporter Code (IEC) is mandatory for all exports from India (with very limited exceptions for personal use goods under ₹25,000). It is a 10-digit code issued by DGFT, linked to your PAN. Without an IEC, customs will not process your shipping bill and you cannot legally export. The IEC is free of cost from January 2021 (the ₹500 fee was waived). Application is online at dgft.gov.in and takes 2–3 working days. One IEC is valid for all your export businesses — you don't need a separate one for each product.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          How does Razorpay handle FEMA compliance for digital service exports?
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-a">Razorpay is an RBI-authorised Payment Aggregator operating under the FEMA framework. When you receive a payment from an overseas customer through Razorpay, the settlement comes as an inward remittance to your Indian bank account, accompanied by a Foreign Inward Remittance Advice (FIRA) document. The FIRA serves as proof of foreign exchange receipt, which you need to (a) submit to your bank for EDPMS reconciliation, (b) use for SOFTEX filing (for IT/software service exports), and (c) prove repatriation compliance to RBI. Razorpay auto-generates FIRA for each transaction, eliminating the manual documentation burden.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          What is SOFTEX and when do I need to file it?
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-a">SOFTEX (Software Export Declaration) is the mandatory declaration form for all software and IT service exports. Unlike goods exports (which use Shipping Bills), service exports use SOFTEX for FEMA compliance tracking. SOFTEX is filed through the STPI (Software Technology Parks of India) or NASSCOM e-SOFTEX portal — not through customs. You must file a SOFTEX for each export invoice above ₹25,000 (USD/foreign currency equivalent). The form captures buyer details, invoice amount, service description, and expected payment date. Your inward remittance (FIRA from Razorpay or your bank) must be matched against the filed SOFTEX.</div>
-      </div>
-
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          Can a sole proprietor export? What about GST implications?
-          <span class="faq-icon">+</span>
-        </div>
-        <div class="faq-a">Yes, sole proprietors can export. You need an IEC linked to your PAN. For GST, if your annual export turnover exceeds ₹20 lakh (₹10 lakh for special category states), GST registration is mandatory — even for zero-rated exports. Below this threshold, GST registration is optional but advisable, since you'll need it to file LUT and claim ITC refunds. As a sole proprietor, your EDPMS entries are linked to your PAN-based IEC and bank account. FEMA compliance obligations are the same as for any other exporter — all proceeds must be realised within 9 months.</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── MCP API Section ─────────────────────────────────────────────────── -->
-<section id="mcp" class="mcp-section">
-  <div class="container">
-    <div class="section-header">
-      <h2>For Developers: MCP API</h2>
-      <p>Use GoingGlobal as an MCP (Model Context Protocol) server inside Claude, Cursor, or any MCP-compatible AI assistant.</p>
-    </div>
-
-    <p style="color:#9ca3af;margin-bottom:24px;">The GoingGlobal backend exposes a <code style="background:#374151;padding:2px 6px;border-radius:4px;font-size:.85rem;">/mcp</code> endpoint that makes all ingested export regulation documents searchable from any MCP client. Ask your AI assistant questions like "What are the FEMA penalties for late repatriation?" and get answers grounded in the actual RBI Master Directions — with page citations.</p>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+    <div class="mcp-grid">
       <div>
-        <h3 style="color:#e5e7eb;margin-bottom:12px;font-size:1rem;">Add to Claude Desktop (claude_desktop_config.json)</h3>
+        <h3 style="color:#e5e7eb;font-size:16px;margin-bottom:10px;">Add to Claude Desktop</h3>
         <div class="code-block">
 <span class="c">{</span><br>
 &nbsp;&nbsp;<span class="s">"mcpServers"</span><span class="c">: {</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"goingglobal"</span><span class="c">: {</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"type"</span><span class="c">: </span><span class="s">"http"</span><span class="c">,</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"url"</span><span class="c">: </span><span class="s">"https://goingglobal.com/mcp"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">"url"</span><span class="c">: </span><span class="s">"https://authentic-mercy-production-95c0.up.railway.app/mcp"</span><br>
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="c">}</span><br>
 &nbsp;&nbsp;<span class="c">}</span><br>
 <span class="c">}</span>
         </div>
       </div>
       <div>
-        <h3 style="color:#e5e7eb;margin-bottom:12px;font-size:1rem;">Direct API Search</h3>
+        <h3 style="color:#e5e7eb;font-size:16px;margin-bottom:10px;">Direct API Search</h3>
         <div class="code-block">
 <span class="k">curl</span> <span class="s">-X POST</span> \<br>
-&nbsp;&nbsp;https://goingglobal.com/search \<br>
+&nbsp;&nbsp;https://authentic-mercy-production-95c0.up.railway.app/search \<br>
 &nbsp;&nbsp;<span class="s">-H "Content-Type: application/json"</span> \<br>
-&nbsp;&nbsp;<span class="s">-d '{</span><br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"query"</span>: <span class="s">"LUT filing for zero rated exports"</span>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"top_k"</span>: <span class="k">5</span>,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"filter_type"</span>: <span class="s">"GST"</span><br>
-&nbsp;&nbsp;<span class="s">}'</span>
+&nbsp;&nbsp;<span class="s">-d '{"query": "LUT filing zero rated",</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">"top_k": 5, "filter_type": "GST"}'</span>
         </div>
       </div>
     </div>
+    <div class="corpus-chips">
+      <span class="corpus-chip">RBI Master Directions</span>
+      <span class="corpus-chip">FEMA Notification 23</span>
+      <span class="corpus-chip">DGFT FTP 2023</span>
+      <span class="corpus-chip">DGFT Handbook 2023</span>
+      <span class="corpus-chip">GST LUT Circulars</span>
+      <span class="corpus-chip">GST Refund Circular</span>
+    </div>
+    <p style="margin-top:20px;color:rgba(255,255,255,.35);font-size:12px;text-align:center;">Apache-2.0 License · Not affiliated with any government body · Always verify with a qualified CA</p>
+  </div>
+</section>
 
-    <div style="margin-top:32px;">
-      <h3 style="color:#e5e7eb;margin-bottom:12px;font-size:1rem;">Corpus</h3>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;">
-        <span style="background:#1f2937;border:1px solid #374151;border-radius:6px;padding:6px 14px;font-size:.82rem;color:#9ca3af;">RBI Master Directions</span>
-        <span style="background:#1f2937;border:1px solid #374151;border-radius:6px;padding:6px 14px;font-size:.82rem;color:#9ca3af;">FEMA Notification 23</span>
-        <span style="background:#1f2937;border:1px solid #374151;border-radius:6px;padding:6px 14px;font-size:.82rem;color:#9ca3af;">DGFT FTP 2023</span>
-        <span style="background:#1f2937;border:1px solid #374151;border-radius:6px;padding:6px 14px;font-size:.82rem;color:#9ca3af;">DGFT Handbook 2023</span>
-        <span style="background:#1f2937;border:1px solid #374151;border-radius:6px;padding:6px 14px;font-size:.82rem;color:#9ca3af;">GST Zero-Rating Circulars</span>
-        <span style="background:#1f2937;border:1px solid #374151;border-radius:6px;padding:6px 14px;font-size:.82rem;color:#9ca3af;">EXIM Bank Schemes</span>
-        <span style="background:#1f2937;border:1px solid #374151;border-radius:6px;padding:6px 14px;font-size:.82rem;color:#9ca3af;">ECGC NIRVIK</span>
-        <span style="background:#1f2937;border:1px solid #374151;border-radius:6px;padding:6px 14px;font-size:.82rem;color:#9ca3af;">Customs Duty Drawback Rules</span>
-      </div>
-      <p style="color:#6b7280;font-size:.8rem;margin-top:16px;">License: Apache-2.0 · Not affiliated with any government body · Always verify with a qualified CA</p>
+<!-- ═══════════════════════ CLOSING CTA ═══════════════════════ -->
+<section class="cta-sec">
+  <div class="container cta-inner">
+    <div class="reveal">
+      <span class="eyebrow" style="color:var(--gold);justify-content:center;">Razorpay Cross-Border</span>
+    </div>
+    <h2 class="reveal d1">
+      Going global?<br>
+      <span class="serif" style="color:var(--gold);">We'll get you paid.</span>
+    </h2>
+    <p class="subby reveal d2">Two minutes to sign up. 48 hours to live. 180+ countries to sell to.</p>
+    <div class="btns reveal d3">
+      <a class="btn btn-gold" href="https://dashboard.razorpay.com/signup" target="_blank" rel="noopener">
+        Sign Up on Razorpay — Free
+        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn btn-ghost-light" href="https://razorpay.com/international-payments/" target="_blank" rel="noopener">Learn more about Cross-Border</a>
     </div>
   </div>
 </section>
 
-<!-- ── Footer ─────────────────────────────────────────────────────────── -->
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
 <footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <h3>🌏 GoingGlobal</h3>
-        <p>India's export intelligence hub for SME exporters. Built by Razorpay's Cross-Border & Emerging Business team. Powered by Voyage AI embeddings and Qdrant vector search.</p>
-        <p style="margin-top:12px;font-size:.8rem;">A Razorpay initiative · Apache 2.0 License</p>
-      </div>
-      <div class="footer-col">
-        <h4>Export Essentials</h4>
-        <ul>
-          <li><a href="#steps">10 Steps to Export</a></li>
-          <li><a href="#regulations">Key Regulations</a></li>
-          <li><a href="#markets">Export Markets</a></li>
-          <li><a href="#schemes">Government Schemes</a></li>
-          <li><a href="#tips">Tips & Tricks</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Resources</h4>
-        <ul>
-          <li><a href="https://dgft.gov.in" target="_blank" rel="noopener">DGFT Portal</a></li>
-          <li><a href="https://rbi.org.in" target="_blank" rel="noopener">RBI</a></li>
-          <li><a href="https://gst.gov.in" target="_blank" rel="noopener">GST Portal</a></li>
-          <li><a href="https://ecgc.in" target="_blank" rel="noopener">ECGC</a></li>
-          <li><a href="https://razorpay.com" target="_blank" rel="noopener">Razorpay</a></li>
-        </ul>
-      </div>
+  <div class="container foot">
+    <div class="rzp-badge">
+      <div class="rzp-mark">R</div>
+      <span>© 2025 Razorpay · GoingGlobal</span>
     </div>
-    <div class="footer-bottom">
-      <span>© 2025 GoingGlobal. Unofficial resource — not affiliated with RBI, DGFT, or any government body.</span>
-      <span>Verify all information with a qualified CA before acting.</span>
+    <div class="links">
+      <a href="https://dgft.gov.in" target="_blank">DGFT</a>
+      <a href="https://rbi.org.in" target="_blank">RBI</a>
+      <a href="https://gst.gov.in" target="_blank">GST</a>
+      <a href="https://razorpay.com/international-payments/" target="_blank">Razorpay Cross-Border</a>
+      <a href="https://razorpay.com/terms/" target="_blank">Terms</a>
+      <a href="https://razorpay.com/privacy/" target="_blank">Privacy</a>
+    </div>
+    <div style="width:100%;font-size:11px;color:rgba(255,255,255,.25);padding-top:16px;border-top:1px solid rgba(255,255,255,.05);">
+      Unofficial educational resource. Not affiliated with RBI, DGFT, CBIC, or any government body. Verify all information with a qualified CA before acting.
     </div>
   </div>
 </footer>
 
-<!-- ── JavaScript ─────────────────────────────────────────────────────── -->
+<!-- ═══════════════════════ SCRIPTS ═══════════════════════ -->
 <script>
-  // ── Config ────────────────────────────────────────────────────────────
-  const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://localhost:8000'
-    : 'https://goingglobal.com';
+// ── Config ─────────────────────────────────────────────
+const API_URL = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+  ? 'http://localhost:8000'
+  : 'https://authentic-mercy-production-95c0.up.railway.app';
 
-  // ── Search ────────────────────────────────────────────────────────────
-  let activeFilter = '';
-  let searchTimeout = null;
+// ── Search ──────────────────────────────────────────────
+let activeFilter = '', searchTimer = null;
+const inp = document.getElementById('search-input');
+const res = document.getElementById('search-results');
+const bdy = document.getElementById('search-body');
 
-  const input   = document.getElementById('search-input');
-  const results = document.getElementById('search-results');
-  const body    = document.getElementById('search-body');
+document.querySelectorAll('.sf-chip').forEach(c => {
+  c.addEventListener('click', () => {
+    document.querySelectorAll('.sf-chip').forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    activeFilter = c.dataset.filter;
+    if (inp.value.trim().length >= 2) doSearch();
+  });
+});
 
-  document.querySelectorAll('.filter-chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      activeFilter = chip.dataset.filter;
-      if (input.value.trim().length >= 2) doSearch();
+inp.addEventListener('input', () => {
+  clearTimeout(searchTimer);
+  if (inp.value.trim().length < 2) { closeSearch(); return; }
+  searchTimer = setTimeout(doSearch, 380);
+});
+inp.addEventListener('keydown', e => {
+  if (e.key === 'Enter') { clearTimeout(searchTimer); doSearch(); }
+  if (e.key === 'Escape') closeSearch();
+});
+document.addEventListener('click', e => {
+  if (!document.getElementById('hero-search').contains(e.target)) closeSearch();
+});
+
+async function doSearch() {
+  const q = inp.value.trim();
+  if (q.length < 2) return;
+  res.classList.add('open');
+  bdy.innerHTML = '<div class="search-loading"><div class="spinner"></div></div>';
+  try {
+    const payload = { query: q, top_k: 7 };
+    if (activeFilter) payload.filter_type = activeFilter;
+    const r = await fetch(`${API_URL}/search`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
     });
-  });
-
-  input.addEventListener('input', () => {
-    clearTimeout(searchTimeout);
-    const q = input.value.trim();
-    if (q.length < 2) { closeResults(); return; }
-    searchTimeout = setTimeout(doSearch, 400);
-  });
-
-  input.addEventListener('keydown', e => {
-    if (e.key === 'Enter') { clearTimeout(searchTimeout); doSearch(); }
-    if (e.key === 'Escape') closeResults();
-  });
-
-  document.addEventListener('click', e => {
-    if (!document.getElementById('hero-search').contains(e.target)) closeResults();
-  });
-
-  async function doSearch() {
-    const q = input.value.trim();
-    if (q.length < 2) return;
-
-    results.classList.add('open');
-    body.innerHTML = '<div class="search-loading"><div class="spinner"></div></div>';
-
-    try {
-      const payload = { query: q, top_k: 7 };
-      if (activeFilter) payload.filter_type = activeFilter;
-
-      const res = await fetch(`${API_URL}/search`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-
-      if (!data.length) {
-        body.innerHTML = '<div class="search-empty">No results found. Try a different query or remove filters.</div>';
-        return;
-      }
-
-      body.innerHTML = data.map(r => `
-        <div class="search-result-item" onclick="window.open('${escHtml(r.source_url || '#')}', '_blank')">
-          <div class="sri-header">
-            <span class="sri-tag ${tagClass(r.doc_type)}">${escHtml(r.doc_type)}</span>
-            <span class="sri-title">${escHtml(r.title)} · p.${r.page}</span>
-          </div>
-          <div class="sri-text">${escHtml(r.text)}</div>
-          <div class="sri-footer">
-            <span class="sri-score">Relevance: ${(r.score * 100).toFixed(0)}%</span>
-            ${r.source_url ? `<span class="sri-source">Source →</span>` : ''}
-          </div>
-        </div>
-      `).join('');
-    } catch (err) {
-      body.innerHTML = `<div class="search-empty">Search unavailable — backend not running.<br><small style="color:#9ca3af">Start the server: <code>uvicorn main:app --reload</code></small></div>`;
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const data = await r.json();
+    if (!data.length) {
+      bdy.innerHTML = '<div class="search-empty">No results. Try a different query or remove the filter.</div>';
+      return;
     }
+    bdy.innerHTML = data.map(d => `
+      <div class="sri" onclick="window.open(${JSON.stringify(d.source_url||'#')},'_blank')">
+        <div class="sri-top">
+          <span class="sri-tag ${tagCls(d.doc_type)}">${esc(d.doc_type)}</span>
+          <span class="sri-title">${esc(d.title)} · p.${d.page}</span>
+        </div>
+        <div class="sri-text">${esc(d.text)}</div>
+        <div class="sri-footer">
+          <span class="sri-score">Relevance: ${(d.score*100).toFixed(0)}%</span>
+          ${d.source_url ? '<span class="sri-src">Source →</span>' : ''}
+        </div>
+      </div>`).join('');
+  } catch {
+    bdy.innerHTML = '<div class="search-empty">Search unavailable — backend offline.<br><small>Run: uvicorn main:app --reload</small></div>';
   }
+}
+function closeSearch() { res.classList.remove('open'); }
+function tagCls(t) {
+  return ({RBI:'tag-rbi',FEMA:'tag-fema',DGFT:'tag-dgft',GST:'tag-gst',EXIM:'tag-exim',ECGC:'tag-ecgc'}[t])||'tag-other';
+}
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-  function closeResults() { results.classList.remove('open'); }
+// ── Steps accordion ─────────────────────────────────────
+function toggleStep(hdr) { hdr.parentElement.classList.toggle('open'); }
 
-  function tagClass(docType) {
-    const map = { RBI: 'tag-rbi', FEMA: 'tag-fema', DGFT: 'tag-dgft', GST: 'tag-gst', EXIM: 'tag-exim', ECGC: 'tag-ecgc', Customs: 'tag-customs' };
-    return map[docType] || 'tag-other';
-  }
+// ── FAQ accordion ────────────────────────────────────────
+function toggleFaq(q) { q.parentElement.classList.toggle('open'); }
 
-  function escHtml(str) {
-    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
+// ── Market filter ────────────────────────────────────────
+function filterMarkets(tag, btn) {
+  document.querySelectorAll('.mf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.market-card').forEach(c => {
+    c.classList.toggle('hidden', tag !== 'all' && !c.dataset.tags.includes(tag));
+  });
+}
 
-  // ── Steps accordion ───────────────────────────────────────────────────
-  function toggleStep(header) {
-    const step = header.parentElement;
-    step.classList.toggle('open');
-  }
+// ── Ticker ────────────────────────────────────────────────
+(function() {
+  var items = [
+    {s:'$', t:'<b>USD</b> · Live rate'},
+    {s:'€', t:'<b>EUR</b> · Live rate'},
+    {s:'£', t:'<b>GBP</b> · Live rate'},
+    {s:'¥', t:'<b>JPY</b> · Live rate'},
+    {s:'A', t:'<b>AUD</b> · Live rate'},
+    {s:'S', t:'<b>SGD</b> · Live rate'},
+    {s:'د', t:'<b>AED</b> · Live rate'},
+    {s:'C', t:'<b>CAD</b> · Live rate'},
+    {s:'F', t:'<b>CHF</b> · Live rate'},
+    {s:'R', t:'<b>SAR</b> · Live rate'},
+  ];
+  var html = items.map(i => `<div class="ticker-item"><span class="ticker-sym">${i.s}</span>${i.t}</div>`).join('');
+  var el = document.getElementById('ticker');
+  if (el) el.innerHTML = html + html;
+})();
 
-  // ── FAQ accordion ──────────────────────────────────────────────────────
-  function toggleFaq(q) {
-    q.parentElement.classList.toggle('open');
-  }
-
-  // ── Market filter ──────────────────────────────────────────────────────
-  function filterMarkets(tag, btn) {
-    document.querySelectorAll('.mf-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.market-card').forEach(card => {
-      if (tag === 'all' || card.dataset.tags.includes(tag)) {
-        card.classList.remove('hidden');
-      } else {
-        card.classList.add('hidden');
-      }
+// ── Reveal on scroll ──────────────────────────────────────
+(function() {
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) e.target.classList.add('in');
     });
-  }
+  }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+  document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+})();
+
+// ── Nav theme switch ──────────────────────────────────────
+(function() {
+  var nav = document.getElementById('nav');
+  var lightSecs = document.querySelectorAll('.sec-paper, .sec-paper2');
+  var io = new IntersectionObserver(function() {
+    var any = false;
+    lightSecs.forEach(function(s) {
+      var r = s.getBoundingClientRect();
+      if (r.top < 70 && r.bottom > 70) any = true;
+    });
+    nav.classList.toggle('is-light', any);
+  }, { threshold: 0, rootMargin: '-70px 0px -90% 0px' });
+  lightSecs.forEach(function(s) { io.observe(s); });
+})();
 </script>
+
 </body>
 </html>
