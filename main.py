@@ -313,16 +313,20 @@ async def _ai_answer(query: str, chunks: list[SearchResult]) -> Optional[str]:
         "If not, answer from general knowledge and start with 'Based on general knowledge:'. "
         "Never invent regulation numbers or cite rules you are not certain of."
     )
-    client = anthropic.Anthropic(api_key=api_key)
-    msg = await asyncio.get_event_loop().run_in_executor(
-        None,
-        lambda: client.messages.create(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=300,
-            messages=[{"role": "user", "content": prompt}],
-        ),
-    )
-    return msg.content[0].text
+    try:
+        client = anthropic.Anthropic(api_key=api_key)
+        msg = await asyncio.get_event_loop().run_in_executor(
+            None,
+            lambda: client.messages.create(
+                model="claude-haiku-4-5-20251001",
+                max_tokens=300,
+                messages=[{"role": "user", "content": prompt}],
+            ),
+        )
+        return msg.content[0].text
+    except Exception as e:
+        log.warning("AI answer failed: %s", e)
+        return None
 
 
 @app.post("/ask", response_model=AskResponse)

@@ -1843,23 +1843,41 @@ function filterMarkets(tag, btn) {
   });
 }
 
-// ── Ticker ────────────────────────────────────────────────
+// ── Ticker with live INR rates ─────────────────────────────
 (function() {
-  var items = [
-    {s:'$', t:'<b>USD</b> · Live rate'},
-    {s:'€', t:'<b>EUR</b> · Live rate'},
-    {s:'£', t:'<b>GBP</b> · Live rate'},
-    {s:'¥', t:'<b>JPY</b> · Live rate'},
-    {s:'A', t:'<b>AUD</b> · Live rate'},
-    {s:'S', t:'<b>SGD</b> · Live rate'},
-    {s:'د', t:'<b>AED</b> · Live rate'},
-    {s:'C', t:'<b>CAD</b> · Live rate'},
-    {s:'F', t:'<b>CHF</b> · Live rate'},
-    {s:'R', t:'<b>SAR</b> · Live rate'},
+  var fallback = [
+    {s:'$', k:'USD', r:'83.42'},
+    {s:'€', k:'EUR', r:'90.18'},
+    {s:'£', k:'GBP', r:'105.62'},
+    {s:'¥', k:'JPY', r:'0.54'},
+    {s:'A', k:'AUD', r:'54.10'},
+    {s:'S', k:'SGD', r:'62.33'},
+    {s:'د', k:'AED', r:'22.71'},
+    {s:'C', k:'CAD', r:'61.04'},
+    {s:'F', k:'CHF', r:'95.41'},
+    {s:'R', k:'SAR', r:'22.24'},
   ];
-  var html = items.map(i => `<div class="ticker-item"><span class="ticker-sym">${i.s}</span>${i.t}</div>`).join('');
-  var el = document.getElementById('ticker');
-  if (el) el.innerHTML = html + html;
+  function render(items) {
+    var el = document.getElementById('ticker');
+    if (!el) return;
+    var html = items.map(function(i) {
+      return '<div class="ticker-item"><span class="ticker-sym">' + i.s + '</span><b>' + i.k + '</b> · ₹' + i.r + '</div>';
+    }).join('');
+    el.innerHTML = html + html;
+  }
+  render(fallback);
+  fetch('https://api.frankfurter.app/latest?from=INR&to=USD,EUR,GBP,JPY,AUD,SGD,AED,CAD,CHF,SAR')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!data.rates) return;
+      var updated = fallback.map(function(i) {
+        var rateINRper = data.rates[i.k];
+        if (!rateINRper) return i;
+        return { s: i.s, k: i.k, r: (1 / rateINRper).toFixed(2) };
+      });
+      render(updated);
+    })
+    .catch(function() {});
 })();
 
 // ── Reveal on scroll ──────────────────────────────────────
