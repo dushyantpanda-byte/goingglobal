@@ -22,6 +22,7 @@ from typing import Optional
 import truststore
 truststore.inject_into_ssl()
 
+import anthropic
 import voyageai
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Header
@@ -104,6 +105,11 @@ class IngestResult(BaseModel):
     status: str
     chunks_ingested: int
     by_type: dict
+
+class AskResponse(BaseModel):
+    doc_results: list[SearchResult]
+    ai_answer: Optional[str] = None
+    from_docs: bool
 
 
 # ── Ingestion ──────────────────────────────────────────────────────────────────
@@ -290,6 +296,89 @@ async def search(req: SearchRequest):
         )
         for h in hits
     ]
+
+
+async def _ai_answer(query: str, chunks: list[SearchResult]) -> Optional[str]:
+    api_key = os.getenv("ANTHROPIC_API_KEY")
+    if not api_key:
+        return None
+    context = "\n\n".join(
+        f"[{c.doc_type} · p.{c.page}]: {c.text[:350]}" for c in chunks[:3]
+    ) if chunks else "No relevant documents found."
+    prompt = (
+        f"You are an expert on Indian export regulations, helping SME exporters.\n\n"
+        f"Context from official documents:\n{context}\n\n"
+        f"Question: {query}\n\n"
+        "Answer in 2–4 plain sentences. If the context contains the answer, use it. "
+        "If not, answer from general knowledge and start with 'Based on general knowledge:'. "
+        "Never invent regulation numbers or cite rules you are not certain of."
+    )
+    client = anthropic.Anthropic(api_key=api_key)
+    msg = await asyncio.get_event_loop().run_in_executor(
+        None,
+        lambda: client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=300,
+            messages=[{"role": "user", "content": prompt}],
+        ),
+    )
+    return msg.content[0].text
+
+
+@app.post("/ask", response_model=AskResponse)
+async def ask(req: SearchRequest):
+    """
+    Semantic search with LLM fallback.
+    Returns doc excerpts + an AI-generated answer (if ANTHROPIC_API_KEY is set).
+    """
+    if _voyage is None or _qdrant is None:
+        raise HTTPException(503, "Service not initialised")
+
+    try:
+        result = await asyncio.get_event_loop().run_in_executor(
+            None,
+            lambda: _voyage.embed([req.query], model=MODEL, input_type="query"),
+        )
+        vector = result.embeddings[0]
+    except Exception as e:
+        raise HTTPException(502, f"Embedding failed: {e}")
+
+    qdrant_filter = None
+    if req.filter_type:
+        qdrant_filter = Filter(
+            must=[FieldCondition(key="doc_type", match=MatchValue(value=req.filter_type))]
+        )
+
+    try:
+        response = _qdrant.query_points(
+            collection_name=COLLECTION,
+            query=vector,
+            limit=req.top_k,
+            query_filter=qdrant_filter,
+            with_payload=True,
+        )
+        hits = response.points
+    except Exception as e:
+        raise HTTPException(502, f"Vector search failed: {e}")
+
+    doc_results = [
+        SearchResult(
+            text=h.payload.get("text", ""),
+            doc_type=h.payload.get("doc_type", "Other"),
+            title=h.payload.get("title", ""),
+            source_url=h.payload.get("source_url", ""),
+            page=h.payload.get("page", 0),
+            score=round(h.score, 4),
+        )
+        for h in hits
+    ]
+
+    best_score = doc_results[0].score if doc_results else 0.0
+    from_docs = best_score >= 0.58
+
+    ai_answer = await _ai_answer(req.query, doc_results)
+
+    return AskResponse(doc_results=doc_results, ai_answer=ai_answer, from_docs=from_docs)
 
 
 # ── MCP ────────────────────────────────────────────────────────────────────────
