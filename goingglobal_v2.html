@@ -540,6 +540,193 @@ footer { background: var(--ink); color: rgba(255,255,255,.55); padding: 48px 0 3
   .hero { padding: 110px 0 60px; }
   h2 { font-size: clamp(28px, 8vw, 44px); }
 }
+
+/* ── Design-system layout alias ──────────────────────────────────────── */
+.wrap { width: min(1280px, calc(100vw - 48px)); margin: 0 auto; }
+
+/* ── Stats Band ──────────────────────────────────────────────────────── */
+.stats-band { background: var(--ink); color: #fff; padding: 80px 0; }
+.stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,255,255,.08); }
+.stat-box { background: var(--ink); padding: 56px 48px; }
+.stat-box .sn { font-size: clamp(52px,6vw,88px); font-weight: 600; letter-spacing: -.04em; line-height: .95; }
+.stat-box .sn .accent { color: var(--gold); }
+.stat-box .sl { font-size: 16px; color: rgba(255,255,255,.55); margin-top: 16px; max-width: 240px; line-height: 1.4; }
+@media(max-width:760px){ .stats-row { grid-template-columns: 1fr; } }
+
+/* ── Suite (3 tall product cards) ───────────────────────────────────── */
+.suite { background: var(--ink); color: #fff; padding: 140px 0; }
+.suite-head { margin-bottom: 72px; }
+.suite-head h2 { color: #fff; }
+.suite-head p { color: var(--muted); font-size: 18px; margin-top: 20px; max-width: 560px; font-weight: 300; }
+.suite-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; align-items: stretch; }
+@media(max-width:900px){ .suite-cards { grid-template-columns: 1fr; } }
+.suite-card { background: #0A0E3F; border: 1px solid rgba(255,255,255,.08); border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+.suite-card:hover { transform: translateY(-6px); }
+.suite-card .svis { flex: 1; min-height: 380px; position: relative; overflow: hidden; display: grid; place-items: center; padding: 32px; }
+.suite-card .vis-bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 30%,rgba(51,149,255,.22),transparent 70%); }
+.suite-card:nth-child(2) .vis-bg { background: radial-gradient(circle at 50% 30%,rgba(245,197,24,.18),transparent 70%); }
+.suite-card:nth-child(3) .vis-bg { background: radial-gradient(circle at 50% 30%,rgba(74,222,128,.18),transparent 70%); }
+.suite-card .body-area { padding: 28px 28px 32px; border-top: 1px solid rgba(255,255,255,.07); }
+.suite-card .body-area .skicker { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; display: block; }
+.suite-card:nth-child(2) .body-area .skicker { color: var(--gold); }
+.suite-card:nth-child(3) .body-area .skicker { color: var(--grass); }
+.suite-card .body-area h3 { font-size: 22px; font-weight: 600; color: #fff; line-height: 1.2; }
+.suite-card .body-area p { font-size: 14px; color: var(--muted); margin-top: 10px; line-height: 1.55; font-weight: 300; }
+.suite-card .cta-row { margin-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+.suite-card .cta-row a { font-size: 13px; font-weight: 600; color: var(--cyan); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: gap .2s; }
+.suite-card:nth-child(2) .cta-row a { color: var(--gold); }
+.suite-card:nth-child(3) .cta-row a { color: var(--grass); }
+.suite-card .cta-row a:hover { gap: 10px; }
+
+/* ── Mini globe (suite vis 1) ───────────────────────────────────────── */
+.mini-globe { width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle at 35% 30%,rgba(255,255,255,.15),transparent 50%), conic-gradient(from 200deg,#1E6FE6,#02042A,#3395FF,#02042A,#1E6FE6); box-shadow: inset -30px -40px 80px rgba(0,0,0,.55), 0 30px 70px -20px rgba(51,149,255,.4); animation: miniSpin 50s linear infinite; position: relative; }
+.mini-globe::before { content:""; position: absolute; inset: 0; border-radius: 50%; background: repeating-linear-gradient(0deg,transparent 0 24px,rgba(124,207,255,.18) 24px 25px), repeating-linear-gradient(90deg,transparent 0 24px,rgba(124,207,255,.12) 24px 25px); -webkit-mask: radial-gradient(circle,#000 55%,transparent 70%); mask: radial-gradient(circle,#000 55%,transparent 70%); mix-blend-mode: screen; }
+.mini-globe .mpin { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px rgba(245,197,24,.4); }
+@keyframes miniSpin { to { transform: rotate(360deg); } }
+
+/* ── Fee compare (suite vis 2) ──────────────────────────────────────── */
+.fee-compare { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 280px; }
+.fee-bar { display: flex; flex-direction: column; gap: 6px; }
+.fee-bar .label-row { display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,.65); }
+.fee-bar .ftrack { height: 12px; background: rgba(255,255,255,.06); border-radius: 4px; overflow: hidden; }
+.fee-bar .ffill { height: 100%; border-radius: 4px; }
+.fee-bar.rzp .ffill { background: linear-gradient(90deg,var(--gold),var(--gold-2)); width: 18%; }
+.fee-bar.other .ffill { background: rgba(255,255,255,.25); width: 72%; }
+.fee-bar.other2 .ffill { background: rgba(255,255,255,.18); width: 85%; }
+.fee-badge { margin-top: 8px; padding: 10px 14px; background: rgba(245,197,24,.12); border: 1px solid rgba(245,197,24,.2); border-radius: 10px; font-size: 13px; color: var(--gold); font-weight: 500; text-align: center; }
+
+/* ── Gauge (suite vis 3) ────────────────────────────────────────────── */
+.gauge-wrap { position: relative; width: 200px; height: 200px; }
+.gauge-wrap svg { overflow: visible; }
+.gauge-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.gauge-text .gbig { font-size: 48px; font-weight: 600; color: #fff; letter-spacing: -.04em; line-height: 1; }
+.gauge-text .glbl { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.gauge-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; justify-content: center; }
+.g-badge { padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 500; background: rgba(74,222,128,.1); border: 1px solid rgba(74,222,128,.2); color: var(--grass); }
+@keyframes gaugeFill { from { stroke-dashoffset: 502; } to { stroke-dashoffset: 76; } }
+
+/* ── Full-viewport feature sections ─────────────────────────────────── */
+.feature-sec { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
+.feature-sec.flip { direction: rtl; }
+.feature-sec.flip > * { direction: ltr; }
+@media(max-width:900px){ .feature-sec, .feature-sec.flip { grid-template-columns: 1fr; min-height: auto; } }
+.feat-text { background: var(--paper); display: flex; flex-direction: column; justify-content: center; padding: 100px 64px 100px 80px; }
+@media(max-width:1100px){ .feat-text { padding: 80px 40px; } }
+@media(max-width:900px){ .feat-text { padding: 80px 24px; } }
+.feat-text .fkicker { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; font-weight: 600; color: var(--blue-2); display: inline-flex; align-items: center; gap: 10px; margin-bottom: 24px; }
+.feat-text .fkicker::before { content:""; width: 20px; height: 1px; background: currentColor; display: inline-block; }
+.feat-text h2 { font-size: clamp(36px,4vw,64px); letter-spacing: -.03em; line-height: .97; }
+.feat-text h2 em { font-style: normal; color: var(--blue-2); }
+.feat-text h2 .fgold { color: var(--gold); }
+.feat-text > div > p { font-size: 18px; color: var(--muted-d); margin-top: 24px; max-width: 460px; line-height: 1.6; font-weight: 300; }
+.feat-stat-row { display: flex; gap: 40px; margin-top: 36px; }
+.feat-stat-row .fv { font-size: 38px; font-weight: 600; letter-spacing: -.03em; line-height: 1; }
+.feat-stat-row .fl { font-size: 13px; color: var(--muted-d); margin-top: 5px; }
+.feat-ctas { margin-top: 40px; display: flex; gap: 10px; flex-wrap: wrap; }
+.feat-vis { background: var(--ink); display: flex; align-items: center; justify-content: center; padding: 64px; position: relative; overflow: hidden; }
+.feat-vis::before { content:""; position: absolute; inset: 0; background: radial-gradient(800px 600px at 50% 40%,rgba(51,149,255,.2),transparent 70%); pointer-events: none; }
+.feat-vis.gold-glow::before { background: radial-gradient(800px 600px at 50% 40%,rgba(245,197,24,.15),transparent 70%); }
+.feat-vis.grass-glow::before { background: radial-gradient(800px 600px at 50% 40%,rgba(74,222,128,.14),transparent 70%); }
+@media(max-width:900px){ .feat-vis { min-height: 480px; padding: 48px 24px; } }
+
+/* ── Checkout card (feat 1 vis) ─────────────────────────────────────── */
+.checkout-card { background: #fff; border-radius: 28px; padding: 36px; width: 100%; max-width: 380px; box-shadow: 0 48px 80px -32px rgba(0,0,0,.55); position: relative; z-index: 1; }
+.checkout-card .ctitle { font-size: 13px; font-weight: 600; color: var(--muted-d); margin-bottom: 20px; }
+.big-dial { display: flex; align-items: center; gap: 24px; }
+.dial-ring { width: 120px; height: 120px; flex-shrink: 0; position: relative; }
+.dial-ring svg { overflow: visible; }
+.dial-nums .dpct { font-size: 56px; font-weight: 600; letter-spacing: -.04em; background: linear-gradient(135deg,var(--blue),var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; line-height: 1; }
+.dial-nums .dsub { font-size: 13px; color: var(--muted-d); margin-top: 4px; }
+.checkout-card .drows { margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+.drow { display: flex; align-items: center; gap: 12px; }
+.drow .dname { font-size: 13px; flex: 1; color: var(--muted-d); }
+.drow .dbar { flex: 2; height: 8px; background: #F5F1EA; border-radius: 4px; overflow: hidden; }
+.drow .dbar .dfill { height: 100%; border-radius: 4px; }
+.drow .dpct { font-size: 13px; font-weight: 600; width: 36px; text-align: right; }
+.drow.rzp .dbar .dfill { background: linear-gradient(90deg,var(--blue),var(--cyan)); }
+.drow.rzp .dname { color: var(--ink); font-weight: 600; }
+.drow.rzp .dpct { color: var(--blue-2); }
+
+/* ── Phone mock (feat 2 vis) ────────────────────────────────────────── */
+.phone { width: 260px; height: 540px; border-radius: 46px; background: #02042A; box-shadow: 0 60px 100px -30px rgba(0,0,0,.6), inset 0 0 0 8px #161A4E; overflow: hidden; position: relative; z-index: 1; }
+.phone-inner { position: absolute; inset: 8px; border-radius: 38px; background: #0A0E3F; overflow: hidden; display: flex; flex-direction: column; }
+.phone-notch { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 80px; height: 22px; background: #000; border-radius: 99px; z-index: 5; }
+.phone-merchant-info { padding: 46px 22px 18px; color: #fff; }
+.phone-merchant-info .pbrand { font-weight: 700; font-size: 14px; letter-spacing: -.01em; }
+.phone-merchant-info .ptotal { font-size: 28px; font-weight: 600; margin-top: 10px; letter-spacing: -.03em; }
+.phone-merchant-info .phint { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 4px; }
+.phone-cart-area { background: #fff; flex: 1; border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 10px; color: var(--ink); }
+.prow { display: flex; justify-content: space-between; font-size: 12px; }
+.prow.pbold { font-weight: 600; font-size: 13px; padding-top: 8px; border-top: 1px dashed rgba(2,4,42,.1); }
+.apay { margin-top: auto; background: #000; color: #fff; padding: 14px; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 600; font-size: 14px; animation: apayPulse 2.8s ease-in-out infinite; }
+@keyframes apayPulse { 50% { box-shadow: 0 0 0 8px rgba(0,0,0,.07); } }
+.phint2 { text-align: center; font-size: 10px; color: var(--muted-d); }
+.side-badge { position: absolute; left: -120px; top: 50%; transform: translateY(-50%); background: #fff; border-radius: 18px; padding: 14px 16px; box-shadow: 0 20px 40px -16px rgba(0,0,0,.35); width: 200px; z-index: 2; animation: bob 5s ease-in-out infinite; }
+.side-badge .sbrow { display: flex; align-items: center; gap: 8px; }
+.side-badge .sbico { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--grass); color: #fff; }
+.side-badge .sbtxt { font-size: 12px; font-weight: 600; }
+.side-badge .sbsub { font-size: 11px; color: var(--muted-d); }
+.side-badge .sbnum { font-size: 20px; font-weight: 600; letter-spacing: -.02em; margin-top: 8px; color: var(--ink); }
+
+/* ── Virtual accounts (feat 3 vis) ─────────────────────────────────── */
+.accounts { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 400px; position: relative; z-index: 1; }
+.acct-card { background: #fff; border-radius: 20px; padding: 20px 22px; box-shadow: 0 24px 48px -24px rgba(0,0,0,.45); display: flex; align-items: center; gap: 16px; border: 1px solid rgba(2,4,42,.05); }
+.acct-card.featured { background: var(--ink-2); color: #fff; box-shadow: 0 32px 64px -20px rgba(2,4,42,.55); border: none; }
+.acct-ico { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 20px; color: #fff; flex-shrink: 0; }
+.acct-ico.usd { background: var(--blue); }
+.acct-ico.eur { background: #3B4E8C; }
+.acct-ico.gbp { background: var(--coral); }
+.acct-body { flex: 1; }
+.acct-body b { font-weight: 600; font-size: 14px; }
+.acct-body small { display: block; font-size: 11px; margin-top: 2px; }
+.acct-card.featured .acct-body small { color: rgba(255,255,255,.5); }
+.acct-card:not(.featured) .acct-body small { color: var(--muted-d); }
+.acct-body .iban { font-family: monospace; font-size: 10px; letter-spacing: .04em; margin-top: 4px; }
+.acct-card.featured .iban { color: rgba(255,255,255,.4); }
+.acct-card:not(.featured) .iban { color: var(--muted-d); }
+.acct-amt { text-align: right; font-weight: 600; font-size: 15px; }
+.acct-delta { font-size: 11px; color: var(--grass); font-weight: 500; margin-top: 3px; }
+
+/* ── Coverage ───────────────────────────────────────────────────────── */
+.coverage { background: var(--ink); color: #fff; padding: 160px 0; }
+.coverage-inner { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start; }
+@media(max-width:900px){ .coverage-inner { grid-template-columns: 1fr; gap: 48px; } }
+.cov-left h2 { color: #fff; font-size: clamp(36px,4vw,64px); }
+.cov-left p { color: rgba(255,255,255,.6); font-size: 17px; margin-top: 20px; max-width: 360px; font-weight: 300; line-height: 1.6; }
+.cov-right { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:600px){ .cov-right { grid-template-columns: 1fr; } }
+.cov-block { background: #0A0E3F; border: 1px solid var(--line); border-radius: 24px; padding: 32px; }
+.cov-block .cn { font-size: clamp(44px,5vw,72px); font-weight: 600; letter-spacing: -.04em; line-height: .95; }
+.cov-block .cn .cgold { color: var(--gold); }
+.cov-block .cn .ccyan { color: var(--cyan); }
+.cov-block h3 { font-size: 18px; margin-top: 8px; font-weight: 500; }
+.cov-block .csub { font-size: 14px; color: rgba(255,255,255,.5); margin-top: 6px; font-weight: 300; }
+.cov-block .ctags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.ctag { padding: 5px 10px; border-radius: 6px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); font-size: 12px; color: rgba(255,255,255,.7); }
+.cov-block.span2 { grid-column: 1/-1; }
+
+/* ── Testimonials ───────────────────────────────────────────────────── */
+.testimonials { background: var(--paper-2); padding: 160px 0; overflow: hidden; }
+.test-track { display: flex; gap: 24px; width: max-content; animation: testScroll 60s linear infinite; margin-top: 64px; }
+@keyframes testScroll { to { transform: translateX(-50%); } }
+.testimonials:hover .test-track { animation-play-state: paused; }
+.q-card { width: 420px; flex-shrink: 0; background: #fff; border-radius: 24px; padding: 36px; border: 1px solid rgba(2,4,42,.06); display: flex; flex-direction: column; gap: 16px; }
+.q-card .qmark { font-size: 44px; line-height: .9; color: var(--blue); font-family: "Instrument Serif", serif; }
+.q-card p { font-size: 16px; line-height: 1.55; color: var(--ink); }
+.q-card .qwho { display: flex; align-items: center; gap: 12px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line-d); }
+.q-card .qava { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; }
+.q-card .qname { font-weight: 600; font-size: 14px; }
+.q-card .qrole { font-size: 12px; color: var(--muted-d); }
+.q-card .qco { font-size: 11px; font-weight: 700; letter-spacing: .08em; color: var(--muted-d); text-transform: uppercase; margin-left: auto; }
+
+/* ── New Closing CTA ────────────────────────────────────────────────── */
+.closing-new { background: var(--ink); color: #fff; padding: 180px 0; position: relative; overflow: hidden; text-align: center; }
+.closing-new::before { content:""; position: absolute; inset: 0; background: radial-gradient(1000px 600px at 50% 120%,rgba(51,149,255,.3),transparent 60%), radial-gradient(700px 400px at 15% -10%,rgba(245,197,24,.16),transparent 60%); }
+.closing-new-inner { position: relative; z-index: 1; }
+.closing-new h2 { font-size: clamp(52px,9vw,136px); letter-spacing: -.04em; line-height: .94; }
+.closing-new h2 em { font-style: normal; color: var(--gold); }
+.closing-new .csub { margin: 28px auto 0; max-width: 480px; font-size: 19px; color: rgba(255,255,255,.65); line-height: 1.55; font-weight: 300; }
+.closing-new .cbtns { margin-top: 52px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"GoingGlobal","url":"https://dushyantpanda-byte.github.io/goingglobal/goingglobal_v2.html","description":"India's Export Intelligence Hub — AI search over RBI, DGFT, FEMA and GST regulatory documents for Indian exporters","publisher":{"@type":"Organization","name":"Razorpay","url":"https://razorpay.com"}}
@@ -1062,61 +1249,403 @@ footer { background: var(--ink); color: rgba(255,255,255,.55); padding: 48px 0 3
   </div>
 </section>
 
-<!-- ═══════════════════════ RAZORPAY PRODUCTS ═══════════════════════ -->
-<section class="sec rzp-hero" id="rzp-products">
-  <div class="container" style="position:relative;z-index:2;">
-    <div class="sec-head reveal">
-      <div class="l">
-        <span class="eyebrow" style="color:var(--cyan);">Razorpay Cross-Border</span>
-        <h2 style="margin-top:18px;color:#fff;">
-          Get paid from anywhere.<br>
-          <span class="serif" style="color:var(--gold);">Settle in INR, same day.</span>
-        </h2>
-        <p>India's international payments stack — accept cards, wallets, and direct bank transfers from 180+ countries. Compliant with FEMA. India-based support.</p>
+<!-- ═══════════════════════ STATS BAND ═══════════════════════ -->
+<div class="stats-band">
+  <div class="wrap">
+    <div class="stats-row">
+      <div class="stat-box reveal">
+        <div class="sn">490<span class="accent">+</span></div>
+        <div class="sl">Pages of official RBI, DGFT, FEMA and GST regulation — indexed and searchable in seconds.</div>
+      </div>
+      <div class="stat-box reveal d1">
+        <div class="sn">90–95<span class="accent">%</span></div>
+        <div class="sl">Global card success rate with Razorpay's Smart Routing and Intelligent Retry.</div>
+      </div>
+      <div class="stat-box reveal d2">
+        <div class="sn">48<span class="accent">h</span></div>
+        <div class="sl">From sign-up to live on Razorpay International Payments. FIRA-compliant INR settlements.</div>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="rzp-products-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
-      <div class="rzp-pcard reveal d1">
-        <div class="ico">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>
-        </div>
-        <h3>International Payment Gateway</h3>
-        <p>Accept global cards from 180+ countries across 135 currencies. Intelligent routing delivers up to 10% higher success rates than standard gateways.</p>
-        <div class="stat">90–95%<small>Card success rate</small></div>
-      </div>
-
-      <div class="rzp-pcard reveal d2">
-        <div class="ico">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12h8M12 8v8"/></svg>
-        </div>
-        <h3>Digital Wallets</h3>
-        <p>Accept Apple Pay and Google Pay from 500M+ global users. Biometric authentication enables 5× faster checkout with 95% transaction success rates.</p>
-        <div class="stat">500M+<small>Global wallet users</small></div>
-      </div>
-
-      <div class="rzp-pcard reveal d3">
-        <div class="ico">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--grass)" stroke-width="1.8"><path d="M3 9h18l-2 9H5L3 9Z"/><path d="M9 9V5h6v4"/></svg>
-        </div>
-        <h3>International Bank Transfers</h3>
-        <p>Receive USD, EUR, and GBP directly into dedicated accounts — like a local. Just 1% per transaction, zero forex markup. Save up to 75% on wire transfer fees.</p>
-        <div class="stat">1% fee<small>Zero forex markup</small></div>
-      </div>
+<!-- ═══════════════════════ SUITE ═══════════════════════ -->
+<section class="suite" id="rzp-products">
+  <div class="wrap">
+    <div class="suite-head">
+      <span class="eyebrow reveal" style="color:var(--cyan);">Razorpay for Exporters</span>
+      <h2 class="reveal d1" style="margin-top:18px;">
+        Three rails.<br>One dashboard.<br><span class="serif" style="color:var(--gold);">Zero drama.</span>
+      </h2>
+      <p class="reveal d2">A complete international payments stack — cards, wallets, bank transfers — inside a single Razorpay integration. Built for Indian exporters.</p>
     </div>
 
-    <!-- CTA Strip -->
-    <div class="rzp-cta-strip reveal">
-      <div class="copy">
-        <h3>Ready to get paid globally with Razorpay?</h3>
-        <p>Two minutes to sign up. 48 hours to live. 180+ countries to sell to.</p>
+    <div class="suite-cards">
+      <!-- Card 1: Payment Gateway -->
+      <div class="suite-card reveal d1">
+        <div class="svis">
+          <div class="vis-bg"></div>
+          <div class="mini-globe" style="position:relative;z-index:1;">
+            <div class="mpin" style="top:20%;left:25%;"></div>
+            <div class="mpin" style="top:60%;right:20%;"></div>
+            <div class="mpin" style="bottom:20%;left:50%;"></div>
+          </div>
+        </div>
+        <div class="body-area">
+          <span class="skicker">International Gateway</span>
+          <h3>Global cards. Local success.</h3>
+          <p>Cards in 135 currencies across 180+ countries. Smart Routing and 3DS 2.0 for frictionless auth and higher conversions.</p>
+          <div class="cta-row">
+            <a href="https://razorpay.com/accept-international-payments/" target="_blank" rel="noopener">Learn more
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
       </div>
-      <div class="btns">
-        <a class="btn btn-gold" href="https://dashboard.razorpay.com/signup" target="_blank" rel="noopener">
-          Sign Up on Razorpay — Free
-          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+      <!-- Card 2: Pricing -->
+      <div class="suite-card reveal d2">
+        <div class="svis">
+          <div class="vis-bg"></div>
+          <div class="fee-compare" style="position:relative;z-index:1;">
+            <div class="fee-bar other2">
+              <div class="label-row"><span>Other PSPs</span><b style="color:rgba(255,255,255,.5)">7–10%</b></div>
+              <div class="ftrack"><div class="ffill"></div></div>
+            </div>
+            <div class="fee-bar other">
+              <div class="label-row"><span>Global banks</span><b style="color:rgba(255,255,255,.5)">5–8%</b></div>
+              <div class="ftrack"><div class="ffill"></div></div>
+            </div>
+            <div class="fee-bar rzp">
+              <div class="label-row"><span style="color:var(--gold);font-weight:600;">Razorpay</span><b style="color:var(--gold)">1–3%</b></div>
+              <div class="ftrack"><div class="ffill"></div></div>
+            </div>
+            <div class="fee-badge">Save up to 75% on fees</div>
+          </div>
+        </div>
+        <div class="body-area">
+          <span class="skicker">Transparent Pricing</span>
+          <h3>Fees you can actually see.</h3>
+          <p>1% on bank transfers. Up to 3% on cards. No FX markup, no setup fees, no monthly minimums. Ever.</p>
+          <div class="cta-row">
+            <a href="https://dashboard.razorpay.com/signup" target="_blank" rel="noopener">See pricing
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Success rate -->
+      <div class="suite-card reveal d3">
+        <div class="svis">
+          <div class="vis-bg"></div>
+          <div style="display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;">
+            <div class="gauge-wrap">
+              <svg width="200" height="200" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="16"/>
+                <circle cx="100" cy="100" r="80" fill="none" stroke="url(#gg1)" stroke-width="16"
+                  stroke-dasharray="502" stroke-dashoffset="76" stroke-linecap="round"
+                  transform="rotate(-90 100 100)" style="animation:gaugeFill 2s cubic-bezier(.2,.8,.2,1) backwards;"/>
+                <defs>
+                  <linearGradient id="gg1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#4ADE80"/>
+                    <stop offset="100%" stop-color="#7CCFFF"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div class="gauge-text">
+                <div class="gbig">93%</div>
+                <div class="glbl">Auth rate</div>
+              </div>
+            </div>
+            <div class="gauge-badges">
+              <span class="g-badge">Smart Routing</span>
+              <span class="g-badge">Intelligent Retry</span>
+              <span class="g-badge">3DS 2.0</span>
+            </div>
+          </div>
+        </div>
+        <div class="body-area">
+          <span class="skicker">Success Intelligence</span>
+          <h3>Up to 10% better success.</h3>
+          <p>In-house card switch, intelligent retry logic, and fraud filters built for cross-border flows from India.</p>
+          <div class="cta-row">
+            <a href="https://razorpay.com/accept-international-payments/" target="_blank" rel="noopener">See how
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FEATURE 1 — Gateway ═══════════════════════ -->
+<section class="feature-sec" id="features">
+  <div class="feat-text">
+    <div class="reveal">
+      <span class="fkicker">International Payment Gateway</span>
+      <h2>Higher success,<br><em>built in.</em></h2>
+      <p>Stop losing revenue to failed payments. Smart Routing picks the best path for every transaction — across 135 currencies, 180+ countries, all payment methods.</p>
+      <div class="feat-stat-row">
+        <div><div class="fv">+10%</div><div class="fl">Higher conversions</div></div>
+        <div><div class="fv">3DS 2.0</div><div class="fl">Frictionless auth</div></div>
+      </div>
+      <div class="feat-ctas">
+        <a class="btn btn-primary" href="https://dashboard.razorpay.com/signup" target="_blank" rel="noopener">Start accepting cards
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
-        <a class="btn btn-ghost-light" href="https://razorpay.com/accept-international-payments/" target="_blank" rel="noopener">See all products</a>
+        <a class="btn btn-ghost" href="https://razorpay.com/accept-international-payments/" target="_blank" rel="noopener">Talk to sales</a>
+      </div>
+    </div>
+  </div>
+  <div class="feat-vis">
+    <div class="checkout-card reveal d1">
+      <div class="ctitle">Payment success rate — last 30 days</div>
+      <div class="big-dial">
+        <div class="dial-ring">
+          <svg width="120" height="120" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#F5F1EA" stroke-width="10"/>
+            <circle cx="60" cy="60" r="50" fill="none" stroke="url(#dg1)" stroke-width="10"
+              stroke-dasharray="314" stroke-dashoffset="22" stroke-linecap="round"
+              transform="rotate(-90 60 60)"/>
+            <defs>
+              <linearGradient id="dg1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#3395FF"/><stop offset="100%" stop-color="#7CD3FF"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="dial-nums">
+          <div class="dpct">93%</div>
+          <div class="dsub">Avg. auth rate</div>
+        </div>
+      </div>
+      <div class="drows">
+        <div class="drow rzp">
+          <div class="dname">Razorpay</div>
+          <div class="dbar"><div class="dfill" style="width:93%;"></div></div>
+          <div class="dpct">93%</div>
+        </div>
+        <div class="drow">
+          <div class="dname">Industry avg.</div>
+          <div class="dbar"><div class="dfill" style="width:55%;background:rgba(2,4,42,.1);"></div></div>
+          <div class="dpct" style="color:var(--muted-d)">55%</div>
+        </div>
+        <div class="drow">
+          <div class="dname">Global PSPs</div>
+          <div class="dbar"><div class="dfill" style="width:72%;background:rgba(2,4,42,.12);"></div></div>
+          <div class="dpct" style="color:var(--muted-d)">72%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FEATURE 2 — Wallets ═══════════════════════ -->
+<section class="feature-sec flip">
+  <div class="feat-text" style="background:#fff;">
+    <div class="reveal">
+      <span class="fkicker">Apple Pay & Google Wallet</span>
+      <h2>1-tap checkout.<br><em>500M+ buyers.</em></h2>
+      <p>No card numbers, no OTPs. Just FaceID or a fingerprint. The highest-converting checkout for global shoppers — live in your existing Razorpay integration.</p>
+      <div class="feat-stat-row">
+        <div><div class="fv">5×</div><div class="fl">Faster checkout</div></div>
+        <div><div class="fv">95%</div><div class="fl">Success rate</div></div>
+      </div>
+      <div class="feat-ctas">
+        <a class="btn btn-primary" href="https://dashboard.razorpay.com/signup" target="_blank" rel="noopener">Get Apple Pay
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="feat-vis gold-glow" style="position:relative;">
+    <div class="side-badge" style="left:auto;right:-110px;top:50%;transform:translateY(-50%);">
+      <div class="sbrow">
+        <div class="sbico">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div><div class="sbtxt">Checkout done</div><div class="sbsub">London, UK</div></div>
+      </div>
+      <div class="sbnum">£186.00</div>
+    </div>
+    <div class="phone reveal d1">
+      <div class="phone-inner">
+        <div class="phone-notch"></div>
+        <div class="phone-merchant-info">
+          <div class="pbrand">Saffron Looms</div>
+          <div class="ptotal">£186.00</div>
+          <div class="phint">Handcrafted in Jaipur · ships worldwide</div>
+        </div>
+        <div class="phone-cart-area">
+          <div class="prow"><span>Block-print kurta</span><b>£96</b></div>
+          <div class="prow"><span>Silk dupatta</span><b>£64</b></div>
+          <div class="prow"><span>Shipping</span><b>£26</b></div>
+          <div class="prow pbold"><span>Total</span><span>£186</span></div>
+          <div class="apay"> Pay</div>
+          <div class="phint2">Double-click side button to pay</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FEATURE 3 — Bank Transfers ═══════════════════════ -->
+<section class="feature-sec">
+  <div class="feat-text">
+    <div class="reveal">
+      <span class="fkicker">International Bank Transfers</span>
+      <h2>Local accounts.<br><span class="fgold">No hidden</span><br>fees.</h2>
+      <p>Get a real USD, EUR, and GBP virtual account. Receive like a local from Amazon, Upwork, Fiverr, or your global clients — save up to 75% on transfer costs.</p>
+      <div class="feat-stat-row">
+        <div><div class="fv">75%</div><div class="fl">Saved on fees</div></div>
+        <div><div class="fv">0%</div><div class="fl">FX markup</div></div>
+        <div><div class="fv">T+2</div><div class="fl">INR settlement</div></div>
+      </div>
+      <div class="feat-ctas">
+        <a class="btn btn-primary" href="https://dashboard.razorpay.com/signup" target="_blank" rel="noopener">Get a virtual account
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="feat-vis grass-glow">
+    <div class="accounts reveal d1">
+      <div class="acct-card featured">
+        <div class="acct-ico usd">$</div>
+        <div class="acct-body">
+          <b>USD Virtual Account</b>
+          <small>Bank of America · Routing 026009593</small>
+          <div class="iban">ACC •••• 4127 · WIRE / ACH ready</div>
+        </div>
+        <div class="acct-amt">$48,210<div class="acct-delta">+$2,480 today</div></div>
+      </div>
+      <div class="acct-card">
+        <div class="acct-ico eur">€</div>
+        <div class="acct-body">
+          <b>EUR Virtual Account</b>
+          <small>SEPA · IBAN BE68 5390 0754 7034</small>
+        </div>
+        <div class="acct-amt" style="color:var(--ink);">€12,840<div class="acct-delta">+€640 today</div></div>
+      </div>
+      <div class="acct-card">
+        <div class="acct-ico gbp">£</div>
+        <div class="acct-body">
+          <b>GBP Virtual Account</b>
+          <small>Faster Payments · Sort 04-00-04</small>
+        </div>
+        <div class="acct-amt" style="color:var(--ink);">£8,610<div class="acct-delta">+£210 today</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ COVERAGE ═══════════════════════ -->
+<section class="coverage" id="coverage">
+  <div class="wrap">
+    <div class="coverage-inner">
+      <div class="cov-left">
+        <span class="eyebrow reveal" style="color:var(--cyan);">Anywhere your customers are</span>
+        <h2 class="reveal d1" style="margin-top:20px;">From everywhere.<br><span class="serif" style="color:var(--gold);">To your account.</span></h2>
+        <p class="reveal d2">Your customers pay in their local currency. You settle in INR, with a FIRA and zero paperwork.</p>
+        <a class="btn btn-ghost-light reveal d3" href="https://dashboard.razorpay.com/signup" target="_blank" rel="noopener" style="margin-top:40px;">Get started
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="cov-right">
+        <div class="cov-block reveal d1">
+          <div class="cn">180<span class="cgold">+</span></div>
+          <h3>Countries</h3>
+          <div class="csub">USA, UK, UAE, EU, Canada, Australia, SEA and beyond.</div>
+          <div class="ctags">
+            <span class="ctag">🇺🇸 USA</span><span class="ctag">🇬🇧 UK</span><span class="ctag">🇦🇪 UAE</span>
+            <span class="ctag">🇦🇺 AUS</span><span class="ctag">🇩🇪 Germany</span><span class="ctag">🇫🇷 France</span>
+            <span class="ctag">🇸🇬 Singapore</span><span class="ctag">🇯🇵 Japan</span>
+          </div>
+        </div>
+        <div class="cov-block reveal d2">
+          <div class="cn"><span class="ccyan">135</span></div>
+          <h3>Currencies</h3>
+          <div class="csub">Live FX. No markup. Full audit trail.</div>
+          <div class="ctags">
+            <span class="ctag">$ USD</span><span class="ctag">€ EUR</span><span class="ctag">£ GBP</span>
+            <span class="ctag">¥ JPY</span><span class="ctag">A$ AUD</span><span class="ctag">د.إ AED</span>
+            <span class="ctag">C$ CAD</span><span class="ctag">CHF</span>
+          </div>
+        </div>
+        <div class="cov-block span2 reveal d3">
+          <div class="cn">12<span class="cgold">+</span></div>
+          <h3>Payment Methods</h3>
+          <div class="csub">One integration, every method your customers trust.</div>
+          <div class="ctags" style="margin-top:18px;">
+            <span class="ctag">Visa · Mastercard · Amex</span>
+            <span class="ctag">Apple Pay</span>
+            <span class="ctag">Google Wallet</span>
+            <span class="ctag">PayPal</span>
+            <span class="ctag">SWIFT Wire</span>
+            <span class="ctag">SEPA</span>
+            <span class="ctag">ACH</span>
+            <span class="ctag">UPI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ TESTIMONIALS ═══════════════════════ -->
+<section class="testimonials" id="stories">
+  <div class="wrap">
+    <span class="eyebrow reveal" style="color:var(--blue-2);">Stories beyond borders</span>
+    <h2 class="reveal d1" style="margin-top:18px;">
+      How Indian businesses<br>are <span class="serif" style="color:var(--blue-2);">scaling globally.</span>
+    </h2>
+  </div>
+  <div class="test-track" id="testTrack">
+    <div class="q-card">
+      <div class="qmark">"</div>
+      <p>Razorpay's International Payments enabled seamless global checkouts, helping us expand to 87 countries. We've seen a 5% jump in international success rates.</p>
+      <div class="qwho">
+        <div class="qava" style="background:linear-gradient(135deg,#FF6A4D,#F5C518);"></div>
+        <div><div class="qname">Masaba Gupta</div><div class="qrole">Founder, Masaba</div></div>
+        <div class="qco">Masaba</div>
+      </div>
+    </div>
+    <div class="q-card">
+      <div class="qmark">"</div>
+      <p>Their platform handles payments across currencies and countries seamlessly. We spend less time worrying about payments and more time improving our programs.</p>
+      <div class="qwho">
+        <div class="qava" style="background:linear-gradient(135deg,#7CD3FF,#1E6FE6);"></div>
+        <div><div class="qname">Anshul Agrawal</div><div class="qrole">CPTO & Co-Founder, Habuild</div></div>
+        <div class="qco">Habuild</div>
+      </div>
+    </div>
+    <div class="q-card">
+      <div class="qmark">"</div>
+      <p>Razorpay is one of the best when it comes to protecting merchants from fraudulent chargebacks. We see significantly better win rates compared to other providers.</p>
+      <div class="qwho">
+        <div class="qava" style="background:linear-gradient(135deg,#02042A,#3395FF);"></div>
+        <div><div class="qname">Anmol Jain</div><div class="qrole">CBO, Astrotalk</div></div>
+        <div class="qco">Astrotalk</div>
+      </div>
+    </div>
+    <div class="q-card">
+      <div class="qmark">"</div>
+      <p>International Payments is truly a passport for our product. We were able to handle twice as many international orders per day with Razorpay, without any problems.</p>
+      <div class="qwho">
+        <div class="qava" style="background:linear-gradient(135deg,#FF6A4D,#F5C518);"></div>
+        <div><div class="qname">Chirantan Sharma</div><div class="qrole">Head of Product, FNP</div></div>
+        <div class="qco">FNP</div>
+      </div>
+    </div>
+    <div class="q-card">
+      <div class="qmark">"</div>
+      <p>For international markets, the ability to securely and efficiently process payments is key. Razorpay made expanding into new corridors completely painless.</p>
+      <div class="qwho">
+        <div class="qava" style="background:linear-gradient(135deg,#4ADE80,#02042A);"></div>
+        <div><div class="qname">Saurabh & Rikhil</div><div class="qrole">Founders, Spardha</div></div>
+        <div class="qco">Spardha</div>
       </div>
     </div>
   </div>
@@ -1168,22 +1697,17 @@ footer { background: var(--ink); color: rgba(255,255,255,.55); padding: 48px 0 3
 </section>
 
 <!-- ═══════════════════════ CLOSING CTA ═══════════════════════ -->
-<section class="cta-sec">
-  <div class="container cta-inner">
-    <div class="reveal">
-      <span class="eyebrow" style="color:var(--gold);justify-content:center;">Razorpay Cross-Border</span>
-    </div>
-    <h2 class="reveal d1">
-      Going global?<br>
-      <span class="serif" style="color:var(--gold);">We'll get you paid.</span>
+<section class="closing-new" id="closing">
+  <div class="wrap closing-new-inner">
+    <h2 class="reveal">
+      Going global?<br><em>We'll get</em><br>you paid.
     </h2>
-    <p class="subby reveal d2">Two minutes to sign up. 48 hours to live. 180+ countries to sell to.</p>
-    <div class="btns reveal d3">
-      <a class="btn btn-gold" href="https://dashboard.razorpay.com/signup" target="_blank" rel="noopener">
-        Sign Up on Razorpay — Free
-        <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <p class="csub reveal d1">Two minutes to sign up. Forty-eight hours to live. A whole world to sell to.</p>
+    <div class="cbtns reveal d2">
+      <a class="btn btn-blue" href="https://dashboard.razorpay.com/signup" target="_blank" rel="noopener">Sign up now — Free
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <a class="btn btn-ghost-light" href="https://razorpay.com/international-payments/" target="_blank" rel="noopener">Learn more about Cross-Border</a>
+      <a class="btn btn-ghost-light" href="https://razorpay.com/accept-international-payments/" target="_blank" rel="noopener">Learn more</a>
     </div>
   </div>
 </section>
@@ -1193,13 +1717,13 @@ footer { background: var(--ink); color: rgba(255,255,255,.55); padding: 48px 0 3
   <div class="container foot">
     <div class="rzp-badge">
       <div class="rzp-mark">R</div>
-      <span>© 2025 Razorpay · GoingGlobal</span>
+      <span>© 2026 Razorpay · GoingGlobal</span>
     </div>
     <div class="links">
       <a href="https://dgft.gov.in" target="_blank">DGFT</a>
       <a href="https://rbi.org.in" target="_blank">RBI</a>
       <a href="https://gst.gov.in" target="_blank">GST</a>
-      <a href="https://razorpay.com/international-payments/" target="_blank">Razorpay Cross-Border</a>
+      <a href="https://razorpay.com/accept-international-payments/" target="_blank">Razorpay Cross-Border</a>
       <a href="https://razorpay.com/terms/" target="_blank">Terms</a>
       <a href="https://razorpay.com/privacy/" target="_blank">Privacy</a>
     </div>
@@ -1348,10 +1872,16 @@ function filterMarkets(tag, btn) {
   document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
 })();
 
+// ── Testimonials infinite scroll ─────────────────────────
+(function() {
+  var t = document.getElementById('testTrack');
+  if (t) t.innerHTML += t.innerHTML;
+})();
+
 // ── Nav theme switch ──────────────────────────────────────
 (function() {
   var nav = document.getElementById('nav');
-  var lightSecs = document.querySelectorAll('.sec-paper, .sec-paper2');
+  var lightSecs = document.querySelectorAll('.sec-paper, .sec-paper2, .feat-text, .testimonials, .faq');
   var io = new IntersectionObserver(function() {
     var any = false;
     lightSecs.forEach(function(s) {
