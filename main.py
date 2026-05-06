@@ -299,9 +299,28 @@ async def search(req: SearchRequest):
 
 
 async def _ai_answer(query: str, chunks: list[SearchResult]) -> Optional[str]:
-    api_key = os.getenv("ANTHROPIC_API_KEY")
-    if not api_key:
+    # Azure AI Services endpoint takes priority; falls back to direct Anthropic key
+    azure_endpoint = os.getenv("AZURE_ANTHROPIC_ENDPOINT")
+    azure_key = os.getenv("AZURE_ANTHROPIC_KEY")
+    direct_key = os.getenv("ANTHROPIC_API_KEY")
+
+    if azure_endpoint and azure_key:
+        # Azure AI Services uses 'api-key' header, not 'x-api-key'
+        client = anthropic.Anthropic(
+            base_url=azure_endpoint,
+            api_key=azure_key,
+            default_headers={"api-key": azure_key},
+        )
+        model = os.getenv("AZURE_MODEL_NAME", "claude-sonnet-4-6")
+        log.info("Using Azure AI endpoint: %s", azure_endpoint)
+    elif direct_key:
+        client = anthropic.Anthropic(api_key=direct_key)
+        model = "claude-haiku-4-5-20251001"
+        log.info("Using direct Anthropic API")
+    else:
+        log.warning("No AI credentials configured (AZURE_ANTHROPIC_KEY or ANTHROPIC_API_KEY)")
         return None
+
     context = "\n\n".join(
         f"[{c.doc_type} · p.{c.page}]: {c.text[:350]}" for c in chunks[:3]
     ) if chunks else "No relevant documents found."
@@ -314,11 +333,10 @@ async def _ai_answer(query: str, chunks: list[SearchResult]) -> Optional[str]:
         "Never invent regulation numbers or cite rules you are not certain of."
     )
     try:
-        client = anthropic.Anthropic(api_key=api_key)
         msg = await asyncio.get_event_loop().run_in_executor(
             None,
             lambda: client.messages.create(
-                model="claude-haiku-4-5-20251001",
+                model=model,
                 max_tokens=300,
                 messages=[{"role": "user", "content": prompt}],
             ),
