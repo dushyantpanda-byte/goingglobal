@@ -256,7 +256,8 @@ section { position: relative; }
 .sri-text { font-size: 13px; color: var(--muted-d); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .sri-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; }
 .sri-score { font-size: 12px; color: rgba(2,4,42,.35); }
-.sri-src { font-size: 12px; color: var(--blue); font-weight: 500; }
+.sri-src { font-size: 12px; color: var(--blue); font-weight: 500; text-decoration: none; }
+.sri-src:hover { text-decoration: underline; }
 .search-empty, .search-loading { padding: 24px 16px; text-align: center; color: var(--muted-d); font-size: 14px; }
 .ai-answer-block { padding: 16px; border-bottom: 1px solid var(--paper-2); background: linear-gradient(135deg, rgba(51,149,255,.04), rgba(245,197,24,.04)); }
 .ai-answer-label { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; padding: 2px 10px; border-radius: 99px; margin-bottom: 8px; }
@@ -1803,7 +1804,7 @@ async function doSearch() {
         html += '<div class="sri-divider">Source excerpts</div>';
       }
       html += docs.map(d => `
-        <div class="sri" onclick="window.open(${JSON.stringify(d.source_url||'#')},'_blank')">
+        <div class="sri">
           <div class="sri-top">
             <span class="sri-tag ${tagCls(d.doc_type)}">${esc(d.doc_type)}</span>
             <span class="sri-title">${esc(d.title)} · p.${d.page}</span>
@@ -1811,7 +1812,7 @@ async function doSearch() {
           <div class="sri-text">${esc(d.text)}</div>
           <div class="sri-footer">
             <span class="sri-score">Relevance: ${(d.score*100).toFixed(0)}%</span>
-            ${d.source_url ? '<span class="sri-src">Source →</span>' : ''}
+            ${d.source_url ? `<a class="sri-src" href="${esc(d.source_url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Source →</a>` : ''}
           </div>
         </div>`).join('');
     } else if (!data.ai_answer) {
